@@ -2,6 +2,7 @@ This is a Diploma project - freelance delivery service.
 
 Used stack:
 - [Next.js](https://nextjs.org/) 
+- [Storybook](https://storybook.js.org/)
 - [Emotion](https://emotion.sh/docs/introduction)
 - [Typescript](https://www.typescriptlang.org/)
 - [React Hook Form](https://react-hook-form.com/)
