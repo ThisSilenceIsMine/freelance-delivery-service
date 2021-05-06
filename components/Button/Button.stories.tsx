@@ -1,10 +1,8 @@
 import React from 'react';
 
-import {Story} from "@storybook/react"
+import type {Story} from "@storybook/react"
 
 import { Button, Props } from './Button';
-
-
 
 export default {
   title: 'Button',

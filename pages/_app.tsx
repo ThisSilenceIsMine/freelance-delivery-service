@@ -1,4 +1,4 @@
-import { css, Global, Theme, ThemeProvider } from '@emotion/react';
+import { css, Global, ThemeProvider } from '@emotion/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { theme } from '../lib/theme'; //usage may change, if you want to implement theming
 

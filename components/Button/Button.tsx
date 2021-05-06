@@ -9,6 +9,10 @@ export interface Props extends React.ComponentPropsWithoutRef<'button'> {
    return <StyledButton {...rest}>{children}</StyledButton>;
  };
  
+const SButton = styled.button<Omit<Props, 'label'>>`
+  background-color: ${({ primary, theme }) => { console.log(theme); return (primary ? 'orange' : 'grey') }};
+`;
+
 const StyledButton = styled.button<Omit<Props, 'label'>>`
   border: none;
   border-radius: 50px;
