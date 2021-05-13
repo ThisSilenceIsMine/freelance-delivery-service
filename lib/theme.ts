@@ -1,8 +1,8 @@
-export const theme = {
-  LIGHT: {
-    color: {
-      orange: 'hsl(39, 100%, 50%)',
-      grey: 'hsl(0, 0%, 86%)',
-    }
+import { extendTheme } from '@chakra-ui/react';
+export const theme = extendTheme({
+  fonts: {
+    heading: 'Ubuntu',
+    body: 'Montserrat',
   },
-};
+});
+

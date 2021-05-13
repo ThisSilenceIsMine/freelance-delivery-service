@@ -1,6 +1,5 @@
 import type { Story } from '@storybook/react';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from '../lib/theme';
+import { ChakraProvider } from '@chakra-ui/react';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -14,8 +13,8 @@ export const parameters = {
 
 export const decorators = [
   (Story: Story) => (
-    <ThemeProvider theme={theme.LIGHT}>
+    <ChakraProvider>
       <Story />
-    </ThemeProvider>
+    </ChakraProvider>
   ),
 ];

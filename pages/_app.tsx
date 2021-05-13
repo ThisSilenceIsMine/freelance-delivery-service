@@ -1,18 +1,17 @@
-import { css, Global, ThemeProvider } from '@emotion/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
-import { theme } from '../lib/theme'; //usage may change, if you want to implement theming
+import { ChakraProvider } from '@chakra-ui/react'
+import { Header } from '@components/Header';
+
+import '@fontsource/ubuntu';
+import '@fontsource/montserrat';
+import { theme } from "@lib/theme"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme.LIGHT}>
-      <Global
-        styles={css`
-          @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-        `}
-      />
+    <ChakraProvider theme={theme}>
+      <Header />
       <Component {...pageProps} />
-    </ThemeProvider>
+    </ChakraProvider>
   );
 }
 
