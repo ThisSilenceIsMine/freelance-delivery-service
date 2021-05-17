@@ -16,9 +16,10 @@ export const Default = Template.bind({});
 
 Default.args = {
   tagOptions: [
-    { label: 'Міжміські перевезення', value: '' },
-    { label: 'Таксі', value: '' },
-    { label: 'Вантажі', value: '' },
-    { label: 'Доставка', value: '' },
+    { label: 'Міжміські перевезення', value: '1' },
+    { label: 'Таксі', value: '2' },
+    { label: 'Вантажі', value: '3' },
+    { label: 'Доставка', value: '4' },
   ],
+  onFilterSubmit: (data) => console.log(data),
 };

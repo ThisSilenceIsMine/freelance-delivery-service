@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { CUIAutoComplete } from 'chakra-ui-autocomplete'
-
-export interface Tag {
-    label: string;
-    value: string;
-}
-
+import type { Tag } from '@lib/types'
 export interface Props {
   tags: Tag[];
   onTagsPicked: (arg0: Tag[]) => void;
@@ -29,14 +24,13 @@ export const TagPicker = ({tags, onTagsPicked}: Props) => {
 
     return (
       <CUIAutoComplete
-          label=""
-          placeholder="Почніть друкувати..."
-          onCreateItem={handleCreateItem}
-          items={pickerItems}
-          selectedItems={selectedItems}
-          onSelectedItemsChange={(changes) =>
-            handleSelectedItemsChange(changes.selectedItems)
-          }
+        disableCreateItem={true}
+        label="Виберіть теги"
+        placeholder="Почніть друкувати..."
+        onCreateItem={handleCreateItem}
+        items={pickerItems}
+        selectedItems={selectedItems}
+        onSelectedItemsChange={(changes) => handleSelectedItemsChange(changes.selectedItems)}
       />
-    )
+    );
 }
