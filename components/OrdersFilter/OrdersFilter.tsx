@@ -55,8 +55,8 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
   }, [filter, onFilterSubmit]);
 
   return (
-    <form onSubmit={onSubmit}>
-      <FlexBox spacing="1.5" boxShadow="lg" width="md" height="lg" p="3.5">
+    <Form onSubmit={onSubmit}>
+      <FlexBox spacing="1.5" boxShadow="lg" width={["full","full","full", "md"]} height="lg" p="3.5">
         <FormControl>
           <FormLabel>Виберіть заголовок</FormLabel>
           <Input
@@ -117,12 +117,22 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
         </FormControl>
         <Button type="submit">Пошук</Button>
       </FlexBox>
-    </form>
+    </Form>
   );
 };
 
 const FlexBox = styled(VStack)`
   > * {
+    width: 100%;
+  }
+`;
+
+const Form = styled.form`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  @media only screen and (max-width: 62em) {
     width: 100%;
   }
 `;

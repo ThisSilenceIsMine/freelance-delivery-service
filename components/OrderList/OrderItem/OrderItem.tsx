@@ -14,12 +14,12 @@ import {
 import type { Order } from "@lib/types"
 
 export type Props = Order;
-
+// w={["full", "full", "lg", "lg"]}
 export const OrderItem = ({title, departure, destination, tags}: Props) => {
   return (
     <Grid
       h="min-content"
-      w={["full", "full", "lg", "lg"]}
+      w="full"
       templateRows="repeat(3, 1fr)"
       templateColumns="repeat(6, 1fr)"
       gap={4}

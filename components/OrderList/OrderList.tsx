@@ -8,7 +8,7 @@ export interface Props {
 
 export const OrderList = ({orders}: Props) => {
   return (
-    <List>
+    <List w="full">
       {orders.map(order => <OrderItem {...order}/>)}
     </List>
   )
