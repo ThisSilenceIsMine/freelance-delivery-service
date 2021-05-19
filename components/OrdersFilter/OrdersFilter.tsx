@@ -15,6 +15,7 @@ import {
 import PlacesAutocomplete from 'react-google-places-autocomplete';
 
 import { TagPicker } from '../TagPicker';
+import { StickyForm as Form } from '../StickyForm';
 import type { Tag } from '@lib/types';
 
 const initialState: FormData = {
@@ -34,8 +35,7 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
   const [filter, setFilter] = useState<FormData>(initialState);
 
   const handleChange = useCallback(
-    (field: keyof FormData, value: FormData[keyof FormData] ) => {
-
+    (field: keyof FormData, value: FormData[keyof FormData]) => {
       setFilter((current) => {
         return { ...current, [field]: value };
       });
@@ -43,20 +43,28 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
     [setFilter]
   );
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    const value = { ...filter };
-    value.department = (filter.department as any).label
-    value.destination = (filter.destination as any).label;
+      const value = { ...filter };
+      value.department = (filter.department as any).label;
+      value.destination = (filter.destination as any).label;
 
-    onFilterSubmit(value);
-
-  }, [filter, onFilterSubmit]);
+      onFilterSubmit(value);
+    },
+    [filter, onFilterSubmit]
+  );
 
   return (
     <Form onSubmit={onSubmit}>
-      <FlexBox spacing="1.5" boxShadow="lg" width={["full","full","full", "md"]} height="lg" p="3.5">
+      <FlexBox
+        spacing="1.5"
+        boxShadow="lg"
+        width={['full', 'full', 'full', 'md']}
+        height="lg"
+        p="3.5"
+      >
         <FormControl>
           <FormLabel>Виберіть заголовок</FormLabel>
           <Input
@@ -106,12 +114,13 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
               />
             </NumberInput>
             <Text>{' — '}</Text>
-            <NumberInput mx="1.5" precision={2}>
-              <NumberInputField
-                placeholder="До..."
-                value={filter.maxPrice}
-                onChange={(e) => handleChange('maxPrice', e.target.value)}
-              />
+            <NumberInput
+              mx="1.5"
+              precision={2}
+              value={filter.maxPrice}
+              onChange={(value) => handleChange('maxPrice', value)}
+            >
+              <NumberInputField placeholder="До..." />
             </NumberInput>
           </Flex>
         </FormControl>
@@ -122,17 +131,7 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
 };
 
 const FlexBox = styled(VStack)`
-  > * {
-    width: 100%;
-  }
-`;
-
-const Form = styled.form`
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-
-  @media only screen and (max-width: 62em) {
+  > div {
     width: 100%;
   }
 `;

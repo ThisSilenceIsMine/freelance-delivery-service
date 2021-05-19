@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { Story } from '@storybook/react';
 
-import { Header } from './Header';
+import { ResponsiveHeader as Header } from './Header';
 
 export default {
   title: 'Header',
