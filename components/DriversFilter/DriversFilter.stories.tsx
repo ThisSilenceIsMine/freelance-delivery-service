@@ -3,6 +3,7 @@ import React from 'react';
 import type { Story } from '@storybook/react';
 
 import { DriversFilter, Props } from './DriversFilter';
+import { tags } from 'mock';
 
 export default {
   title: 'Driver/Drivers Filter',
@@ -15,11 +16,6 @@ const Template: Story<Props> = (args) => <DriversFilter {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  tagOptions: [
-    { label: 'Міжміські перевезення', value: '1' },
-    { label: 'Таксі', value: '2' },
-    { label: 'Вантажі', value: '3' },
-    { label: 'Доставка', value: '4' },
-  ],
+  tagOptions: tags,
   onFilterSubmit: (data) => console.log(data),
 };
