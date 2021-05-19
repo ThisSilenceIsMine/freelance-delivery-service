@@ -2,26 +2,26 @@ import React from 'react';
 
 import type { Meta, Story } from '@storybook/react';
 
-import { OrderList, Props } from './OrderList';
+import { DriverList, Props } from './DriverList';
 
-import {OrderItem} from './OrderItem/OrderItem'
+import { DriverItem } from './DriverItem/DriverItem';
 
 export default {
-  title: 'Order/Order List',
-  component: OrderList,
-  subcomponents: {OrderItem}
+  title: 'Driver/Driver List',
+  component: DriverList,
+  subcomponents: { DriverItem },
 } as Meta;
 
-const Template: Story<Props> = (args) => <OrderList {...args} />;
+const Template: Story<Props> = (args) => <DriverList {...args} />;
 
 export const Default = Template.bind({});
 
 Default.args = {
-  orders: [
+  drivers: [
     {
-      title: 'Перевездти холодильник з Бердичева в Житомир',
-      departure: 'Бердичів',
-      destination: 'Житомир',
+      firstName: 'Виталий',
+      lastName: ' Волочай',
+      experience: '4',
       tags: [
         { label: 'Міжміські перевезення', value: '1' },
         { label: 'Таксі', value: '2' },
@@ -30,9 +30,21 @@ Default.args = {
       ],
     },
     {
-      title: 'Перевездти холодильник з Бердичева в Житомир',
-      departure: 'Бердичів',
-      destination: 'Житомир',
+      firstName: 'Виталий',
+      lastName: ' Волочай',
+      experience: '4',
+      tags: [
+        { label: 'Міжміські перевезення', value: '1' },
+        { label: 'Таксі', value: '2' },
+        { label: 'Вантажі', value: '3' },
+        { label: 'Доставка', value: '4' },
+      ],
+    },
+
+    {
+      firstName: 'Виталий',
+      lastName: ' Волочай',
+      experience: '4',
       tags: [
         { label: 'Міжміські перевезення', value: '1' },
         { label: 'Таксі', value: '2' },
@@ -41,9 +53,9 @@ Default.args = {
       ],
     },
     {
-      title: 'Перевездти холодильник з Бердичева в Житомир',
-      departure: 'Бердичів',
-      destination: 'Житомир',
+      firstName: 'Виталий',
+      lastName: ' Волочай',
+      experience: '4',
       tags: [
         { label: 'Міжміські перевезення', value: '1' },
         { label: 'Таксі', value: '2' },
@@ -52,20 +64,9 @@ Default.args = {
       ],
     },
     {
-      title: 'Перевездти холодильник з Бердичева в Житомир',
-      departure: 'Бердичів',
-      destination: 'Житомир',
-      tags: [
-        { label: 'Міжміські перевезення', value: '1' },
-        { label: 'Таксі', value: '2' },
-        { label: 'Вантажі', value: '3' },
-        { label: 'Доставка', value: '4' },
-      ],
-    },
-    {
-      title: 'Перевездти холодильник з Бердичева в Житомир',
-      departure: 'Бердичів',
-      destination: 'Житомир',
+      firstName: 'Виталий',
+      lastName: ' Волочай',
+      experience: '4',
       tags: [
         { label: 'Міжміські перевезення', value: '1' },
         { label: 'Таксі', value: '2' },

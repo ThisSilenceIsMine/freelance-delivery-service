@@ -5,7 +5,7 @@ import type { Story } from '@storybook/react';
 import { OrderItem, Props } from './OrderItem';
 
 export default {
-  title: 'Order Item',
+  title: 'Order/Order Item',
   component: OrderItem,
   //   argTypes: { onClick: { action: 'clicked' } },
 };

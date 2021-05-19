@@ -2,24 +2,26 @@ import React from 'react';
 
 import type { Story } from '@storybook/react';
 
-import { OrdersFilter, Props } from './OrdersFilter';
+import { DriverItem, Props } from './DriverItem';
 
 export default {
-  title: 'Order/Orders Filter',
-  component: OrdersFilter,
+  title: 'Driver/Driver List Item',
+  component: DriverItem,
   //   argTypes: { onClick: { action: 'clicked' } },
 };
 
-const Template: Story<Props> = (args) => <OrdersFilter {...args} />;
+const Template: Story<Props> = (args) => <DriverItem {...args} />;
 
 export const Default = Template.bind({});
 
 Default.args = {
-  tagOptions: [
+  firstName: "Виталий",
+  lastName: " Волочай",
+  experience: "4",
+  tags: [
     { label: 'Міжміські перевезення', value: '1' },
     { label: 'Таксі', value: '2' },
     { label: 'Вантажі', value: '3' },
     { label: 'Доставка', value: '4' },
   ],
-  onFilterSubmit: (data) => console.log(data),
 };

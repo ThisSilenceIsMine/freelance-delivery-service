@@ -12,7 +12,7 @@ export const Header = () => {
       w="100%"
       p="4"
       bg="white"
-      direction={['column', 'row', 'row', 'row']}
+      direction={['column', 'column', 'row', 'row']}
       boxShadow="md"
       justify="flex-start"
       align="center"
@@ -21,7 +21,7 @@ export const Header = () => {
         <Heading>ShipIT!</Heading>
       </Box>
       <Spacer />
-      <Stack direction={['column', 'row', 'row', 'row']} spacing="1em">
+      <Stack direction={['column', 'column', 'row', 'row']} spacing="1em">
         <Link as={NextLink} href="/">
           Home
         </Link>

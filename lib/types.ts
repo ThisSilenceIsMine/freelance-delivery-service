@@ -9,3 +9,10 @@ export interface Order {
   destination: string;
   tags: Tag[];
 }
+
+export interface Driver {
+  firstName: string;
+  lastName: string;
+  experience: string;
+  tags: Tag[];
+}

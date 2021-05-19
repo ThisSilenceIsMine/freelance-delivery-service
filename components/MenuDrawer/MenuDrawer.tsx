@@ -7,6 +7,7 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerContent,
+  Flex
 } from '@chakra-ui/react'
 import {useRef, FC} from 'react'
 
@@ -16,18 +17,25 @@ const btnRef = useRef(null);
 
 return (
   <>
-    <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-      Меню
-    </Button>
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+    <Flex
+      w="100%"
+      p="4"
+      bg="white"
+      direction='row'
+      boxShadow="md"
+      justify="flex-start"
+      align="center"
+    >
+      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        Меню
+      </Button>
+    </Flex>
+    <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
 
-        <DrawerBody>
-          {children}
-        </DrawerBody>
-
+        <DrawerBody>{children}</DrawerBody>
       </DrawerContent>
     </Drawer>
   </>

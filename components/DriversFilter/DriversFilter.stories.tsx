@@ -5,7 +5,7 @@ import type { Story } from '@storybook/react';
 import { DriversFilter, Props } from './DriversFilter';
 
 export default {
-  title: 'Drivers Filter',
+  title: 'Driver/Drivers Filter',
   component: DriversFilter,
   //   argTypes: { onClick: { action: 'clicked' } },
 };
