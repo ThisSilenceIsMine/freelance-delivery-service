@@ -1,5 +1,23 @@
-import { Container } from "@chakra-ui/layout";
+import { Container, Stack } from "@chakra-ui/react";
+
+import { DriversFilter } from '@components/DriversFilter'
+import { DriverList } from "@components/DriverList"
+
+import { tags, drivers } from 'mock';
+
 
 export default function Drivers() {
-    return <Container maxW="container.xl">Hello, drivers page!</Container>;
+    return (
+      <Container maxW="container.xl">
+        <Stack
+          direction={['column', 'column', 'column', 'row']}
+          my="2.5"
+          align="flex-start"
+          spacing={['4', '4', '2.5', '2.5']}
+        >
+          <DriversFilter tagOptions={tags} onFilterSubmit={() => {}} />
+          <DriverList drivers={drivers} />
+        </Stack>
+      </Container>
+    );
 }
