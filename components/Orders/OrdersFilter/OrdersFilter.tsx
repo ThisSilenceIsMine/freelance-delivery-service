@@ -14,8 +14,8 @@ import {
 
 import PlacesAutocomplete from 'react-google-places-autocomplete';
 
-import { TagPicker } from '../TagPicker';
-import { StickyForm as Form } from '../StickyForm';
+import { TagPicker } from '~/components/TagPicker';
+import { StickyForm as Form } from '~/components/StickyForm';
 import type { Tag } from '@lib/types';
 
 const initialState: FormData = {

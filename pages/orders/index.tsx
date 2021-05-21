@@ -5,8 +5,7 @@ import {
   Stack
 } from '@chakra-ui/react';
 
-import { OrderList } from '@components/OrderList';
-import { OrdersFilter } from '@components/OrdersFilter'
+import { OrderList, OrdersFilter } from '@components/Orders';
 
 import {tags, orders} from '../../mock'
 

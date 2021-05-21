@@ -1,6 +1,6 @@
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { ChakraProvider } from '@chakra-ui/react'
-import { ResponsiveHeader as Header } from '@components/Header';
+import { ResponsiveHeader as Header } from '@components/Layout/Header';
 
 import '@fontsource/ubuntu';
 import '@fontsource/montserrat';

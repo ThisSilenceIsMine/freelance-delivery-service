@@ -1,4 +1,4 @@
-import { List, ListItem } from "@chakra-ui/react"
+import { List } from "@chakra-ui/react"
 import { Order } from "@lib/types"
 import { OrderItem } from "./OrderItem/OrderItem"
 

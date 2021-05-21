@@ -1,7 +1,6 @@
 import { Container, Stack } from "@chakra-ui/react";
 
-import { DriversFilter } from '@components/DriversFilter'
-import { DriverList } from "@components/DriverList"
+import { DriversFilter, DriverList } from '@components/Drivers';
 
 import { tags, drivers } from 'mock';
 
