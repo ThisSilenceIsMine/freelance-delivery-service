@@ -5,7 +5,7 @@ import type { Meta, Story } from '@storybook/react';
 import { OrderList, Props } from './OrderList';
 
 import {OrderItem} from './OrderItem/OrderItem'
-import { orders } from 'mock';
+import { orders } from '~/mock/orders.mock';
 
 export default {
   title: 'Order/Order List',
