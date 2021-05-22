@@ -2,7 +2,7 @@ export interface Props {
  
 }
 
-export const ProfileTabs = ({}: Props) => {
+export const DriverProfile = ({}: Props) => {
   return (
     <div>
     

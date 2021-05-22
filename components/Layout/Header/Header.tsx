@@ -1,7 +1,7 @@
 import { Button, Box, Flex, Heading, Link, Spacer, Stack } from '@chakra-ui/react';
 import { MenuDrawer } from '../MenuDrawer';
 
-import { useWindowDimensions } from '../../hooks/useWindowDimensions';
+import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 
 import NextLink from 'next/link';
 
