@@ -2,6 +2,7 @@ import { Order } from "@lib/types";
 
 export const orders: Order[] = [
   {
+    id: 1,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -13,6 +14,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 2,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -24,6 +26,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 3,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -35,6 +38,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 4,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -46,6 +50,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 5,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -57,6 +62,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 6,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -68,6 +74,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 7,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -79,6 +86,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 8,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
@@ -90,6 +98,7 @@ export const orders: Order[] = [
     ],
   },
   {
+    id: 9,
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',

@@ -18,5 +18,5 @@ const Template: Story<Props> = (args) => <DriverList {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  drivers
+  drivers,
 };

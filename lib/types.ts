@@ -1,9 +1,10 @@
 export interface Tag {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 export interface Order {
+  id: number | string;
   title: string;
   departure: string;
   destination: string;
@@ -11,6 +12,7 @@ export interface Order {
 }
 
 export interface Driver {
+  id: number | string;
   firstName: string;
   lastName: string;
   experience: string;

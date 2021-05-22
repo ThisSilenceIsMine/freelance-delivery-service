@@ -10,7 +10,7 @@ export const DriverList = ({ drivers }: Props) => {
   return (
     <List w="full">
       {drivers.map((driver) => (
-        <DriverItem {...driver} />
+        <DriverItem key={driver.id} {...driver} />
       ))}
     </List>
   );

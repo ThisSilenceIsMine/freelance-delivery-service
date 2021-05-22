@@ -7,9 +7,9 @@ import { ResponsiveHeader as Header } from './Header';
 export default {
   title: 'Header',
   component: Header,
-//   argTypes: { onClick: { action: 'clicked' } },
+  //   argTypes: { onClick: { action: 'clicked' } },
 };
 
-const Template: Story = (args) => <Header {...args}/>;
+const Template: Story = (args) => <Header {...args} />;
 
 export const Default = Template.bind({});

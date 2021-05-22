@@ -1,11 +1,5 @@
-export interface Props {
- 
-}
+export interface Props {}
 
 export const DriverProfile = ({}: Props) => {
-  return (
-    <div>
-    
-    </div>
-  );
+  return <div></div>;
 };

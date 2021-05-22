@@ -14,8 +14,8 @@ const Template: Story<Props> = (args) => <UserProfile {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  email: "myemail@gmail.com",
-  name: "Виталий Волочай",
-  phoneNumber: "+380984686733",
-  onDataChanged: (data) => console.log(data)
-}
+  email: 'myemail@gmail.com',
+  name: 'Виталий Волочай',
+  phoneNumber: '+380984686733',
+  onDataChanged: (data) => console.log(data),
+};

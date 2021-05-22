@@ -1,13 +1,6 @@
-import {
-  Grid,
-  GridItem,
-  Heading,
-  Wrap,
-  Tag,
-  Tooltip,
-} from '@chakra-ui/react';
+import { Grid, GridItem, Heading, Wrap, Tag, Tooltip } from '@chakra-ui/react';
 
-import {useRef} from 'react'
+import { useRef } from 'react';
 import type { Driver } from '@lib/types';
 
 export type Props = Driver;

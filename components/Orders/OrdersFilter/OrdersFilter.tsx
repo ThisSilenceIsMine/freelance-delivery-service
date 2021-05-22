@@ -14,44 +14,31 @@ import {
 
 import PlacesAutocomplete from 'react-google-places-autocomplete';
 
-import { useForm } from '@hooks/useForm';
+import { useForm } from '~/hooks/useForm';
 
 import { TagPicker } from '~/components/TagPicker';
 import { StickyForm as Form } from '~/components/StickyForm';
 import type { Tag } from '@lib/types';
 
-const initialState: FormData = {
-  title: '',
-  tags: [],
-  department: '',
-  destination: '',
-  minPrice: 0,
-  maxPrice: 0,
-};
 export interface Props {
   tagOptions: Tag[];
-  onFilterSubmit: (data: FormData) => void;
+  onFilterSubmit: (data: Partial<FormData>) => void;
 }
 
 export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
-  const [filter, setFilter] = useState<FormData>(initialState);
-
-  const handleChange = useCallback(
-    (field: keyof FormData, value: FormData[keyof FormData]) => {
-      setFilter((current) => {
-        return { ...current, [field]: value };
-      });
-    },
-    [setFilter]
-  );
+  const { data: filter, handleChange } = useForm<FormData>({});
 
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
       const value = { ...filter };
-      value.department = (filter.department as any).label;
-      value.destination = (filter.destination as any).label;
+      if (filter.department) {
+        value.department = (filter.department as any).label;
+      }
+      if (filter.destination) {
+        value.destination = (filter.destination as any).label;
+      }
 
       onFilterSubmit(value);
     },

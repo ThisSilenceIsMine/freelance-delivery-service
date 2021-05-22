@@ -1,1 +1,1 @@
-export {MenuDrawer} from './MenuDrawer'
+export { MenuDrawer } from './MenuDrawer';

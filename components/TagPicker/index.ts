@@ -1,2 +1,2 @@
-export { TagPicker } from './TagPicker'
-export type { Tag } from './TagPicker'
+export { TagPicker } from './TagPicker';
+export type { Tag } from './TagPicker';

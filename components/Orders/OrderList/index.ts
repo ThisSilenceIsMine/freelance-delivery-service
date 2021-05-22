@@ -1,2 +1,2 @@
-export { OrderList } from './OrderList'
-export { OrderItem } from './OrderItem/OrderItem'
+export { OrderList } from './OrderList';
+export { OrderItem } from './OrderItem/OrderItem';

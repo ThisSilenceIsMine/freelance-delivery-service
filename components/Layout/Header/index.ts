@@ -1,1 +1,1 @@
-export { Header, ResponsiveHeader} from './Header'
+export { Header, ResponsiveHeader } from './Header';

@@ -12,7 +12,7 @@ import {
 
 import { useCallback, FormEvent } from 'react';
 
-import { useForm } from '@hooks/useForm';
+import { useForm } from '~/hooks/useForm';
 
 interface FormData {
   name: string;
@@ -26,8 +26,7 @@ export interface Props extends FormData {
 
 export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) => {
   const { data, handleChange } = useForm<FormData>({});
-  
-  
+
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -40,14 +39,20 @@ export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) 
     <form {...onSubmit}>
       <FormControl>
         <FormLabel>Ім'я</FormLabel>
-        <Editable boxShadow="base" p="2" defaultValue={name} value={data.name} onChange={(value) => handleChange('name', value)} >
+        <Editable
+          boxShadow="base"
+          p="2"
+          defaultValue={name}
+          value={data.name}
+          onChange={(value) => handleChange('name', value)}
+        >
           <EditablePreview />
           <EditableInput />
         </Editable>
       </FormControl>
       <FormControl>
         <FormLabel>Email</FormLabel>
-        <Editable boxShadow="base" p="2" defaultValue={email} >
+        <Editable boxShadow="base" p="2" defaultValue={email}>
           <EditablePreview />
           <EditableInput />
         </Editable>

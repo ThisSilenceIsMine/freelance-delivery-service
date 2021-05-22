@@ -15,44 +15,22 @@ import {
 
 import { TagPicker } from '~/components/TagPicker';
 import { StickyForm as Form } from '~/components/StickyForm';
-import type { Tag } from '@lib/types';
+import type { Tag } from '~/lib/types';
 
-const initialState: FormData = {
-  fullName: '',
-  // tags: [],
-  // experience: 0,
-};
+import { useForm } from '~/hooks/useForm';
 
 export interface Props {
   tagOptions: Tag[];
-  onFilterSubmit: (data: FormData) => void;
+  onFilterSubmit: (data: Partial<FormData>) => void;
 }
 
 export const DriversFilter = ({ tagOptions, onFilterSubmit }: Props) => {
-  const [filter, setFilter] = useState<FormData>(initialState);
-
-  const handleChange = useCallback(
-    (field: keyof FormData, value: FormData[keyof FormData]) => {
-      setFilter((current) => {
-        return { ...current, [field]: value };
-      });
-    },
-    [setFilter]
-  );
+  const { data: filter, handleChange } = useForm<FormData>({});
 
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
-      const data = {...filter}
-      let key: keyof FormData;
-      for (key in data) {
-        if (!data[key]) {
-          delete data[key];
-        }
-      }
-
-      onFilterSubmit(data);
+      onFilterSubmit(filter);
     },
     [filter, onFilterSubmit]
   );
@@ -107,7 +85,7 @@ const FlexBox = styled(VStack)`
 `;
 
 export interface FormData {
-  fullName?: string;
-  tags?: Tag[];
-  experience?: number;
+  fullName: string;
+  tags: Tag[];
+  experience: number;
 }

@@ -8,14 +8,14 @@ import {
   Divider,
   Text,
   Center,
-  VStack
-} from "@chakra-ui/react"
+  VStack,
+} from '@chakra-ui/react';
 
-import type { Order } from "@lib/types"
+import type { Order } from '@lib/types';
 
 export type Props = Order;
 // w={["full", "full", "lg", "lg"]}
-export const OrderItem = ({title, departure, destination, tags}: Props) => {
+export const OrderItem = ({ title, departure, destination, tags }: Props) => {
   return (
     <Grid
       h="min-content"
@@ -52,4 +52,4 @@ export const OrderItem = ({title, departure, destination, tags}: Props) => {
       </GridItem>
     </Grid>
   );
-}
+};

@@ -4,7 +4,7 @@ export const NavLink = styled.a`
   position: relative;
   box-sizing: content-box;
   cursor: pointer;
-  text-transform: uppercase;  
+  text-transform: uppercase;
   &::before {
     display: block;
     position: relative;
