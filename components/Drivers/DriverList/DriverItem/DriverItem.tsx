@@ -5,8 +5,7 @@ import type { Driver } from '@lib/types';
 
 export type Props = Driver;
 
-export const DriverItem = ({ firstName, lastName, experience, tags }: Props) => {
-  const fullName = useRef(`${firstName} ${lastName}`);
+export const DriverItem = ({ fullName, experience, tags }: Props) => {
 
   return (
     <Grid
@@ -20,9 +19,9 @@ export const DriverItem = ({ firstName, lastName, experience, tags }: Props) => 
       p="2.5"
     >
       <GridItem boxShadow="base" p="2.5" overflow="hidden">
-        <Tooltip label={fullName.current}>
+        <Tooltip label={fullName}>
           <Heading size="md" isTruncated maxWidth="4fr">
-            {`${fullName.current}, стаж ${experience} роки(-ів)`}
+            {`${fullName}, стаж ${experience} роки(-ів)`}
           </Heading>
         </Tooltip>
       </GridItem>

@@ -3,12 +3,13 @@ import { CUIAutoComplete } from 'chakra-ui-autocomplete';
 import type { Tag } from '@lib/types';
 export interface Props {
   tags: Tag[];
+  initialTags?: Tag[];
   onTagsPicked: (arg0: Tag[]) => void;
 }
 
-export const TagPicker = ({ tags, onTagsPicked }: Props) => {
+export const TagPicker = ({ tags, onTagsPicked, initialTags }: Props) => {
   const [pickerItems, setPickerItems] = useState(tags);
-  const [selectedItems, setSelectedItems] = useState<Tag[]>([]);
+  const [selectedItems, setSelectedItems] = useState<Tag[]>(initialTags ?? []);
 
   const handleCreateItem = (item: Tag) => {
     setPickerItems((curr) => [...curr, item]);

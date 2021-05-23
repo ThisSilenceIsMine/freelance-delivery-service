@@ -15,10 +15,11 @@ import {
 
 import { TagPicker } from '~/components/TagPicker';
 import { Form } from '~/components/StyledForm';
-import type { Tag } from '~/lib/types';
+import type { Tag, Driver } from '~/lib/types';
 
 import { useForm } from '~/hooks/useForm';
 
+type FormData = Driver;
 export interface Props {
   tagOptions: Tag[];
   onFilterSubmit: (data: Partial<FormData>) => void;
@@ -84,8 +85,9 @@ const FlexBox = styled(VStack)`
   }
 `;
 
-export interface FormData {
-  fullName: string;
-  tags: Tag[];
-  experience: number;
-}
+// export interface FormData {
+//   fullName: string;
+//   tags: Tag[];
+//   experience: number;
+// }
+

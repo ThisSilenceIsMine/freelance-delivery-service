@@ -50,7 +50,7 @@ export const Header = () => {
 export const ResponsiveHeader = () => {
   const { width } = useWindowDimensions();
 
-  if (width <= 768) {
+  if (width && width <= 768) {
     //roughly equals to 62em assuming font-size is 16px
     return (
       <MenuDrawer>

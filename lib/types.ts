@@ -13,8 +13,8 @@ export interface Order {
 
 export interface Driver {
   id: number | string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   experience: string;
+  description?: string;
   tags: Tag[];
 }

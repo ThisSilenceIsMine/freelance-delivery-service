@@ -15,8 +15,7 @@ const Template: Story<Props> = (args) => <DriverItem {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  firstName: 'Виталий',
-  lastName: ' Волочай',
+  fullName: 'Виталий Волочай',
   experience: '4',
   tags: [
     { label: 'Міжміські перевезення', value: '1' },

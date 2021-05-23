@@ -21,25 +21,25 @@ interface FormData {
 }
 
 export interface Props extends FormData {
-  onDataChanged: (_arg0: Partial<FormData>) => void;
+  onFormSubmit: (_arg0: Partial<FormData>) => void;
 }
 
-export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) => {
+export const UserProfile = ({ name, email, phoneNumber, onFormSubmit }: Props) => {
   const { data, handleChange } = useForm<FormData>({name, email, phoneNumber});
 
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      onDataChanged(data);
+      onFormSubmit(data);
     },
-    [onDataChanged, data]
+    [onFormSubmit, data]
   );
 
   return (
     <form onSubmit={onSubmit}>
       <FormControl>
-        <FormLabel>Ім'я</FormLabel>
+        <FormLabel>Нікнейм</FormLabel>
         <Editable
           boxShadow="base"
           p="2"
@@ -77,7 +77,7 @@ export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) 
           <EditableInput />
         </Editable>
       </FormControl>
-      <Button colorScheme="teal" variant="outline" mt="2" mx="auto" type="submit">Зберегти</Button>
+      <Button colorScheme="teal"  variant="outline" mt="2" type="submit">Зберегти</Button>
     </form>
   );
 };

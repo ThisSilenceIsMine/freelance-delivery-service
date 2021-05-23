@@ -17,5 +17,5 @@ Default.args = {
   email: 'myemail@gmail.com',
   name: 'Виталий Волочай',
   phoneNumber: '+380984686733',
-  onDataChanged: (data) => console.log(data),
+  onFormSubmit: (data) => console.log(data),
 };

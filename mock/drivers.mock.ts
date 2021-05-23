@@ -3,8 +3,7 @@ import { Driver } from "@lib/types";
 export const drivers: Driver[] = [
   {
     id: 1,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -15,8 +14,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 2,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -28,8 +26,7 @@ export const drivers: Driver[] = [
 
   {
     id: 3,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -40,8 +37,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 4,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -52,8 +48,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 5,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -64,8 +59,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 6,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -76,8 +70,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 7,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -88,8 +81,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 8,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -100,8 +92,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 9,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
@@ -112,8 +103,7 @@ export const drivers: Driver[] = [
   },
   {
     id: 10,
-    firstName: 'Виталий',
-    lastName: ' Волочай',
+    fullName: "Виталий Волочай",
     experience: '4',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
