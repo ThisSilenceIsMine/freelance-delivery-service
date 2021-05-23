@@ -1,6 +1,6 @@
 export interface Tag {
   label: string;
-  value: string | number;
+  value: string;
 }
 
 export interface Order {

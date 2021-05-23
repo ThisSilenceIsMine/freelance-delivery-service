@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { TagPicker } from '~/components/TagPicker';
-import { StickyForm as Form } from '~/components/StickyForm';
+import { Form } from '~/components/StyledForm';
 import type { Tag } from '~/lib/types';
 
 import { useForm } from '~/hooks/useForm';
@@ -36,7 +36,7 @@ export const DriversFilter = ({ tagOptions, onFilterSubmit }: Props) => {
   );
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} sticky>
       <FlexBox
         spacing="1.5"
         boxShadow="lg"

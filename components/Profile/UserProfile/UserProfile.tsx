@@ -25,18 +25,19 @@ export interface Props extends FormData {
 }
 
 export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) => {
-  const { data, handleChange } = useForm<FormData>({});
+  const { data, handleChange } = useForm<FormData>({name, email, phoneNumber});
 
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       onDataChanged(data);
     },
     [onDataChanged, data]
   );
 
   return (
-    <form {...onSubmit}>
+    <form onSubmit={onSubmit}>
       <FormControl>
         <FormLabel>Ім'я</FormLabel>
         <Editable
@@ -52,19 +53,31 @@ export const UserProfile = ({ name, email, phoneNumber, onDataChanged }: Props) 
       </FormControl>
       <FormControl>
         <FormLabel>Email</FormLabel>
-        <Editable boxShadow="base" p="2" defaultValue={email}>
+        <Editable
+          boxShadow="base"
+          p="2"
+          defaultValue={email}
+          value={data.email}
+          onChange={(value) => handleChange('email', value)}
+        >
           <EditablePreview />
           <EditableInput />
         </Editable>
       </FormControl>
       <FormControl>
         <FormLabel>Номер телефону</FormLabel>
-        <Editable boxShadow="base" p="2" defaultValue={phoneNumber}>
+        <Editable
+          boxShadow="base"
+          p="2"
+          defaultValue={phoneNumber}
+          value={data.phoneNumber}
+          onChange={(value) => handleChange('phoneNumber', value)}
+        >
           <EditablePreview />
           <EditableInput />
         </Editable>
       </FormControl>
-      <Button type="submit">Зберегти</Button>
+      <Button colorScheme="teal" variant="outline" mt="2" mx="auto" type="submit">Зберегти</Button>
     </form>
   );
 };

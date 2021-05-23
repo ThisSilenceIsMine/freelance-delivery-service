@@ -17,15 +17,17 @@ import PlacesAutocomplete from 'react-google-places-autocomplete';
 import { useForm } from '~/hooks/useForm';
 
 import { TagPicker } from '~/components/TagPicker';
-import { StickyForm as Form } from '~/components/StickyForm';
+import { Form } from '~/components/StyledForm'
 import type { Tag } from '@lib/types';
 
 export interface Props {
   tagOptions: Tag[];
   onFilterSubmit: (data: Partial<FormData>) => void;
+  sticky?: boolean;
+  fullWidth?: boolean;
 }
 
-export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
+export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: Props) => {
   const { data: filter, handleChange } = useForm<FormData>({});
 
   const onSubmit = useCallback(
@@ -46,11 +48,11 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
   );
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form {...{ sticky, fullWidth }} onSubmit={onSubmit}>
       <FlexBox
         spacing="1.5"
         boxShadow="lg"
-        width={['full', 'full', 'full', 'md']}
+        width={['full', 'full', 'full', `${fullWidth ? 'full' : 'md'}`]}
         height="lg"
         p="3.5"
       >
@@ -118,6 +120,7 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit }: Props) => {
     </Form>
   );
 };
+
 
 const FlexBox = styled(VStack)`
   > div {

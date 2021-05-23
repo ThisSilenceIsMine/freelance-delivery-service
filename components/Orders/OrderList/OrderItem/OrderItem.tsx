@@ -37,7 +37,7 @@ export const OrderItem = ({ title, departure, destination, tags }: Props) => {
       <GridItem rowStart={2} rowEnd={4} colSpan={4} boxShadow="base" p="2.5">
         <Wrap>
           {tags.map((x) => (
-            <Tag>{x.label}</Tag>
+            <Tag key={x.value}>{x.label}</Tag>
           ))}
         </Wrap>
       </GridItem>

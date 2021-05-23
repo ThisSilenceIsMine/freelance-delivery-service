@@ -1,1 +1,1 @@
-export { OrdersFilter } from './OrdersFilter';
+export * from './OrdersFilter';
