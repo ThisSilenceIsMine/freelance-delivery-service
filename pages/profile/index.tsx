@@ -1,4 +1,15 @@
-import { Container, Tabs, TabList, TabPanels, Tab, TabPanel, Center, Text } from '@chakra-ui/react';
+import {
+  Container,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Center,
+  Text,
+  Button,
+} from '@chakra-ui/react';
+import { useRef } from 'react';
 
 import { UserProfile, DriverProfile, UserOrders } from '@components/Profile';
 
@@ -24,6 +35,8 @@ const __mockUserOrders = {
 };
 
 export default function Orders() {
+  const ref = useRef<HTMLFormElement>(null);
+
   return (
     <Container maxW="container.xl">
       <Tabs isFitted isLazy>
@@ -40,7 +53,11 @@ export default function Orders() {
             <UserOrders {...__mockUserOrders} />
           </TabPanel>
           <TabPanel>
-            <DriverProfile {...__mockDriverProfile} />
+            <DriverProfile {...__mockDriverProfile} ref={ref}>
+              <Button colorScheme="teal" mt="2" variant="outline" type="submit">
+                Зберегти
+              </Button>
+            </DriverProfile>
           </TabPanel>
         </TabPanels>
       </Tabs>
