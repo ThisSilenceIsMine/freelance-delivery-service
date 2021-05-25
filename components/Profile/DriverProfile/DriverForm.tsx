@@ -31,7 +31,7 @@ export interface Props {
   onFormSubmit: (_argo0: Partial<FormData>) => void;
 }
 
-export const DriverProfile = forwardRef<HTMLFormElement, Props>(
+export const DriverForm = forwardRef<HTMLFormElement, Props>(
   ({ initialData, tagOptions, onFormSubmit, children, formId }, ref) => {
     const { data, handleChange } = useForm<FormData>(initialData ?? {});
 

@@ -16,15 +16,13 @@ export const Form = styled.form<FormStyleProps>`
   `}
 
   ${(props) =>
-    props.fullWidth ?
-    `
+    props.fullWidth
+      ? `
       width: 100%;
     `
-    :
-    `
+      : `
       @media only screen and (max-width: 62em) {
         width: 100%;
       }
-    `
-    }
+    `}
 `;

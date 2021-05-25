@@ -2,21 +2,21 @@ import * as React from 'react';
 
 import type { Story } from '@storybook/react';
 
-import { Props, DriverProfile } from './DriverProfile';
+import { Props, DriverForm } from './DriverForm';
 import { tags } from '~/mock/tags.mock';
 import { Button } from '@chakra-ui/react';
 
 export default {
-  title: 'Profile/DriverProfile',
-  component: DriverProfile,
+  title: 'Profile/Driver Form',
+  component: DriverForm,
 };
 
 const Template: Story<Props> = (args) => (
-  <DriverProfile {...args}>
+  <DriverForm {...args}>
     <Button colorScheme="teal" mt="2" variant="outline" type="submit">
       Зберегти
     </Button>
-  </DriverProfile>
+  </DriverForm>
 );
 
 export const Default = Template.bind({});

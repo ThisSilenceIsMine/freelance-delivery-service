@@ -17,7 +17,7 @@ import PlacesAutocomplete from 'react-google-places-autocomplete';
 import { useForm } from '~/hooks/useForm';
 
 import { TagPicker } from '~/components/TagPicker';
-import { Form } from '~/components/StyledForm'
+import { Form } from '~/components/StyledForm';
 import type { Tag } from '@lib/types';
 
 export interface Props {
@@ -120,7 +120,6 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
     </Form>
   );
 };
-
 
 const FlexBox = styled(VStack)`
   > div {

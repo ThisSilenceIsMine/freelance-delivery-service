@@ -90,4 +90,3 @@ const FlexBox = styled(VStack)`
 //   tags: Tag[];
 //   experience: number;
 // }
-

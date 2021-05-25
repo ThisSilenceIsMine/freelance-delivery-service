@@ -25,7 +25,7 @@ export interface Props extends FormData {
 }
 
 export const UserProfile = ({ name, email, phoneNumber, onFormSubmit }: Props) => {
-  const { data, handleChange } = useForm<FormData>({name, email, phoneNumber});
+  const { data, handleChange } = useForm<FormData>({ name, email, phoneNumber });
 
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -77,7 +77,9 @@ export const UserProfile = ({ name, email, phoneNumber, onFormSubmit }: Props) =
           <EditableInput />
         </Editable>
       </FormControl>
-      <Button colorScheme="teal"  variant="outline" mt="2" type="submit">Зберегти</Button>
+      <Button colorScheme="teal" variant="outline" mt="2" type="submit">
+        Зберегти
+      </Button>
     </form>
   );
 };

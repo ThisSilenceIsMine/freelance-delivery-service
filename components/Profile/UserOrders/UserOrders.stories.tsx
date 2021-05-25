@@ -18,5 +18,5 @@ export const Default = Template.bind({});
 Default.args = {
   onFilterSubmit: (data) => console.log(data),
   orders,
-  tags
-}
+  tags,
+};

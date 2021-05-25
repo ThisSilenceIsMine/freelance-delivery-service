@@ -17,4 +17,4 @@ export const Default = Template.bind({});
 Default.args = {
   onFormSubmit: console.log,
   tags,
-}
+};

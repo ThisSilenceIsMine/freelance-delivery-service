@@ -6,7 +6,6 @@ import type { Driver } from '@lib/types';
 export type Props = Driver;
 
 export const DriverItem = ({ fullName, experience, tags }: Props) => {
-
   return (
     <Grid
       h="min-content"

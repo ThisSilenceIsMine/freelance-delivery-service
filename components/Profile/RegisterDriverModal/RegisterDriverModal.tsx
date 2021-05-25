@@ -8,11 +8,11 @@ import {
   ModalCloseButton,
   Button,
 } from '@chakra-ui/react';
-import { useRef } from 'react'
+import { useRef } from 'react';
 import { useDisclosure } from '@chakra-ui/hooks';
 
 import { Driver, Tag } from '@lib/types';
-import { DriverProfile } from '../DriverProfile/DriverProfile';
+import { DriverForm } from '../DriverProfile/DriverForm';
 
 export interface Props {
   tags: Tag[];
@@ -21,7 +21,7 @@ export interface Props {
 
 export const RegisterDriverModal = ({ onFormSubmit, tags }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const ref = useRef<HTMLFormElement>(null)
+  const ref = useRef<HTMLFormElement>(null);
 
   return (
     <>
@@ -33,7 +33,7 @@ export const RegisterDriverModal = ({ onFormSubmit, tags }: Props) => {
           <ModalHeader>Зареєструйтесь як водій</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <DriverProfile onFormSubmit={onFormSubmit} tagOptions={tags} ref={ref} />
+            <DriverForm onFormSubmit={onFormSubmit} tagOptions={tags} ref={ref} />
           </ModalBody>
 
           <ModalFooter>

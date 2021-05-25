@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import { UserProfile, DriverProfile, UserOrders } from '@components/Profile';
+import { UserProfile, UserOrders, DriverForm } from '@components/Profile';
 
 import { tags, orders, drivers } from '../../mock';
 
@@ -53,11 +53,11 @@ export default function Orders() {
             <UserOrders {...__mockUserOrders} />
           </TabPanel>
           <TabPanel>
-            <DriverProfile {...__mockDriverProfile} ref={ref}>
+            <DriverForm {...__mockDriverProfile} ref={ref}>
               <Button colorScheme="teal" mt="2" variant="outline" type="submit">
                 Зберегти
               </Button>
-            </DriverProfile>
+            </DriverForm>
           </TabPanel>
         </TabPanels>
       </Tabs>
