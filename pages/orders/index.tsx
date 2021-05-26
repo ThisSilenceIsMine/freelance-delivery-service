@@ -7,7 +7,7 @@ import {
 
 import { OrderList, OrdersFilter } from '@components/Orders';
 
-import {tags, orders} from '../../mock'
+import {tags, orders} from '~/mock'
 
 export default function Orders() {
   return (

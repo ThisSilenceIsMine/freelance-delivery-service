@@ -18,5 +18,6 @@ Default.args = {
   departure: "DEPATURE",
   destination: "DEST",
   tags,
-  onFormSubmit: console.log
+  onFormSubmit: console.log,
+  onModeChange: () => { }
 }
