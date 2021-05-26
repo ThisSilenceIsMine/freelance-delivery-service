@@ -8,12 +8,14 @@ import {
   Center,
   Text,
   Button,
+  Heading,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 
 import { UserProfile, UserOrders, DriverForm } from '@components/Profile';
 
 import { tags, orders, drivers } from '../../mock';
+import { RegisterDriverModal } from '@components/Profile/RegisterDriverModal/RegisterDriverModal';
 
 const __mockUserProfile = {
   name: 'Vitaliy',
@@ -37,18 +39,21 @@ const __mockUserOrders = {
 export default function Orders() {
   const ref = useRef<HTMLFormElement>(null);
 
+  const __test_isDriver = true;
+
   return (
     <Container maxW="container.xl">
       <Tabs isFitted isLazy>
         <TabList>
           <Tab>Профіль</Tab>
-          <Tab>Водій</Tab>
+          <Tab isDisabled={__test_isDriver}>Водій</Tab>
+          {__test_isDriver && <RegisterDriverModal tags={tags} onFormSubmit={ console.log }/>}
         </TabList>
         <TabPanels>
           <TabPanel>
             <UserProfile {...__mockUserProfile} />
             <Center my="3.5">
-              <Text>Ваші замовлення</Text>
+              <Heading>Ваші замовлення</Heading>
             </Center>
             <UserOrders {...__mockUserOrders} />
           </TabPanel>
