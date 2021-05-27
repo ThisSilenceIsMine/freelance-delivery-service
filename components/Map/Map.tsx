@@ -62,13 +62,13 @@ export const Map = withScriptjs(withGoogleMap(({ isDestination, onPlacePicked }:
   return (
     <GoogleMap
       defaultZoom={8}
-      defaultCenter={{ lat: -34.397, lng: 150.644 }}
+      defaultCenter={{ lat: 50.449950585577824, lng: 30.52404566087585 }}
       onClick={handleMapClick}
     >
       {showDest && <Marker position={destination} />}
       {showDep && <Marker position={departure} />}
     </GoogleMap>
-  )
+  );
 }))
 
   

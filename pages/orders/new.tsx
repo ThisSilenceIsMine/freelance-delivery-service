@@ -20,8 +20,8 @@ export default function NewOrder() {
   }
 
   return (
-    <Stack h="full" w="full" direction={['column', 'column', 'row', 'row']} p="4">
-      <Box h="100vh-110px" w="40%" boxShadow="md" p="4">
+    <Stack h="full" w="full" direction={['column', 'column', 'column', 'row']} p="4">
+      <Box h="100vh-110px" w={['full', 'full', 'full', '40%']} boxShadow="md" p="4">
         <OrderForm
           departure={departure}
           destination={destination}
@@ -30,7 +30,7 @@ export default function NewOrder() {
           onModeChange={(m) => setMode(m)}
         />
       </Box>
-      <Box h="calc(100vh - 110px)" w="60%" boxShadow="md">
+      <Box h="calc(100vh - 110px)" w={['full', 'full', 'full', '60%']} boxShadow="md">
         <Map
           isDestination={mode === MODE.DESTINATION}
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.NEXT_PUBLIC_GMAP_API_KEY}`}

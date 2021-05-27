@@ -39,7 +39,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
     <Form onSubmit={onSubmit}>
       <FormControl isRequired>
         <FormLabel>Заголовок</FormLabel>
-        <Input value={data.title} onChange={(e) => handleChange('title', e.target.value)} />
+        <Input value={data.title ?? ""} onChange={(e) => handleChange('title', e.target.value)} />
       </FormControl>
       <TagPicker tags={tags} onTagsPicked={(tags) => handleChange('tags', tags)} />
       <FormControl isRequired>
@@ -65,7 +65,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
       <FormControl isRequired>
         <FormLabel>Деталі замовлення</FormLabel>
         <Textarea
-          value={data.description}
+          value={data.description ?? ""}
           onChange={(e) => handleChange('description', e.target.value)}
         />
       </FormControl>
