@@ -6,6 +6,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -18,6 +19,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -30,6 +32,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -42,6 +45,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -54,6 +58,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -66,6 +71,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -78,6 +84,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -90,6 +97,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },
@@ -102,6 +110,7 @@ export const orders: Order[] = [
     title: 'Перевездти холодильник з Бердичева в Житомир',
     departure: 'Бердичів',
     destination: 'Житомир',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis consequat orci, sed faucibus enim accumsan eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed eget lacus hendrerit, hendrerit elit malesuada, condimentum sapien. Cras a condimentum velit, in tincidunt dolor. Nam sed massa non lectus sagittis dictum. Cras porta semper ipsum in ullamcorper. Suspendisse quis nisl blandit, sodales magna ut, dignissim purus. Pellentesque laoreet ligula ut lacus maximus, in volutpat urna ullamcorper. Quisque volutpat ante urna. Sed vel dolor nec orci egestas vehicula. Aliquam elementum lacus vel maximus egestas. Phasellus viverra risus magna, sit amet maximus nunc consectetur ac. Aenean sit amet enim quis justo tincidunt suscipit. Ut et nunc pulvinar, sodales ante eu, molestie tellus. Suspendisse facilisis dui arcu, cursus ultricies odio mollis at. ',
     tags: [
       { label: 'Міжміські перевезення', value: '1' },
       { label: 'Таксі', value: '2' },

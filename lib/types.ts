@@ -8,7 +8,10 @@ export interface Order {
   title: string;
   departure: string;
   destination: string;
-  tags: Tag[];
+  date?: Date;
+  tags?: Tag[];
+  price?: number;
+  description: string;
 }
 
 export interface Driver {

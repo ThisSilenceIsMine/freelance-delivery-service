@@ -6,7 +6,7 @@ import { Props, OrderForm } from './OrderForm';
 import { tags } from '~/mock/tags.mock';
 
 export default {
-  title: 'OrderForm',
+  title: 'Order/OrderForm',
   component: OrderForm,
 };
 

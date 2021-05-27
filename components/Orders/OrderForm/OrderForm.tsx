@@ -3,11 +3,17 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  InputLeftAddon,
+  InputRightAddon,
+  InputGroup,
+  Text,
   Textarea,
   NumberInput,
   NumberInputField,
   Button,
+  Icon
 } from '@chakra-ui/react';
+import { RiMapPin2Line, RiMapPin2Fill, AiOutlineCalendar, BiDollar } from 'react-icons/all';
 import { useCallback } from 'react';
 
 import { Form } from '~/components/StyledForm';
@@ -39,33 +45,58 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
     <Form onSubmit={onSubmit}>
       <FormControl isRequired>
         <FormLabel>Заголовок</FormLabel>
-        <Input value={data.title ?? ""} onChange={(e) => handleChange('title', e.target.value)} />
+        <Input value={data.title ?? ''} onChange={(e) => handleChange('title', e.target.value)} />
       </FormControl>
       <TagPicker tags={tags} onTagsPicked={(tags) => handleChange('tags', tags)} />
       <FormControl isRequired>
         <FormLabel>Точка відправки</FormLabel>
-        <Input readOnly value={departure} onClick={() => onModeChange(MODE.DEPARTURE)} />
+        <InputGroup>
+          <InputLeftAddon
+            minW="80px"
+            children={
+              <>
+                <Icon as={RiMapPin2Line} mr="2" />
+                <Text>З</Text>
+              </>
+            }
+          />
+          <Input readOnly value={departure} onClick={() => onModeChange(MODE.DEPARTURE)} />
+        </InputGroup>
         <FormHelperText>*Виберіть місце на карті</FormHelperText>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Точка призначення</FormLabel>
-        <Input readOnly value={destination} onClick={() => onModeChange(MODE.DESTINATION)} />
+        <InputGroup>
+          <InputLeftAddon
+            minW="80px"
+            children={
+              <>
+                <Icon as={RiMapPin2Fill} mr="2" />
+                <Text>До</Text>
+              </>
+            }
+          />
+          <Input readOnly value={destination} onClick={() => onModeChange(MODE.DESTINATION)} />
+        </InputGroup>
         <FormHelperText>*Виберіть місце на карті</FormHelperText>
       </FormControl>
       <FormControl>
         <FormLabel>Дата</FormLabel>
         <DatePicker selectedDate={data.date} onChange={(date) => handleChange('date', date)} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Бюджет</FormLabel>
-        <NumberInput precision={2}>
-          <NumberInputField />
-        </NumberInput>
+        <InputGroup>
+          <NumberInput precision={2} value={data.price} onChange={(value) => handleChange('price', value)}>
+            <NumberInputField />
+          </NumberInput>
+          <InputRightAddon children={<Icon as={BiDollar} />} />
+        </InputGroup>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Деталі замовлення</FormLabel>
         <Textarea
-          value={data.description ?? ""}
+          value={data.description ?? ''}
           onChange={(e) => handleChange('description', e.target.value)}
         />
       </FormControl>
