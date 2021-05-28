@@ -13,7 +13,9 @@ import {
   Button,
   Icon
 } from '@chakra-ui/react';
-import { RiMapPin2Line, RiMapPin2Fill, AiOutlineCalendar, BiDollar } from 'react-icons/all';
+import { RiMapPin2Line, RiMapPin2Fill } from 'react-icons/ri';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { BiDollar } from 'react-icons/bi';
 import { useCallback } from 'react';
 
 import { Form } from '~/components/StyledForm';

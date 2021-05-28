@@ -13,15 +13,19 @@ import {
   Icon,
   Text,
 } from '@chakra-ui/react';
-
-import { RiMapPin2Line, RiMapPin2Fill, AiOutlineCalendar, BiDollar } from 'react-icons/all';
-import { Order } from '~/lib/types';
+import { useEffect, useState } from 'react';
+import { RiMapPin2Line, RiMapPin2Fill } from 'react-icons/ri';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { BiDollar } from 'react-icons/bi';
+import { Order, Point } from '~/lib/types';
+import { getLatLng } from '@lib/Api/geocoding/geocoding';
 
 export interface Props {
   order: Order;
 }
 
 export const OrderDisplay = ({ order }: Props) => {
+
   return (
     <Stack direction="column">
       <Heading>{order.title}</Heading>

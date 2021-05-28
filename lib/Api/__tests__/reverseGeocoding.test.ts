@@ -1,4 +1,4 @@
-import { getPlaceName } from '../reverseGeocoding';
+import { getPlaceName } from '../geocoding/reverseGeocoding';
 
 
 describe('Reverse Geocoding', () => {

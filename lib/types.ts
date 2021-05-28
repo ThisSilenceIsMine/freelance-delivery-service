@@ -21,3 +21,8 @@ export interface Driver {
   description?: string;
   tags: Tag[];
 }
+
+export interface Point {
+  lat: number;
+  lng: number;
+}
