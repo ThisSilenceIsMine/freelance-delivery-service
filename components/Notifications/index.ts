@@ -1,1 +1,1 @@
-export * from './NotificationsList'
+export * from './NotificationsMenu'

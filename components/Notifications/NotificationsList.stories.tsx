@@ -2,13 +2,18 @@ import * as React from 'react';
 
 import type { Story } from '@storybook/react';
 
-import { Props, NotificationsList } from './NotificationsList';
+import { Props, NotificationsMenu } from './NotificationsMenu';
+import { notifications } from '~/mock/Notifications.mock';
 
 export default {
-  title: 'Notification/NotificationsList',
-  component: NotificationsList,
+  title: 'Notification/Notifications Menu',
+  component: NotificationsMenu,
 };
 
-const Template: Story<Props> = (args) => <NotificationsList {...args} />;
+const Template: Story<Props> = (args) => <NotificationsMenu {...args} />;
 
 export const Default = Template.bind({});
+
+Default.args = {
+  notifications
+}

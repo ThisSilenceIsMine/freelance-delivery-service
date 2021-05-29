@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { Notification } from '@lib/types';
 
-export type Props = Notification;
-
+export type Props = Omit<Notification, 'id'>;
+  
 export const NotificationItem = ({ title, text }: Props) => {
   return (
     <Accordion allowToggle maxW="45ch">
