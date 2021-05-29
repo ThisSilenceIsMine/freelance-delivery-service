@@ -26,3 +26,9 @@ export interface Point {
   lat: number;
   lng: number;
 }
+
+export interface Notification {
+  id: string | number;
+  title: string;
+  text: string;
+}
