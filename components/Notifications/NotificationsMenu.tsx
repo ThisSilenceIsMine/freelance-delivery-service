@@ -7,7 +7,7 @@ import { Notification } from '@lib/types';
 export interface Props {
   notifications: Notification[];
 }
-//
+
 export const NotificationsMenu = ({ notifications }: Props) => {
   return (
     <Menu closeOnSelect={false} closeOnBlur={true} autoSelect={false}>

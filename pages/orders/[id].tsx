@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      order,
+      order: { ...order, price: 100 },
     },
   };
 };
