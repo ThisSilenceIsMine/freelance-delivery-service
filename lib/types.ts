@@ -8,6 +8,7 @@ export interface Order {
   title: string;
   departure: string;
   destination: string;
+  phoneNumber: string;
   date?: Date;
   tags?: Tag[];
   price?: number;

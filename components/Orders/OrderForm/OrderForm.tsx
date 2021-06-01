@@ -4,30 +4,33 @@ import {
   FormLabel,
   Input,
   InputLeftAddon,
-  InputRightAddon,
   InputGroup,
   Text,
   Textarea,
   NumberInput,
   NumberInputField,
   Button,
-  Icon
+  Icon,
+  InputLeftElement,
 } from '@chakra-ui/react';
-import { RiMapPin2Line, RiMapPin2Fill } from 'react-icons/ri';
+import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
-import { useCallback } from 'react';
+import { useCallback, FormEvent } from 'react';
 
 import { Form } from '~/components/StyledForm';
 import { useForm } from '~/hooks/useForm';
 import { TagPicker } from '~/components/TagPicker';
 import DatePicker from '~/components/DatePicker/DatePicker';
-import { Tag } from '@lib/types';
+import { Order, Tag } from '@lib/types';
 
 export enum MODE {
   DEPARTURE,
   DESTINATION,
 }
+
+type FormData = Order;
+
 export interface Props {
   departure: string;
   destination: string;
@@ -39,9 +42,13 @@ export interface Props {
 export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeChange }: Props) => {
   const { data, handleChange } = useForm<FormData>({ departure, destination });
 
-  const onSubmit = useCallback(() => {
-    onFormSubmit(data);
-   }, [onFormSubmit, data])
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      onFormSubmit(data);
+    },
+    [onFormSubmit, data]
+  );
 
   return (
     <Form onSubmit={onSubmit}>
@@ -89,11 +96,26 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
       <FormControl>
         <FormLabel>Бюджет</FormLabel>
         <InputGroup>
-          <NumberInput precision={2} value={data.price} onChange={(value) => handleChange('price', value)}>
+          <InputLeftAddon children={<Icon as={BiDollar} />} />
+          <NumberInput
+            precision={2}
+            w="full"
+            value={data.price}
+            onChange={(value) => handleChange('price', value)}
+          >
             <NumberInputField />
           </NumberInput>
-          <InputRightAddon children={<Icon as={BiDollar} />} />
         </InputGroup>
+        <FormControl isRequired>
+          <FormLabel>Номер телефону</FormLabel>
+          <InputGroup>
+            <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
+            <Input
+              value={data.phoneNumber}
+              onChange={(e) => handleChange('phoneNumber', e.target.value)}
+            />
+          </InputGroup>
+        </FormControl>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Деталі замовлення</FormLabel>
@@ -107,12 +129,26 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
   );
 };
 
-interface FormData {
-  title: string;
-  departure: string;
-  destination: string;
-  date: Date;
-  tags: Tag[];
-  price: number;
-  description: string;
+// interface FormData {
+//   title: string;
+//   departure: string;
+//   destination: string;
+//   date: Date;
+//   tags: Tag[];
+//   price: number;
+//   description: string;
+// }
+// They're same. Why the fuck I'm not resuing alredy existing type?
+/*
+export interface Order {
+  id: number | string;
+  +title: string;
+  +departure: string;
+  +destination: string;
+  +phoneNumber: string;
+  +date?: Date;
+  +tags?: Tag[];
+  +price?: number;
+  +description: string;
 }
+*/
