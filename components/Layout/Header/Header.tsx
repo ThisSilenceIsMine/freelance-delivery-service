@@ -1,9 +1,11 @@
-import { Button, Box, Flex, Heading, Link, Spacer, Stack } from '@chakra-ui/react';
-import { MenuDrawer } from '../MenuDrawer';
-
-import { useWindowDimensions } from '~/hooks/useWindowDimensions';
-
 import NextLink from 'next/link';
+import { Button, Box, Flex, Heading, Link, Spacer, Stack } from '@chakra-ui/react';
+
+import { MenuDrawer } from '../MenuDrawer';
+import { NotificationsMenu } from '~/components/Notifications'
+import { useWindowDimensions } from '~/hooks/useWindowDimensions';
+import { notifications } from '~/mock/Notifications.mock';
+
 
 export const Header = () => {
   return (
@@ -36,12 +38,18 @@ export const Header = () => {
         </Link>
       </Stack>
       <Spacer />
-      <Button variant="base" colorScheme="teal">
+      <NotificationsMenu notifications={notifications} />
+      <NextLink href="/profile">
+        <Button variant="outline" colorScheme="teal">
+          Профіль
+        </Button>
+      </NextLink>
+      {/* <Button variant="base" colorScheme="teal">
         Login
       </Button>
       <Button variant="outline" colorScheme="orange">
         Sign In
-      </Button>
+      </Button> */}
     </Flex>
     // </Box>
   );
