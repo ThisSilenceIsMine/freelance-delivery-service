@@ -1,31 +1,26 @@
 import {
-  Box,
   Heading,
   Button,
   Wrap,
   Tag,
   Input,
-  InputRightAddon,
   InputLeftAddon,
   InputGroup,
-  Flex,
   Stack,
   Icon,
   Text,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { RiMapPin2Line, RiMapPin2Fill } from 'react-icons/ri';
+
+import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
-import { Order, Point } from '~/lib/types';
-import { getLatLng } from '@lib/Api/geocoding/geocoding';
+import { Order } from '~/lib/types';
 
 export interface Props {
   order: Order;
 }
 
 export const OrderDisplay = ({ order }: Props) => {
-
   return (
     <Stack direction="column">
       <Heading>{order.title}</Heading>
@@ -63,16 +58,20 @@ export const OrderDisplay = ({ order }: Props) => {
       <Stack direction={['column', 'column', 'row', 'row']}>
         {order.date && (
           <InputGroup>
+            <InputLeftAddon children={<Icon as={AiOutlineCalendar} />} />
             <Input readOnly value={order.date.toString()} />
-            <InputRightAddon children={<Icon as={AiOutlineCalendar} />} />
           </InputGroup>
         )}
         {order.price && (
           <InputGroup>
+            <InputLeftAddon children={<Icon as={BiDollar} />} />
             <Input readOnly value={order.price} />
-            <InputRightAddon children={<Icon as={BiDollar} />} />
           </InputGroup>
         )}
+        <InputGroup>
+          <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
+          <Input readOnly value={order.phoneNumber} />
+        </InputGroup>
       </Stack>
       <Text>{order.description}</Text>
     </Stack>

@@ -15,7 +15,7 @@ export interface Props {
   onPlacePicked?: (_arg0: string) => void;
 }
 
-const defaultCenter: Point = { lat: 50.449950585577824, lng: 30.52404566087585 };
+const defaultCenter: Point = { lat: 59.9106591, lng: 38.590031 };
 
 export const Map = withScriptjs(
   withGoogleMap(
@@ -26,14 +26,18 @@ export const Map = withScriptjs(
       initialDeparture, //= { lat: 0, lng: 0 },
       initialDestination, //= { lat: 0, lng: 0 },
     }: Props) => {
-      const [departure, setDeparture] = useState<Point>(initialDeparture ?? { lat: 0, lng: 0 });
-      const [destination, setDestination] = useState<Point>(
-        initialDestination ?? { lat: 0, lng: 0 }
-      );
+      const [departure, setDeparture] = useState<Point>(initialDeparture ?? defaultCenter);
+      const [destination, setDestination] = useState<Point>(initialDestination ?? defaultCenter);
       const [showDep, setShowDep] = useBoolean(isViewOnly);
       const [showDest, setShowDest] = useBoolean(isViewOnly);
       const isInitialMount = useRef(true);
 
+      console.log(`Dep Prop: ${JSON.stringify(initialDeparture)}`);
+      console.log(`Dest Prop: ${JSON.stringify(initialDestination)}`);
+      console.log(`Dep State: ${JSON.stringify(departure)}`);
+      console.log(`Dest State: ${JSON.stringify(destination)}`);
+      console.log('-------------------------------');
+      
       const handleMapClick = (data: any) => {
         const point: Point = {
           lat: data.latLng.lat(),
@@ -48,6 +52,15 @@ export const Map = withScriptjs(
         setDeparture(point);
         setShowDep.on();
       };
+
+      useEffect(() => {
+        if (!initialDestination || !initialDeparture) {
+          return;
+        }
+        
+        setDeparture(initialDeparture);
+        setDestination(initialDestination);
+      }, [initialDeparture, initialDestination])
 
       useEffect(() => {
         const placeName = async () => {
@@ -76,14 +89,14 @@ export const Map = withScriptjs(
       }, [departure, destination]);
 
       return (
-        <GoogleMap
-          defaultZoom={8}
-          defaultCenter={isViewOnly ? initialDeparture : defaultCenter}
-          onClick={isViewOnly ? () => {} : handleMapClick}
-        >
-          {showDest && <Marker position={destination} />}
-          {showDep && <Marker position={departure} />}
-        </GoogleMap>
+            <GoogleMap
+              defaultZoom={8}
+              defaultCenter={isViewOnly ? departure : defaultCenter}
+              onClick={isViewOnly ? () => {} : handleMapClick}
+            >
+              {showDest && <Marker position={destination} />}
+              {showDep && <Marker position={departure} />}
+            </GoogleMap>
       );
     }
   )
