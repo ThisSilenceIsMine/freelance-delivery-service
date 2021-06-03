@@ -1,4 +1,13 @@
-import { Menu, MenuButton, MenuList, MenuItem, IconButton } from '@chakra-ui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+  Text,
+  Portal,
+  Button,
+} from '@chakra-ui/react';
 import { FiBell } from 'react-icons/fi';
 
 import { NotificationItem } from './Item/NotificationItem';
@@ -19,9 +28,7 @@ export const NotificationsMenu = ({ notifications }: Props) => {
       />
       <MenuList p="2.5">
         {notifications.map((x) => (
-          <MenuItem key={x.id}>
-            <NotificationItem title={x.title} text={x.text} />
-          </MenuItem>
+          <NotificationItem title={x.title} text={x.text} id={x.id} key={x.id} />
         ))}
       </MenuList>
     </Menu>

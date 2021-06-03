@@ -15,7 +15,7 @@ export interface Props {
   onPlacePicked?: (_arg0: string) => void;
 }
 
-const defaultCenter: Point = { lat: 59.9106591, lng: 38.590031 };
+const defaultCenter: Point = { lat: 50.4501, lng: 30.5234 };
 
 export const Map = withScriptjs(
   withGoogleMap(
@@ -89,14 +89,14 @@ export const Map = withScriptjs(
       }, [departure, destination]);
 
       return (
-            <GoogleMap
-              defaultZoom={8}
-              defaultCenter={isViewOnly ? departure : defaultCenter}
-              onClick={isViewOnly ? () => {} : handleMapClick}
-            >
-              {showDest && <Marker position={destination} />}
-              {showDep && <Marker position={departure} />}
-            </GoogleMap>
+        <GoogleMap
+          defaultZoom={8}
+          defaultCenter={isViewOnly ? defaultCenter : defaultCenter}
+          onClick={isViewOnly ? () => {} : handleMapClick}
+        >
+          {showDest && <Marker position={destination} />}
+          {showDep && <Marker position={departure} />}
+        </GoogleMap>
       );
     }
   )

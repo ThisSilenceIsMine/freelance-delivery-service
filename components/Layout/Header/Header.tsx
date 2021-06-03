@@ -40,7 +40,7 @@ export const Header = () => {
       <Spacer />
       <NotificationsMenu notifications={notifications} />
       <NextLink href="/profile">
-        <Button variant="outline" colorScheme="teal">
+        <Button variant="outline" colorScheme="orange">
           Профіль
         </Button>
       </NextLink>
