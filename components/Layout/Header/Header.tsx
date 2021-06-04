@@ -44,7 +44,7 @@ export const Header = () => {
           Профіль
         </Button>
       </NextLink>
-      {/* <Button variant="base" colorScheme="teal">
+      {/* <Button variant="base" colorScheme="teal"> 
         Login
       </Button>
       <Button variant="outline" colorScheme="orange">

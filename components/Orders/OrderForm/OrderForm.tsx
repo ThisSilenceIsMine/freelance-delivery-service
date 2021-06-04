@@ -11,12 +11,18 @@ import {
   NumberInputField,
   Button,
   Icon,
-  InputLeftElement,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+  HStack,
 } from '@chakra-ui/react';
+import { useCallback, useEffect, FormEvent } from 'react';
 import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
-import { useCallback, FormEvent } from 'react';
 
 import { Form } from '~/components/StyledForm';
 import { useForm } from '~/hooks/useForm';
@@ -49,6 +55,11 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
     },
     [onFormSubmit, data]
   );
+
+  useEffect(() => {
+    handleChange('departure', departure);
+    handleChange('destination', destination);
+  }, [departure, destination])
 
   return (
     <Form onSubmit={onSubmit}>
@@ -89,34 +100,103 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
         </InputGroup>
         <FormHelperText>*Виберіть місце на карті</FormHelperText>
       </FormControl>
-      <FormControl>
-        <FormLabel>Дата</FormLabel>
-        <DatePicker selectedDate={data.date} onChange={(date) => handleChange('date', date)} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Бюджет</FormLabel>
+      <FormControl isRequired>
+        <FormLabel>Номер телефону</FormLabel>
         <InputGroup>
-          <InputLeftAddon children={<Icon as={BiDollar} />} />
-          <NumberInput
-            precision={2}
-            w="full"
-            value={data.price}
-            onChange={(value) => handleChange('price', value)}
-          >
-            <NumberInputField />
-          </NumberInput>
+          <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
+          <Input
+            value={data.phoneNumber ?? ''}
+            onChange={(e) => handleChange('phoneNumber', e.target.value)}
+          />
         </InputGroup>
-        <FormControl isRequired>
-          <FormLabel>Номер телефону</FormLabel>
-          <InputGroup>
-            <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
-            <Input
-              value={data.phoneNumber}
-              onChange={(e) => handleChange('phoneNumber', e.target.value)}
-            />
-          </InputGroup>
-        </FormControl>
       </FormControl>
+
+      <Accordion allowToggle my="2">
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Додаткова інформація
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <FormControl>
+              <FormLabel>Дата</FormLabel>
+              <DatePicker
+                selectedDate={data.date}
+                onChange={(date) => handleChange('date', date)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Бюджет</FormLabel>
+              <InputGroup>
+                <InputLeftAddon children={<Icon as={BiDollar} />} />
+                <NumberInput
+                  precision={2}
+                  w="full"
+                  value={data.price}
+                  onChange={(value) => handleChange('price', value)}
+                >
+                  <NumberInputField />
+                </NumberInput>
+              </InputGroup>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Кількість людей</FormLabel>
+              <NumberInput
+                w="full"
+                value={data.details?.peopleCount} //
+                onChange={(value) => handleChange('details.peopleCount', value)}
+              >
+                <NumberInputField />
+              </NumberInput>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Вага вантажу</FormLabel>
+              <NumberInput
+                precision={2}
+                w="full"
+                value={data.details?.weight} //
+                onChange={(value) => handleChange('details.weight', value)}
+              >
+                <NumberInputField />
+              </NumberInput>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Розміри вантажу</FormLabel>
+              <HStack>
+                <NumberInput
+                  precision={2}
+                  w="1/3"
+                  value={data.details?.height} //
+                  onChange={(value) => handleChange('details.height', value)}
+                >
+                  <NumberInputField placeholder="Висота" />
+                </NumberInput>
+                <NumberInput
+                  precision={2}
+                  w="1/3"
+                  value={data.details?.width} //
+                  onChange={(value) => handleChange('details.width', value)}
+                >
+                  <NumberInputField placeholder="Ширина" />
+                </NumberInput>
+                <NumberInput
+                  precision={2}
+                  w="1/3"
+                  value={data.details?.length} //
+                  onChange={(value) => handleChange('details.length', value)}
+                >
+                  <NumberInputField placeholder="Довжина" />
+                </NumberInput>
+              </HStack>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+
       <FormControl isRequired>
         <FormLabel>Деталі замовлення</FormLabel>
         <Textarea
@@ -128,27 +208,3 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
     </Form>
   );
 };
-
-// interface FormData {
-//   title: string;
-//   departure: string;
-//   destination: string;
-//   date: Date;
-//   tags: Tag[];
-//   price: number;
-//   description: string;
-// }
-// They're same. Why the fuck I'm not resuing alredy existing type?
-/*
-export interface Order {
-  id: number | string;
-  +title: string;
-  +departure: string;
-  +destination: string;
-  +phoneNumber: string;
-  +date?: Date;
-  +tags?: Tag[];
-  +price?: number;
-  +description: string;
-}
-*/

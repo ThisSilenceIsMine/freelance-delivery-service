@@ -9,6 +9,13 @@ export interface Order {
   departure: string;
   destination: string;
   phoneNumber: string;
+  details?: {
+    weight?: number;
+    height?: number;
+    width?: number;
+    length?: number;
+    peopleCount?: number;
+  }
   date?: Date;
   tags?: Tag[];
   price?: number;

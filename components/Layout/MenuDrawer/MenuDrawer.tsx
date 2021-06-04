@@ -7,10 +7,11 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerContent,
+  IconButton,
   Flex,
 } from '@chakra-ui/react';
 import { useRef, FC } from 'react';
-
+import { AiOutlineMenu } from 'react-icons/ai'
 export const MenuDrawer: FC = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
@@ -26,7 +27,7 @@ export const MenuDrawer: FC = ({ children }) => {
         justify="flex-start"
         align="center"
       >
-        <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        <Button ref={btnRef} variant="ghost" onClick={onOpen} as={IconButton} aria-label="Sidebar Menu" icon={<AiOutlineMenu/>}>
           Меню
         </Button>
       </Flex>

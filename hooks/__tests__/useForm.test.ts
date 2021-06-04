@@ -5,6 +5,10 @@ import { useState } from 'react';
 interface FormData {
   name: string;
   email: string;
+  details?: {
+    phoneNumber?: string;
+    adress?: string;
+  }
 }
 
 const initialData: FormData = {
@@ -46,4 +50,18 @@ describe('useFormChange', () => {
 
     expect(result.current.data).toStrictEqual({name: 'Andrey'});
   });
+
+  it('sets nested properties', () => {
+    const { result } = renderHook(() => useForm<FormData>({}));
+
+    const phoneNumber = '0984686733';
+
+    act(() => {
+      result.current.handleChange('details.phoneNumber', phoneNumber);
+    });
+
+    console.log(result.current.data)
+
+    expect(result.current.data.details?.phoneNumber).toStrictEqual(phoneNumber);
+  })
 });

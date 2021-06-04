@@ -1,4 +1,5 @@
 import { useCallback, Dispatch, SetStateAction, useState } from 'react';
+import _ from 'lodash'
 
 type Setter<T> = Dispatch<SetStateAction<T>>;
 
@@ -6,7 +7,9 @@ const __createCallback = <T>(callback: Setter<T>) => {
   return useCallback(
     <T>(field: keyof T, value: T[keyof T]) => {
       callback((current) => {
-        return { ...current, [field]: value };
+        const clone = { ...current };
+        _.set(clone as unknown as object, field, value);
+        return clone;
       });
     },
     [callback]

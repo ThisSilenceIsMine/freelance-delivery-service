@@ -1,4 +1,4 @@
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ResponsiveHeader as Header } from '@components/Layout/Header';
 
@@ -14,7 +14,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Header />
-
       <Component {...pageProps} />
     </ChakraProvider>
   );
