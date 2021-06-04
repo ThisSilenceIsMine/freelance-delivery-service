@@ -154,7 +154,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
               </NumberInput>
             </FormControl>
             <FormControl>
-              <FormLabel>Вага вантажу</FormLabel>
+              <FormLabel>Вага вантажу (кг)</FormLabel>
               <NumberInput
                 precision={2}
                 w="full"

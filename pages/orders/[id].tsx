@@ -37,7 +37,7 @@ export default function Order({ order }: Props) {
   return (
     <Stack h="full" w="full" direction={['column', 'column', 'column', 'row']} p="4">
       <Box h="100vh-110px" w={['full', 'full', 'full', '40%']} boxShadow="md" p="4">
-        <OrderDisplay order={order} />
+        <OrderDisplay {...order} />
       </Box>
       <Box h="calc(100vh - 110px)" w={['full', 'full', 'full', '60%']} boxShadow="md">
         <Map
@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      order: { ...order, price: 100 },
+      order: { ...order, price: 100, date: "14.06.2002" },
     },
   };
 };

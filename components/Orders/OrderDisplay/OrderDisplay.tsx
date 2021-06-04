@@ -9,6 +9,9 @@ import {
   Stack,
   Icon,
   Text,
+  FormControl,
+  FormHelperText,
+  FormLabel,
 } from '@chakra-ui/react';
 
 import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
@@ -16,17 +19,30 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { Order } from '~/lib/types';
 
-export interface Props {
-  order: Order;
-}
+// export interface Props {
+//   order: Order;
+// }
 
-export const OrderDisplay = ({ order }: Props) => {
+export type Props = Order;
+
+export const OrderDisplay = ({
+  id,
+  title,
+  tags,
+  details,
+  destination,
+  departure,
+  phoneNumber,
+  date,
+  price,
+  description,
+}: Props) => {
   return (
     <Stack direction="column">
-      <Heading>{order.title}</Heading>
-      {order.tags && (
+      <Heading>{title}</Heading>
+      {tags && (
         <Wrap p="2" boxShadow="base">
-          {order.tags.map((x) => (
+          {tags.map((x) => (
             <Tag key={x.value}>{x.label}</Tag>
           ))}
         </Wrap>
@@ -41,7 +57,7 @@ export const OrderDisplay = ({ order }: Props) => {
             </>
           }
         />
-        <Input readOnly value={order.departure} />
+        <Input readOnly value={departure} />
       </InputGroup>
       <InputGroup>
         <InputLeftAddon
@@ -53,27 +69,50 @@ export const OrderDisplay = ({ order }: Props) => {
             </>
           }
         />
-        <Input readOnly value={order.destination} />
+        <Input readOnly value={destination} />
       </InputGroup>
       <Stack direction={['column', 'column', 'row', 'row']}>
-        {order.date && (
+        {date && (
           <InputGroup>
             <InputLeftAddon children={<Icon as={AiOutlineCalendar} />} />
-            <Input readOnly value={order.date.toString()} />
+            <Input readOnly value={date.toString()} />
           </InputGroup>
         )}
-        {order.price && (
+        {price && (
           <InputGroup>
             <InputLeftAddon children={<Icon as={BiDollar} />} />
-            <Input readOnly value={order.price} />
+            <Input readOnly value={price} />
           </InputGroup>
         )}
         <InputGroup>
           <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
-          <Input readOnly value={order.phoneNumber} />
+          <Input readOnly value={phoneNumber} />
         </InputGroup>
       </Stack>
-      <Text>{order.description}</Text>
+      {details?.width && details?.height && details?.length && (
+        <FormControl>
+          <FormLabel>Розміри вантажу:</FormLabel>
+          <Stack direction="row">
+            <Input readOnly value={details?.width} />
+            <Input readOnly value={details?.height} />
+            <Input readOnly value={details?.length} />
+          </Stack>
+        </FormControl>
+      )}
+      {details?.weight && (
+        <FormControl>
+          <FormLabel>Вага вантажу (кг):</FormLabel>
+          <Input readOnly value={details?.weight} />
+        </FormControl>
+      )}
+      {details?.peopleCount && (
+        <FormControl>
+          <FormLabel>Кількість людей:</FormLabel>
+          <Input readOnly value={details?.peopleCount} />
+        </FormControl>
+      )}
+
+      <Text>{description}</Text>
     </Stack>
   );
 };
