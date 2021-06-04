@@ -16,7 +16,7 @@ export interface Order {
     length?: number;
     peopleCount?: number;
   }
-  date?: Date;
+  date?: string;
   tags?: Tag[];
   price?: number;
   description: string;

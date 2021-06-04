@@ -41,12 +41,14 @@ export interface Props {
   departure: string;
   destination: string;
   tags: Tag[];
+  initialOrder?: Order;
   onFormSubmit: (_arg0: Partial<FormData>) => void;
   onModeChange: (_arg0: MODE) => void;
 }
 
-export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeChange }: Props) => {
-  const { data, handleChange } = useForm<FormData>({ departure, destination });
+export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeChange, initialOrder }: Props) => {
+  const { data, handleChange } = useForm<FormData>(initialOrder ?? { departure, destination }
+  );
 
   const onSubmit = useCallback(
     (e: FormEvent) => {
@@ -125,8 +127,8 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
             <FormControl>
               <FormLabel>Дата</FormLabel>
               <DatePicker
-                selectedDate={data.date}
-                onChange={(date) => handleChange('date', date)}
+                selectedDate={ data.date ? new Date(data.date) : undefined}
+                onChange={(date) => handleChange('date', date.toDateString())}
               />
             </FormControl>
             <FormControl>

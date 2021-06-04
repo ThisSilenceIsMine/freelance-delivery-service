@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { Box, Stack } from '@chakra-ui/react';
 
 import { orders, tags } from 'mock';
-import { Order as IOrder, Point } from '@lib/types';
+import { Order, Point } from '@lib/types';
 
 import { Map } from '@components/Map';
 import { OrderDisplay } from '@components/Orders/OrderDisplay/OrderDisplay';
@@ -11,10 +11,10 @@ import { getLatLng } from '@lib/Api/geocoding/geocoding';
 import { RiContrastDropLine } from 'react-icons/ri';
 
 interface Props {
-  order: IOrder;
+  order: Order;
 }
 
-export default function Order({ order }: Props) {
+export default function OrderDetails({ order }: Props) {
     const [departure, setDeparture] = useState<Point>();
     const [destination, setDestiation] = useState<Point>();
 
@@ -58,11 +58,11 @@ export default function Order({ order }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // console.log(context) // params.id
 
-  const order: IOrder = orders[0];
+  const order: Order = orders[0];
 
   return {
     props: {
-      order: { ...order, price: 100, date: "14.06.2002" },
+      order: { ...order, price: 100, date: Date() },
     },
   };
 };
