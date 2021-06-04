@@ -1,34 +1,28 @@
-import {
-  Box,
-  Heading,
-  Text,
-  Accordion,
-  AccordionButton,
-  AccordionPanel,
-  AccordionItem,
-  AccordionIcon,
-  CloseButton,
-  Tooltip,
-  MenuItem,
-  Collapse,
-  SlideFade,
-  VStack,
-} from '@chakra-ui/react';
-import {useDisclosure} from '@chakra-ui/hooks'
+import { Heading, Text, MenuItem, SlideFade, VStack, HStack, Icon } from '@chakra-ui/react';
+import { AiOutlineClose } from 'react-icons/ai';
+
+import { useDisclosure } from '@chakra-ui/hooks';
 
 import { Notification } from '@lib/types';
 
-export type Props = Notification;
-  
-export const NotificationItem = ({ title, text }: Props) => {
+// export type Props = Notification;
+
+export interface Props extends Notification {
+  onDismiss: (id: number | string) => void;
+}
+
+export const NotificationItem = ({ title, text, id, onDismiss }: Props) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   return (
     <MenuItem>
       <VStack>
-        <Heading isTruncated p="1.5" maxW="45ch" size="md" onClick={onToggle}>
-          {title}
-        </Heading>
-        <SlideFade in={isOpen} hidden={!isOpen}>
+        <HStack>
+          <Heading isTruncated p="1.5" maxW="45ch" size="md" onClick={onToggle}>
+            {title}
+          </Heading>
+          <Icon as={AiOutlineClose} onClick={ () => onDismiss(id) }/>
+        </HStack>
+        <SlideFade in={isOpen} hidden={!isOpen} onClick={onClose}>
           <Heading size="sm" maxW="45ch">
             {title}
           </Heading>
@@ -38,7 +32,6 @@ export const NotificationItem = ({ title, text }: Props) => {
     </MenuItem>
   );
 };
-
 
 // export const NotificationItem = ({ title, text }: Props) => {
 //   return (
@@ -56,11 +49,10 @@ export const NotificationItem = ({ title, text }: Props) => {
 //           </AccordionButton>
 //         {/* </h2> */}
 //         <AccordionPanel boxShadow="sm">
-          // <Heading size="sm">{title}</Heading>
-          // <Text>{text}</Text>
+// <Heading size="sm">{title}</Heading>
+// <Text>{text}</Text>
 //         </AccordionPanel>
 //       </AccordionItem>
 //     </Accordion>
 //   );
 // };
-

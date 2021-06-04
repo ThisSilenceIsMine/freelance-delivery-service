@@ -28,7 +28,7 @@ export const NotificationsMenu = ({ notifications }: Props) => {
       />
       <MenuList p="2.5">
         {notifications.map((x) => (
-          <NotificationItem title={x.title} text={x.text} id={x.id} key={x.id} />
+          <NotificationItem title={x.title} text={x.text} id={x.id} key={x.id} onDismiss={console.log} />
         ))}
       </MenuList>
     </Menu>
