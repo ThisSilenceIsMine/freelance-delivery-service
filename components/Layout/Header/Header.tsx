@@ -6,6 +6,7 @@ import { MenuDrawer } from '../MenuDrawer';
 import { NotificationsMenu } from '~/components/Notifications';
 import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 import { notifications } from '~/mock/Notifications.mock';
+import { ColorModeSwitch } from '@components/ColorModeSwitch';
 
 export const Header = () => {
   return (
@@ -47,6 +48,7 @@ export const Header = () => {
       </Stack>
       <Spacer />
       <NotificationsMenu notifications={notifications} />
+      <ColorModeSwitch/>
       <NextLink href="/profile">
         <Button variant="outline" colorScheme="black">
           Профіль
