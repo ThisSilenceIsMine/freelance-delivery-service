@@ -10,12 +10,13 @@ import {
   FormLabel,
   NumberInput,
   NumberInputField,
+  useColorMode,
 } from '@chakra-ui/react';
 
 import PlacesAutocomplete from 'react-google-places-autocomplete';
 
 import { useForm } from '~/hooks/useForm';
-
+import { customStyles } from './DarkPlacesAutocomplete';
 import { TagPicker } from '~/components/TagPicker';
 import { Form } from '~/components/StyledForm';
 import type { Tag } from '@lib/types';
@@ -29,7 +30,7 @@ export interface Props {
 
 export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: Props) => {
   const { data: filter, handleChange } = useForm<FormData>({});
-
+  const {colorMode} = useColorMode();
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -72,8 +73,10 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
           <FormLabel>Виберіть місце відправки</FormLabel>
           <PlacesAutocomplete
             selectProps={{
+              //@ts-ignore
               value: filter.department,
               onChange: (value: any) => handleChange('department', value),
+              styles: colorMode === 'dark' ? customStyles : undefined,
               placeholder: 'Почніть друкувати...',
             }}
             onLoadFailed={(error) => console.error('Could not inject Google script', error)}
@@ -85,8 +88,10 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
           <FormLabel>Виберіть місце Призначення</FormLabel>
           <PlacesAutocomplete
             selectProps={{
+              //@ts-ignore
               value: filter.destination,
-              onChange: (value: string) => handleChange('destination', value),
+              onChange: (value: any) => handleChange('destination', value),
+              styles: colorMode === 'dark' ? customStyles : undefined,
               placeholder: 'Почніть друкувати...',
             }}
             onLoadFailed={(error) => console.error('Could not inject Google script', error)}
