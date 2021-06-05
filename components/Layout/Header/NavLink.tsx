@@ -4,18 +4,17 @@ export const NavLink = styled.a`
   position: relative;
   box-sizing: content-box;
   cursor: pointer;
-  text-transform: uppercase;
   &::before {
     display: block;
     position: relative;
     left: 0;
-    bottom: -1.23em;
+    bottom: -1.5em;
     content: '';
-    background: ${({ theme }) => theme.color.orange};
-    height: 3px;
+    background: black;
+    height: 2px;
     width: 0;
-    color: ${({ theme }) => theme.color.orange};
-    transition: 0.1s;
+    color: black;
+    transition: 0.25s;
   }
   &:hover::before {
     width: 100%;

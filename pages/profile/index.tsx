@@ -10,7 +10,7 @@ import {
   Button,
   Heading,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { UserProfile, UserOrders, DriverForm } from '@components/Profile';
 
@@ -37,17 +37,26 @@ const __mockUserOrders = {
 };
 
 export default function Orders() {
+  const [tabIndex, setTabIndex] = useState(0);
   const ref = useRef<HTMLFormElement>(null);
+  
+  const __test_isDriver = false;
 
-  const __test_isDriver = true;
+  const handleTabsChange = (index: number) => {
+    if (!__test_isDriver) {
+      return;
+    }
+    setTabIndex(index);
+  }
+
 
   return (
     <Container maxW="container.xl">
-      <Tabs isFitted isLazy>
+      <Tabs isFitted isLazy mt="8" index={tabIndex} onChange={ handleTabsChange }>
         <TabList>
           <Tab>Профіль</Tab>
-          <Tab isDisabled={__test_isDriver}>Водій</Tab>
-          {__test_isDriver && <RegisterDriverModal tags={tags} onFormSubmit={ console.log }/>}
+          {/* <Tab isDisabled={__test_isDriver}>Водій</Tab> */}
+          <RegisterDriverModal isDriver={__test_isDriver} tags={tags} onFormSubmit={ console.log }/>
         </TabList>
         <TabPanels>
           <TabPanel>

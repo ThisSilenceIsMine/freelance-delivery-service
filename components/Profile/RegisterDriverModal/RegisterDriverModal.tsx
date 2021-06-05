@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Tab
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useDisclosure } from '@chakra-ui/hooks';
@@ -16,16 +17,18 @@ import { DriverForm } from '../DriverProfile/DriverForm';
 
 export interface Props {
   tags: Tag[];
+  isDriver?: boolean;
   onFormSubmit: (_arg0: Partial<Driver>) => void;
 }
 
-export const RegisterDriverModal = ({ onFormSubmit, tags }: Props) => {
+export const RegisterDriverModal = ({ onFormSubmit, tags, isDriver }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const ref = useRef<HTMLFormElement>(null);
 
   return (
     <>
-      <Button onClick={onOpen}>Стати водієм</Button>
+      {/* <Button onClick={onOpen}>Стати водієм</Button> */}
+      <Tab onClick={isDriver ? () => {} : onOpen}>Водій</Tab>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

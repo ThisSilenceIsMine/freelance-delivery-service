@@ -80,6 +80,9 @@ export const UserProfile = ({ name, email, phoneNumber, onFormSubmit }: Props) =
       <Button colorScheme="teal" variant="outline" mt="2" type="submit">
         Зберегти
       </Button>
+      <Button colorScheme="red" variant="solid" mt="2" ml="2" type="submit">
+        Вихід
+      </Button>
     </form>
   );
 };

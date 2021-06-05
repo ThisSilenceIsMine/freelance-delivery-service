@@ -1,11 +1,11 @@
 import NextLink from 'next/link';
 import { Button, Box, Flex, Heading, Link, Spacer, Stack } from '@chakra-ui/react';
 
+import { NavLink } from './NavLink';
 import { MenuDrawer } from '../MenuDrawer';
-import { NotificationsMenu } from '~/components/Notifications'
+import { NotificationsMenu } from '~/components/Notifications';
 import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 import { notifications } from '~/mock/Notifications.mock';
-
 
 export const Header = () => {
   return (
@@ -13,7 +13,7 @@ export const Header = () => {
     <Flex
       w="100%"
       p="4"
-      bg="white"
+      bg="orange"
       direction={['column', 'column', 'row', 'row']}
       boxShadow="md"
       justify="flex-start"
@@ -24,23 +24,31 @@ export const Header = () => {
       </Box>
       <Spacer />
       <Stack direction={['column', 'column', 'row', 'row']} spacing="1em">
-        <Link as={NextLink} href="/">
-          Home
-        </Link>
-        <Link as={NextLink} href="/orders">
+        <NextLink href="/" passHref>
+          <NavLink>Головна</NavLink>
+        </NextLink>
+        <NextLink href="/orders" passHref>
+          <NavLink>Замовлення</NavLink>
+        </NextLink>
+        <NextLink href="/drivers" passHref>
+          <NavLink>Водії</NavLink>
+        </NextLink>
+        {/* <Link as={NextLink} href="/orders">
           Orders
-        </Link>
+        </Link> */}
+
+        {/*         
         <Link as={NextLink} href="/drivers">
           Drivers
         </Link>
         <Link as={NextLink} href="/about">
           About
-        </Link>
+        </Link> */}
       </Stack>
       <Spacer />
       <NotificationsMenu notifications={notifications} />
       <NextLink href="/profile">
-        <Button variant="outline" colorScheme="orange">
+        <Button variant="outline" colorScheme="black">
           Профіль
         </Button>
       </NextLink>

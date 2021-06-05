@@ -50,7 +50,7 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
   return (
     <Form {...{ sticky, fullWidth }} onSubmit={onSubmit}>
       <FlexBox
-        spacing="1.5"
+        spacing="2.5"
         boxShadow="lg"
         width={['full', 'full', 'full', `${fullWidth ? 'full' : 'md'}`]}
         height="lg"
