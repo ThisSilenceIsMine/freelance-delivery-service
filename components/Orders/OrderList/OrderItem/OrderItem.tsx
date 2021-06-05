@@ -11,11 +11,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
+import NextLink from 'next/link'
+
 import type { Order } from '@lib/types';
 
 export type Props = Order;
 // w={["full", "full", "lg", "lg"]}
-export const OrderItem = ({ title, departure, destination, tags }: Props) => {
+export const OrderItem = ({ title, departure, destination, tags, id }: Props) => {
   return (
     <Grid
       h="min-content"
@@ -29,14 +31,14 @@ export const OrderItem = ({ title, departure, destination, tags }: Props) => {
     >
       <GridItem colSpan={4} boxShadow="base" p="2.5" overflow="hidden">
         <Tooltip label={title}>
-          <Heading size="md" isTruncated maxWidth="4fr">
+          <Heading size="md" as={NextLink} href={`/orders/${id}`} isTruncated maxWidth="4fr">
             {title}
           </Heading>
         </Tooltip>
       </GridItem>
       <GridItem rowStart={2} rowEnd={4} colSpan={4} boxShadow="base" p="2.5">
         <Wrap>
-          {tags.map((x) => (
+          {tags && tags.map((x) => (
             <Tag key={x.value}>{x.label}</Tag>
           ))}
         </Wrap>

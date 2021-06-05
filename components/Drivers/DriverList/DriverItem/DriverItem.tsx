@@ -1,11 +1,13 @@
 import { Grid, GridItem, Heading, Wrap, Tag, Tooltip } from '@chakra-ui/react';
 
 import { useRef } from 'react';
+import NextLink from 'next/link'
+
 import type { Driver } from '@lib/types';
 
 export type Props = Driver;
 
-export const DriverItem = ({ fullName, experience, tags }: Props) => {
+export const DriverItem = ({ fullName, experience, tags, id }: Props) => {
   return (
     <Grid
       h="min-content"
@@ -19,7 +21,7 @@ export const DriverItem = ({ fullName, experience, tags }: Props) => {
     >
       <GridItem boxShadow="base" p="2.5" overflow="hidden">
         <Tooltip label={fullName}>
-          <Heading size="md" isTruncated maxWidth="4fr">
+          <Heading size="md" as={NextLink} href={`/drivers/${id}`} isTruncated maxWidth="4fr">
             {`${fullName}, стаж ${experience} роки(-ів)`}
           </Heading>
         </Tooltip>
