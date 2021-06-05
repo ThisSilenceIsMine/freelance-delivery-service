@@ -15,6 +15,10 @@ export const Form = styled.form<FormStyleProps>`
       top: 0;
   `}
 
+    @media only screen and (max-width: 62em) {
+      position: relative;
+    }
+
   ${(props) =>
     props.fullWidth
       ? `
