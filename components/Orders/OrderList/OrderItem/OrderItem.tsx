@@ -26,7 +26,6 @@ export const OrderItem = ({ title, departure, destination, tags, id }: Props) =>
       templateColumns="repeat(6, 1fr)"
       gap={4}
       boxShadow="md"
-      bg="white"
       p="2.5"
     >
       <GridItem colSpan={4} boxShadow="base" p="2.5" overflow="hidden">

@@ -16,7 +16,6 @@ export const DriverItem = ({ fullName, experience, tags, id }: Props) => {
       templateColumns="1fr"
       gap={4}
       boxShadow="md"
-      bg="white"
       p="2.5"
     >
       <GridItem boxShadow="base" p="2.5" overflow="hidden">
