@@ -22,7 +22,7 @@ export const BackgroundImage = (imageProps: Props) => {
 };
 
 const BgWrap = styled.div`
-  filter: brightness(60%) blur(4px);
+  filter: brightness(60%);
   position: fixed;
   height: 100vh;
   width: 100vw;

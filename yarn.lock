@@ -1879,6 +1879,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/ubuntu/-/ubuntu-4.3.0.tgz#45de1af27874b8acc970078d26f572514d9d48eb"
   integrity sha512-vEK01Kcl7oodfuymz6geG27XY1rftJ6S+TWm3o59vULjBO8KHLt3go3N5g6VYRmkXTgp0fWqDqRGtb5o4GNdMg==
 
+"@fontsource/yanone-kaffeesatz@^4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/yanone-kaffeesatz/-/yanone-kaffeesatz-4.4.5.tgz#8daeedd30fb36e222fe17e32cd366b3567e3b06b"
+  integrity sha512-g+z39jebM7ZKVxAcxzxcRcM1Vv5dAsHIdev+b8vlURWI/HOgv5yvbE3pXTcWYEoSmfwfBieHg2rpn58irLjUjw==
+
 "@googlemaps/js-api-loader@^1.11.1":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.11.4.tgz#f687a88e270234e3a29c64b42b76129e75467ca7"

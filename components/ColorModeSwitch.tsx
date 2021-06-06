@@ -10,6 +10,7 @@ export const ColorModeSwitch = (props: Props) => {
   return (
     <IconButton
       aria-label="colorModeSwitch"
+      size="lg"
       icon={colorMode === 'dark' ? <MoonIcon /> : <SunIcon />}
       onClick={toggleColorMode}
       variant="ghost"

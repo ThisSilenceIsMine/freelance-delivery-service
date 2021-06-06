@@ -9,10 +9,12 @@ import {
   DrawerContent,
   IconButton,
   Flex,
+  useColorMode,
 } from '@chakra-ui/react';
 import { useRef, FC } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai'
 export const MenuDrawer: FC = ({ children }) => {
+  const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
@@ -21,7 +23,7 @@ export const MenuDrawer: FC = ({ children }) => {
       <Flex
         w="100%"
         p="4"
-        bg="white"
+        bg={colorMode === "dark" ? "gray.900" : "white"}
         direction="row"
         boxShadow="md"
         justify="flex-start"

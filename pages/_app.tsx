@@ -7,6 +7,7 @@ import '~/components/DatePicker/DatePicker.css';
 
 import '@fontsource/ubuntu';
 import '@fontsource/montserrat';
+import '@fontsource/yanone-kaffeesatz';
 import { theme } from "@lib/theme"
 
 

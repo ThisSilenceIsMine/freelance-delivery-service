@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 
-export const NavLink = styled.a`
+interface Props {
+  dark?: boolean;
+}
+
+export const NavLink = styled.a<Props>`
   position: relative;
   box-sizing: content-box;
   cursor: pointer;
@@ -10,10 +14,10 @@ export const NavLink = styled.a`
     left: 0;
     bottom: -1.5em;
     content: '';
-    background: black;
+    background: ${(props) => (props.dark ? 'orange' : 'black')};
     height: 2px;
     width: 0;
-    color: black;
+    color: ${(props) => (props.dark ? 'orange' : 'black')};
     transition: 0.25s;
   }
   &:hover::before {

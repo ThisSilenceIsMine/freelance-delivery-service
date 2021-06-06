@@ -8,16 +8,22 @@ import {
   Divider,
   Text,
   Center,
-  VStack,
+  Stack,
+  useColorMode,
+  Button,
 } from '@chakra-ui/react';
 
-import NextLink from 'next/link'
+import NextLink from 'next/link';
 
 import type { Order } from '@lib/types';
+export interface Props extends Order {
+  onClick?: (id: number | string) => void;
+}
 
-export type Props = Order;
-// w={["full", "full", "lg", "lg"]}
-export const OrderItem = ({ title, departure, destination, tags, id }: Props) => {
+
+export const OrderItem = ({ title, departure, destination, tags, id, onClick }: Props) => {
+  const { colorMode } = useColorMode();
+  const darkModeStyleProps = colorMode === "dark" ? { background: "gray.700", borderRadius: "0.3em" } : {};
   return (
     <Grid
       h="min-content"
@@ -27,28 +33,38 @@ export const OrderItem = ({ title, departure, destination, tags, id }: Props) =>
       gap={4}
       boxShadow="md"
       p="2.5"
+      my="1.5"
+      background={colorMode === 'dark' ? 'gray.700' : undefined}
     >
-      <GridItem colSpan={4} boxShadow="base" p="2.5" overflow="hidden">
+      <GridItem colSpan={4} boxShadow="base" p="2.5" overflow="hidden" {...darkModeStyleProps}>
         <Tooltip label={title}>
           <Heading size="md" as={NextLink} href={`/orders/${id}`} isTruncated maxWidth="4fr">
             {title}
           </Heading>
         </Tooltip>
       </GridItem>
-      <GridItem rowStart={2} rowEnd={4} colSpan={4} boxShadow="base" p="2.5">
-        <Wrap>
-          {tags && tags.map((x) => (
-            <Tag key={x.value}>{x.label}</Tag>
-          ))}
-        </Wrap>
+      <GridItem
+        rowStart={2}
+        rowEnd={4}
+        colSpan={4}
+        boxShadow="base"
+        p="2.5"
+        {...darkModeStyleProps}
+      >
+        <Wrap>{tags && tags.map((x) => <Tag key={x.value}>{x.label}</Tag>)}</Wrap>
       </GridItem>
-      <GridItem rowSpan={3} colSpan={2} boxShadow="base">
-        <Center w="full" h="full">
-          <VStack>
+      <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" {...darkModeStyleProps}>
+        {onClick && (
+          <Button colorScheme="green" variant="outline" w="full">
+            Виконано
+          </Button>
+        )}
+        <Center w="full" h={onClick ? 'calc(100% - 40px)' : 'full'}>
+          <Stack direction="column">
             <Text>{departure}</Text>
             <Divider />
             <Text>{destination}</Text>
-          </VStack>
+          </Stack>
         </Center>
       </GridItem>
     </Grid>
