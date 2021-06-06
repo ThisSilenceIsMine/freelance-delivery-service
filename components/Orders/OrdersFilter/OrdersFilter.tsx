@@ -16,19 +16,21 @@ import {
 import PlacesAutocomplete from 'react-google-places-autocomplete';
 
 import { useForm } from '~/hooks/useForm';
-import { customStyles } from './DarkPlacesAutocomplete';
 import { TagPicker } from '~/components/TagPicker';
 import { Form } from '~/components/StyledForm';
+import { StatusSelect } from '~/components/Orders/StatusSelect';
 import type { Tag } from '@lib/types';
 
+import { customStyles } from './DarkPlacesAutocomplete';
 export interface Props {
   tagOptions: Tag[];
   onFilterSubmit: (data: Partial<FormData>) => void;
+  withOrderStatus?: boolean;
   sticky?: boolean;
   fullWidth?: boolean;
 }
 
-export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: Props) => {
+export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth, withOrderStatus }: Props) => {
   const { data: filter, handleChange } = useForm<FormData>({});
   const {colorMode} = useColorMode();
   const onSubmit = useCallback(
@@ -53,8 +55,7 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
       <FlexBox
         spacing="2.5"
         boxShadow="lg"
-        width={['full', 'full', 'full', `${fullWidth ? 'full' : 'md'}`]}
-        height="lg"
+        width={fullWidth ? "full" : ['full', 'full', 'full', 'md']}
         p="3.5"
       >
         <FormControl>
@@ -120,6 +121,12 @@ export const OrdersFilter = ({ tagOptions, onFilterSubmit, sticky, fullWidth }: 
             </NumberInput>
           </Flex>
         </FormControl>
+      {withOrderStatus && (
+        <FormControl>
+          <FormLabel>Статус</FormLabel>
+          <StatusSelect onSelected={(value) => handleChange('status', value)} />
+        </FormControl>
+      )}
         <Button type="submit">Пошук</Button>
       </FlexBox>
     </Form>

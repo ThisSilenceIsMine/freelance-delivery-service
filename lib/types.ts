@@ -19,6 +19,7 @@ export interface Order {
   date?: string;
   tags?: Tag[];
   price?: number;
+  status?: string;
   description: string;
 }
 

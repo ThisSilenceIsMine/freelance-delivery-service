@@ -19,3 +19,11 @@ Default.args = {
   tagOptions: tags,
   onFilterSubmit: (data) => console.log(data),
 };
+
+export const WithStatus = Template.bind({});
+
+WithStatus.args = {
+  tagOptions: tags,
+  onFilterSubmit: (data) => console.log(data),
+  withOrderStatus: true,
+};
