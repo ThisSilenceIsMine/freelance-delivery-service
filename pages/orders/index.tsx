@@ -14,13 +14,13 @@ interface Props {
 
 const fetchOrders = async ({ pageParam = 0, queryKey }: QueryFunctionContext) => {
 
-  const [_key, filter] = queryKey as [string, Partial<FormData>];
+  const [_key, filter] = queryKey as [string, Partial<FormData> | null];
 
-  const { data } = await api.get('/public/advertisements/', {
+  const { data } = await api.get('/public/advertisements', {
     params: {
       pageNumber: pageParam,
       title: filter?.title,
-      types: filter.tags && [...(filter.tags.map(tag => tag.label))].join('+'),
+      types: filter?.tags && [...(filter.tags.map(tag => tag.label))].join('+'),
       deliver_from: filter?.department,
       deliver_to: filter?.destination,
       max_price: filter?.maxPrice,
@@ -71,7 +71,7 @@ export default function Orders({ orders, tags }: Props) {
         spacing={['4', '4', '2.5', '2.5']}
       >
         <OrdersFilter tagOptions={tags} onFilterSubmit={(data) => {setFilter(data);}} sticky />
-        <Stack direction="column">
+        <Stack direction="column" w="full">
           <OrderList orders={orderList ?? []} />
           <Button
             isLoading={isFetching}

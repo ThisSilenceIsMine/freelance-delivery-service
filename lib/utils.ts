@@ -59,6 +59,7 @@ export const renameOrdersFrom = (orders: any[]) => {
     deliver_from: 'departure',
     deliver_to: 'destination',
     types: 'tags',
+    phone_number: 'phoneNumber'
   });
   const res = newOrders.map((order) => {
     order.tags = renameTagsFrom(order.tags);
@@ -79,6 +80,7 @@ export const renameOrdersTo = (orders: any[]) => {
     departure: 'deliver_from',
     destination: 'deliver_to',
     tags: 'types',
+    phoneNumber: 'phone_number',
   });
 
   const res = newOrders.map((order) => {
@@ -88,6 +90,36 @@ export const renameOrdersTo = (orders: any[]) => {
     }
     return order;
   });
+
+  return res;
+};
+
+export const renameDriversFrom = (drivers: any[]) => {
+  const newDrivers = renameFields(drivers, {
+    name: 'fullName',
+    types: 'tags',
+  });
+  const res = newDrivers.map((driver) => {
+    driver.tags = renameTagsFrom(driver.tags);
+    return driver;
+  });
+  // console.log(orders)
+  // console.log(res)
+
+  return res;
+};
+
+export const renameDriversTo = (drivers: any[]) => {
+  const newDrivers = renameFields(drivers, {
+    fullName: 'name',
+    tags: 'types',
+  });
+  const res = newDrivers.map((driver) => {
+    driver.tags = renameTagsTo(driver.tags); //this shouldn't work
+    return driver;
+  });
+  // console.log(orders)
+  // console.log(res)
 
   return res;
 };

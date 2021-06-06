@@ -1,8 +1,9 @@
 import { Box, Container, Wrap, Tag, Heading, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next'
 
-import { tags } from 'mock';
+import { renameDriversFrom } from '@lib/utils'
 import { Driver as IDriver } from '@lib/types';
+import { api } from '@lib/Api/backend';
 
 interface Props {
   driver: IDriver;
@@ -29,15 +30,9 @@ export default function Driver({ driver }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // console.log(context) // params.id
+  const { data } = await api.get(`/public/drivers/${context?.params?.id}`);
   
-  const driver: IDriver = {
-    id: "somerandomidgoesthere",
-    experience: "5",
-    fullName: "Виталий Волочай",
-    tags: tags,
-    description: "Как-то раз я невзначай..."
-  };//await fetch('https://.../posts');
+  const driver: IDriver = renameDriversFrom([data])[0];
 
   return {
     props: {
