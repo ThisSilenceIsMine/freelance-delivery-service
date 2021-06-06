@@ -9,14 +9,19 @@ import '@fontsource/ubuntu';
 import '@fontsource/montserrat';
 import '@fontsource/yanone-kaffeesatz';
 import { theme } from "@lib/theme"
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Header />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <Header />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CUIAutoComplete } from 'chakra-ui-autocomplete';
-import type { Tag } from '@lib/types';
 import { useColorMode } from '@chakra-ui/color-mode';
+import type { Tag } from '@lib/types';
 export interface Props {
   tags: Tag[];
   initialTags?: Tag[];

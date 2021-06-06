@@ -9,6 +9,8 @@ import { Map } from '@components/Map';
 import { OrderDisplay } from '@components/Orders/OrderDisplay/OrderDisplay';
 import { getLatLng } from '@lib/Api/geocoding/geocoding';
 import { RiContrastDropLine } from 'react-icons/ri';
+import { api } from '@lib/Api/backend';
+import { renameOrdersFrom } from '@lib/utils';
 
 interface Props {
   order: Order;
@@ -18,6 +20,8 @@ export default function OrderDetails({ order }: Props) {
     const [departure, setDeparture] = useState<Point>();
     const [destination, setDestiation] = useState<Point>();
 
+    console.log(order)
+  
     useEffect(() => {
       (async () => {
         try {
@@ -25,7 +29,6 @@ export default function OrderDetails({ order }: Props) {
           const dep = await getLatLng(order.departure);
           const dest = await getLatLng(order.destination);
 
-          console.log({dep, dest})
           setDeparture(dep);
           setDestiation(dest);
         } catch (error) {
@@ -58,11 +61,13 @@ export default function OrderDetails({ order }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // console.log(context) // params.id
 
-  const order: Order = orders[0];
+  const { data } = await api.get(`/public/advertisements/${context?.params?.id}`);
+
+  const order: Order = renameOrdersFrom([data])[0];
 
   return {
     props: {
-      order: { ...order, price: 100, date: Date() },
+      order,
     },
   };
 };
