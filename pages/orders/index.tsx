@@ -7,6 +7,7 @@ import { OrderList, OrdersFilter, FormData } from '@components/Orders';
 import { renameOrdersFrom, renameTagsFrom } from '@lib/utils';
 import { Order, Tag } from '@lib/types';
 import { api } from '@lib/Api/backend';
+import { getSession } from '@auth0/nextjs-auth0';
 interface Props {
   orders: any;
   tags: Tag[];
@@ -52,12 +53,10 @@ export default function Orders({ orders, tags }: Props) {
   });
 
   useEffect(() => {
-    console.log(data);
     if (!data) {
       return;
     }
     const list = data.pages.reduce((orders, page) => orders.concat(renameOrdersFrom(page.content)), []);
-    console.log(list);
     
     setOrderList(list);
   }, [data]);
@@ -93,7 +92,8 @@ export default function Orders({ orders, tags }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data: orders } = await api.get('/public/advertisements/');
   const { data: _tags } = await api.get('/public/types');
-
+  const session = getSession(context.req, context.res);
+  const roles = session?.user['https://spring5-delivery.com/roles'] ?? [];
   const tags = renameTagsFrom(_tags);
 
   // const orders = renameOrdersFrom(data.content);
@@ -107,6 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       orders: initialPage,
       tags,
+      roles
     },
   };
 };

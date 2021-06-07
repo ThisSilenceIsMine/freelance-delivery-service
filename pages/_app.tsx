@@ -10,18 +10,21 @@ import '@fontsource/montserrat';
 import '@fontsource/yanone-kaffeesatz';
 import { theme } from "@lib/theme"
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <Header />
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </QueryClientProvider>
+    <UserProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <Header />
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </QueryClientProvider>
+    </UserProvider>
   );
 }
 

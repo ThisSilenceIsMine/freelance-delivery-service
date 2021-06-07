@@ -7,11 +7,12 @@ import { NotificationsMenu } from '~/components/Notifications';
 import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 import { notifications } from '~/mock/Notifications.mock';
 import { ColorModeSwitch } from '~/components/ColorModeSwitch';
+import { useUser } from '@auth0/nextjs-auth0';
 
 export const Header = () => {
   const { colorMode } = useColorMode();
+  const { user, error, isLoading } = useUser();
   return (
-    // <Box w="100%" p="4" bg="white" boxShadow="md">
     <Flex
       w="100%"
       p="4"
@@ -50,19 +51,35 @@ export const Header = () => {
         </Link> */}
       </Stack>
       <Spacer />
-      <NotificationsMenu notifications={notifications} />
       <ColorModeSwitch mr="2" />
-      <NextLink href="/profile">
-        <Button variant="outline" colorScheme="black">
-          Профіль
-        </Button>
-      </NextLink>
-      {/* <Button variant="base" colorScheme="teal"> 
-        Login
-      </Button>
-      <Button variant="outline" colorScheme="orange">
-        Sign In
-      </Button> */}
+      {user ? (
+        <>
+          <NotificationsMenu notifications={notifications} />
+          <NextLink href="/profile">
+            <Button variant="outline" colorScheme="black">
+              Профіль
+            </Button>
+          </NextLink>
+          <NextLink href="/api/auth/logout">
+            <Button variant="outline" colorScheme="orange">
+              Вихід
+            </Button>
+          </NextLink>
+        </>
+      ) : (
+        <>
+          {/* <NextLink href="/api/auth/login"> */}
+          <Button as={Link} href="/api/auth/login" variant="base" colorScheme="teal">
+            Вхід
+          </Button>
+          {/* </NextLink> */}
+          <NextLink href="/api/auth/register">
+            <Button variant="outline" colorScheme="orange">
+              Реєстрація
+            </Button>
+          </NextLink>
+        </>
+      )}
     </Flex>
     // </Box>
   );
