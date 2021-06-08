@@ -4,13 +4,14 @@ import { OrderItem } from './OrderItem/OrderItem';
 
 export interface Props {
   orders: Order[];
+  onItemClick?: (id: number | string) => void;
 }
 
-export const OrderList = ({ orders }: Props) => {
+export const OrderList = ({ orders, onItemClick }: Props) => {
   return (
     <List w="full">
       {orders.map((order) => (
-        <OrderItem key={order.id} {...order} />
+        <OrderItem key={order.id} onClick={ onItemClick } {...order} />
       ))}
     </List>
   );

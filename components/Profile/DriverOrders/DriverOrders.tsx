@@ -7,31 +7,36 @@ import {
   AccordionIcon,
   Box,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { QueryFunctionContext, useQuery } from 'react-query';
+
 import { api } from '@lib/Api/backend';
 import { Order, Tag } from '@lib/types';
 import { renameOrdersFrom } from '@lib/utils';
-import { useEffect, useState } from 'react';
-import { useQueryClient, QueryFunctionContext, useQuery } from 'react-query';
 import { OrderList } from '~/components/Orders/OrderList';
 import { OrdersFilter, FormData } from '~/components/Orders/OrdersFilter';
+
 export interface Props {
   initialOrders: Order[];
   tags: Tag[];
-  userID: string;
+  driverID: number;
 }
 
-
-export const UserOrders = ({ initialOrders, tags, userID }: Props) => {
+export const DriverOrders = ({ initialOrders, tags, driverID }: Props) => {
   const [filter, setFilter] = useState<Partial<FormData>>();
 
-
-  const { data, refetch } = useQuery(['userOrders', userID, filter], fetchUserOrders, {
+  const { data, refetch } = useQuery(['driverOrders', driverID, filter], fetchDriverOrders, {
     initialData: initialOrders,
   });
 
   useEffect(() => {
     refetch();
   }, [filter]);
+
+  useEffect(() => {
+    console.log('initialOrders :>> ', initialOrders);
+    console.log('data :>> ', data);
+  }, [data]);
 
   return (
     <>
@@ -61,23 +66,23 @@ export const UserOrders = ({ initialOrders, tags, userID }: Props) => {
   );
 };
 
-async function fetchUserOrders({ queryKey }: QueryFunctionContext) {
-    const [_key, userID, filter] = queryKey as [string, string, Partial<FormData> | null];
+async function fetchDriverOrders({ queryKey }: QueryFunctionContext) {
+  const [_key, driverID, filter] = queryKey as [string, number, Partial<FormData> | null];
 
-    const { data } = await api.get('/public/advertisements', {
-      params: {
-        user_id: userID,
-        title: filter?.title,
-        types: filter?.tags && [...filter.tags.map((tag) => tag.label)].join('+'),
-        deliver_from: filter?.department,
-        deliver_to: filter?.destination,
-        max_price: filter?.maxPrice,
-        min_price: filter?.minPrice,
-        status: filter?.status,
-      },
-    });
+  const { data } = await api.get('/public/advertisements', {
+    params: {
+      driver_id: driverID,
+      title: filter?.title,
+      types: filter?.tags && [...filter.tags.map((tag) => tag.label)].join('+'),
+      deliver_from: filter?.department,
+      deliver_to: filter?.destination,
+      max_price: filter?.maxPrice,
+      min_price: filter?.minPrice,
+      status: filter?.status,
+    },
+  });
 
   const rn = renameOrdersFrom(data.content);
-  
+
   return rn;
 }

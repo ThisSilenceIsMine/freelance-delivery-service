@@ -22,21 +22,22 @@ import { api } from '@lib/Api/backend';
 import type { User } from '@lib/Api/UserType';
 import type { Driver, Tag } from '@lib/types';
 import { renameOrdersFrom, renameTagsFrom, renameTagsTo } from '@lib/utils';
+import { DriverOrders } from '@components/Profile/DriverOrders/DriverOrders';
 
 interface Props {
-  isAdmin: boolean;
+  userID: string;
   token: string;
   user: User;
   tags: Tag[];
 }
 
-export default function Profile({ isAdmin, token, user, tags }: Props) {
+export default function Profile({ userID, token, user, tags }: Props) {
   const [tabIndex, setTabIndex] = useState(0);
   const ref = useRef<HTMLFormElement>(null);
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(['profile', { token }], fetchUser, {
+  const { data } = useQuery<User>(['profile', { token }], fetchUser, {
     initialData: user,
   });
 
@@ -84,7 +85,7 @@ export default function Profile({ isAdmin, token, user, tags }: Props) {
       },
     });
 
-  const isDriver = Boolean(data.user_metadata.driver);
+  const isDriver = Boolean(data?.user_metadata.driver);
 
   const handleTabsChange = (index: number) => {
     if (!isDriver) {
@@ -103,25 +104,26 @@ export default function Profile({ isAdmin, token, user, tags }: Props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserProfile name={data.name} email={data.email} onFormSubmit={(user) => mutateUser({token, user})} />
+            <UserProfile name={data?.name ?? ''} email={data?.email ?? ''} onFormSubmit={(user) => mutateUser({token, user})} />
             <Center my="3.5">
               <Heading>Ваші замовлення</Heading>
             </Center>
             <UserOrders
-              orders={renameOrdersFrom(data.user_metadata.advertisements)}
+              initialOrders={renameOrdersFrom(data?.user_metadata?.advertisements ?? [])}
               tags={tags}
-              onFilterSubmit={console.log}
+              userID={userID}
             />
           </TabPanel>
           <TabPanel>
             {isDriver && (
+              <>
               <DriverForm
                 initialData={{
-                  id: data.user_metadata.driver.id,
-                  fullName: data.user_metadata.driver.name,
-                  experience: String(data.user_metadata.driver.experience),
-                  tags: (renameTagsFrom(data.user_metadata.driver.types) as unknown) as Tag[],
-                  description: data.user_metadata.driver.description,
+                  id: data!.user_metadata.driver.id,
+                  fullName: data!.user_metadata.driver.name,
+                  experience: String(data!.user_metadata.driver.experience),
+                  tags: (renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[],
+                  description: data!.user_metadata.driver.description,
                 }}
                 tagOptions={tags}
                 onFormSubmit={(driver) => { mutateDriver( {token, driver} ) }} //mutate driver
@@ -131,6 +133,12 @@ export default function Profile({ isAdmin, token, user, tags }: Props) {
                   Зберегти
                 </Button>
               </DriverForm>
+              <DriverOrders
+                  initialOrders={renameOrdersFrom(data!.user_metadata.driver.advertisements ?? [])}
+                  tags={(renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[]}
+                  driverID={data!.user_metadata.driver.id}
+              />
+              </>
             )}
           </TabPanel>
         </TabPanels>
@@ -140,11 +148,14 @@ export default function Profile({ isAdmin, token, user, tags }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const { accessToken } = await getAccessToken(req, res, {
-    scopes: ['openid', 'profile', 'email'],
-  });
-
   try {
+    const { accessToken } = await getAccessToken(req, res, {
+      scopes: ['openid', 'profile', 'email'],
+    });
+  
+    const session = getSession(req, res);
+
+
     const { data: user } = await api.get('/user', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -153,12 +164,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
     const { data: _tags } = await api.get('/public/types');
     const tags = renameTagsFrom(_tags);
-
+    const sub = session?.user?.sub as string;
     return {
       props: {
         user,
         tags,
         token: accessToken,
+        userID: sub,
       },
     };
   } catch (error) {

@@ -146,4 +146,5 @@ export interface FormData {
   destination: string;
   minPrice: number;
   maxPrice: number;
+  status: string;
 }
