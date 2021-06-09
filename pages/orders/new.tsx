@@ -1,11 +1,40 @@
 import { useState } from 'react';
+import { GetServerSideProps } from 'next';
+import { getSession, getAccessToken } from '@auth0/nextjs-auth0';
 import { Container, Heading, Flex, Stack, Box } from '@chakra-ui/react';
+import { useMutation, useQueryClient, useQuery, QueryFunctionContext } from 'react-query';
+
+import { api } from '@lib/Api/backend';
+import { renameOrdersFrom, renameOrdersTo, renameTagsFrom, renameTagsTo } from '@lib/utils';
 
 import { Map } from '~/components/Map';
 import { OrderForm, MODE } from '@components/Orders/OrderForm/OrderForm';
 import { tags, orders } from '~/mock';
+import { Order, Tag } from '@lib/types';
 
-export default function NewOrder() {
+interface Props {
+  token: string;
+  tags: Tag[];
+}
+
+const createOrder = async (order: Partial<Order>, token: string) => {
+  try {
+
+    const orderData = renameOrdersTo([order])[0];
+
+    api.post('/user/advertisements', {
+      ...orderData
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export default function NewOrder({ token, tags }:Props) {
   const [departure, setDeparture] = useState("");
   const [destination, setDestinaion] = useState("");
   const [mode, setMode] = useState<MODE>(MODE.DEPARTURE)
@@ -26,7 +55,7 @@ export default function NewOrder() {
           departure={departure}
           destination={destination}
           tags={tags}
-          onFormSubmit={console.log}
+          onFormSubmit={(order) => createOrder(order, token)}
           onModeChange={(m) => setMode(m)}
         />
       </Box>
@@ -42,4 +71,27 @@ export default function NewOrder() {
       </Box>
     </Stack>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+   try {
+    const { accessToken } = await getAccessToken(req, res, {
+      scopes: ['openid', 'profile', 'email'],
+    });
+
+    const { data: _tags } = await api.get('/public/types');
+    const tags = renameTagsFrom(_tags);
+    return {
+      props: {
+        tags,
+        token: accessToken,
+      },
+     };
+     
+  } catch (error) {
+    console.log('Whoops! Token f*d up!');
+    return { props: {} };
+  }
+
+
 }

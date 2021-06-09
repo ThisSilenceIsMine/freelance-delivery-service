@@ -84,7 +84,7 @@ export const renameOrdersTo = (orders: any[]) => {
   });
 
   const res = newOrders.map((order) => {
-    order.tags = renameTagsTo(order.tags);
+    order.types = renameTagsTo(order.types);
     if (order.details) {
       renameField(order.details, 'people_count', 'peopleCount');
     }

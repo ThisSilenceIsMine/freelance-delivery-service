@@ -2,19 +2,43 @@ import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { Container, Heading, Flex, Stack, Box } from '@chakra-ui/react';
 
+import { api } from '@lib/Api/backend';
+import { renameOrdersFrom, renameOrdersTo, renameTagsFrom, renameTagsTo } from '@lib/utils';
 import type { Order, Point } from '@lib/types';
 import { Map } from '@components/Map';
 import { OrderForm, MODE } from '@components/Orders/OrderForm/OrderForm';
 import { tags, orders } from '~/mock';
 import { getLatLng } from '@lib/Api/geocoding/geocoding';
+import { getAccessToken } from '@auth0/nextjs-auth0';
 
 interface Props {
   order: Order;
   departurePoint: Point;
   destinationPoint: Point;
+  token: string;
 }
 
-export default function NewOrder({ order, departurePoint, destinationPoint}: Props) {
+const updateOrder = async (order: Partial<Order>, token: string, id: string | number) => {
+  try {
+    const orderData = renameOrdersTo([order])[0];
+
+    api.patch(
+      `/user/advertisements/${id}`,
+      {
+        ...orderData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export default function NewOrder({ order, departurePoint, destinationPoint, token}: Props) {
   const [departure, setDeparture] = useState(order.departure);
   const [destination, setDestinaion] = useState(order.destination);
   const [mode, setMode] = useState<MODE>(MODE.DEPARTURE);
@@ -36,7 +60,7 @@ export default function NewOrder({ order, departurePoint, destinationPoint}: Pro
           departure={departure}
           destination={destination}
           tags={tags}
-          onFormSubmit={console.log}
+          onFormSubmit={(order) => updateOrder(order, token, order.id ?? -1)}
           onModeChange={(m) => setMode(m)}
         />
       </Box>
@@ -56,19 +80,28 @@ export default function NewOrder({ order, departurePoint, destinationPoint}: Pro
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
   // console.log(context) // params.id
 
-  const order: Order = orders[0];
+  const { data } = await api.get(`/public/advertisements/${params?.id}`);
+
+    const { accessToken } = await getAccessToken(req, res, {
+      scopes: ['openid', 'profile', 'email'],
+    });
+
+  const order = renameOrdersFrom([data])[0];
+
+  console.log(data);
 
   const departurePoint = await getLatLng(order.departure);
   const destinationPoint = await getLatLng(order.destination);
 
   return {
     props: {
-      order: { ...order, price: 100, date: Date() },
+      order,
       departurePoint,
-      destinationPoint
+      destinationPoint,
+      token: accessToken,
     },
   };
 };

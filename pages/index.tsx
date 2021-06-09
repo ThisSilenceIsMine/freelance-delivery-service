@@ -1,12 +1,11 @@
 import NextLink from 'next/link';
-import { Button, ButtonGroup, Container, Heading, Flex, Center, VStack } from '@chakra-ui/react';
+import { Button, ButtonGroup, Heading, Flex, Center, VStack } from '@chakra-ui/react';
 import { BackgroundImage } from '@components/BackgroundImage';
 
 export default function Home() {
   return (
     <>
       <BackgroundImage src="/bg_alt.jpg" />
-      {/* <Container maxW="container.lg" minH="90vh" centerContent={true}> */}
       <Center maxW="full" minH="90vh">
         <VStack spacing="32">
           <Heading mt="10" size="2xl" sx={{ color: 'orange.400' }}>
@@ -32,7 +31,6 @@ export default function Home() {
         </VStack>
       </Center>
 
-      {/* </Container> */}
     </>
   );
 }

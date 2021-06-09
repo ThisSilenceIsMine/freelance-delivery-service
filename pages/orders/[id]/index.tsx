@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { Box, Stack } from '@chakra-ui/react';
-
-import { orders, tags } from 'mock';
 import { Order, Point } from '@lib/types';
 
 import { Map } from '@components/Map';
 import { OrderDisplay } from '@components/Orders/OrderDisplay/OrderDisplay';
 import { getLatLng } from '@lib/Api/geocoding/geocoding';
-import { RiContrastDropLine } from 'react-icons/ri';
+
 import { api } from '@lib/Api/backend';
 import { renameOrdersFrom } from '@lib/utils';
 

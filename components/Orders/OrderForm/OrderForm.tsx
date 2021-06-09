@@ -128,7 +128,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
               <FormLabel>Дата</FormLabel>
               <DatePicker
                 selectedDate={ data.date ? new Date(data.date) : undefined}
-                onChange={(date) => handleChange('date', date.toDateString())}
+                onChange={(date) => handleChange('date', date.toISOString().substring(0,10))}
               />
             </FormControl>
             <FormControl>
@@ -138,7 +138,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 <NumberInput
                   precision={2}
                   w="full"
-                  value={data.price}
+                  value={data.price ?? ''} 
                   onChange={(value) => handleChange('price', value)}
                 >
                   <NumberInputField />
@@ -149,7 +149,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
               <FormLabel>Кількість людей</FormLabel>
               <NumberInput
                 w="full"
-                value={data.details?.peopleCount} //
+                value={data.details?.peopleCount ?? ''} //
                 onChange={(value) => handleChange('details.peopleCount', value)}
               >
                 <NumberInputField />
@@ -160,7 +160,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
               <NumberInput
                 precision={2}
                 w="full"
-                value={data.details?.weight} //
+                value={data.details?.weight ?? ''} //
                 onChange={(value) => handleChange('details.weight', value)}
               >
                 <NumberInputField />
@@ -172,7 +172,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 <NumberInput
                   precision={2}
                   w="1/3"
-                  value={data.details?.height} //
+                  value={data.details?.height ?? ''} //
                   onChange={(value) => handleChange('details.height', value)}
                 >
                   <NumberInputField placeholder="Висота" />
@@ -180,7 +180,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 <NumberInput
                   precision={2}
                   w="1/3"
-                  value={data.details?.width} //
+                  value={data.details?.width ?? ''} //
                   onChange={(value) => handleChange('details.width', value)}
                 >
                   <NumberInputField placeholder="Ширина" />
@@ -188,7 +188,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 <NumberInput
                   precision={2}
                   w="1/3"
-                  value={data.details?.length} //
+                  value={data.details?.length ?? ''} //
                   onChange={(value) => handleChange('details.length', value)}
                 >
                   <NumberInputField placeholder="Довжина" />
