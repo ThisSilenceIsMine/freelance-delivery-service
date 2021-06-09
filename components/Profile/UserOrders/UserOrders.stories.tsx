@@ -16,7 +16,7 @@ const Template: Story<Props> = (args) => <UserOrders {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  onFilterSubmit: (data) => console.log(data),
-  orders,
+  initialOrders: orders,
   tags,
+  userID: "yay, string"
 };

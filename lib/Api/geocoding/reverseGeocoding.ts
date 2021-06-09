@@ -17,6 +17,6 @@ export const getPlaceName = async (lat: number | string, lng: number | string): 
   } catch (error) {
     console.log('ERROR' + error);
 
-    return null;
+    return "null";
   }
 };

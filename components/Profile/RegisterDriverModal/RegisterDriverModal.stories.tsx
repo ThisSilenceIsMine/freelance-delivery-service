@@ -15,6 +15,6 @@ const Template: Story<Props> = (args) => <RegisterDriverModal {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  onFormSubmit: console.log,
+  token: "token_there",
   tags,
 };

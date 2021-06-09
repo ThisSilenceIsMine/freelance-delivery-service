@@ -16,6 +16,5 @@ export const Default = Template.bind({});
 Default.args = {
   email: 'myemail@gmail.com',
   name: 'Виталий Волочай',
-  phoneNumber: '+380984686733',
   onFormSubmit: (data) => console.log(data),
 };
