@@ -215,3 +215,25 @@ async function suspendOrder(id: number | string, reason: string, token: string |
     console.error(`Cannot suspend order! Reason: ${error}`);
   }
 }
+
+async function applyForOrder(advertisement_id: number | string, token: string | undefined) {
+  try {
+    if (!token) {
+      console.error('Cannot apply for order! Reason: Token not provided.');
+      return;
+    }
+    await api.get(
+      '/user/driver/respond/',
+      {
+        params: {
+          advertisement_id,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  } catch (error) {
+    console.error(`Cannot suspend order! Reason: ${error}`);
+  }
+}
