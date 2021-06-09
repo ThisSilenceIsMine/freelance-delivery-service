@@ -12,18 +12,44 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Textarea,
 } from '@chakra-ui/react';
-
+import NextLink from 'next/link';
 import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { Order } from '~/lib/types';
+import { useState } from 'react';
+import { api } from '@lib/Api/backend';
 
 // export interface Props {
 //   order: Order;
 // }
 
-export type Props = Order;
+export interface Props extends Order {
+  isAdmin?: boolean;
+  isDriver?: boolean;
+  isOwner?: boolean;
+  token?: string;
+}
 
 export const OrderDisplay = ({
   id,
@@ -36,10 +62,35 @@ export const OrderDisplay = ({
   date,
   price,
   description,
+  isAdmin,
+  isDriver,
+  isOwner,
+  token,
 }: Props) => {
+  const { isOpen, onClose, onToggle } = useDisclosure();
+  const [reason, setReason] = useState('');
+
+  const showMenu = isDriver || isOwner || isAdmin;
+
   return (
     <Stack direction="column">
-      <Heading>{title}</Heading>
+      <Stack direction="row">
+        <Heading>{title}</Heading>
+        {(showMenu) ? (
+          <Menu>
+            <MenuButton>Menu</MenuButton>
+            <MenuList>
+              {isOwner && (
+                <NextLink href={`/orders/${id}/edit`}>
+                  <MenuItem>Редагувати</MenuItem>
+                </NextLink>
+              )}
+              {isDriver && <MenuItem onClick={() => {}}>Відгукнутись</MenuItem>}
+              {isAdmin && <MenuItem onClick={() => onToggle()}>Заблокувати</MenuItem>}
+            </MenuList>
+          </Menu>
+        ) : null}
+      </Stack>
       {tags && (
         <Wrap p="2" boxShadow="base">
           {tags.map((x) => (
@@ -111,8 +162,56 @@ export const OrderDisplay = ({
           <Input readOnly value={details?.peopleCount} />
         </FormControl>
       )}
-
       <Text>{description}</Text>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Заблокувати оголошення</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl isRequired>
+              <FormLabel>Вкажіть причину</FormLabel>
+              <Textarea value={reason} onChange={(e) => setReason(e.target.value)} />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              variant="outline"
+              colorScheme="orange"
+              onClick={() => suspendOrder(id, reason, token)}
+            >
+              Підтвердити
+            </Button>
+            <Button ml={3} onClick={onClose}>
+              Відмінити
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 };
+
+async function suspendOrder(id: number | string, reason: string, token: string | undefined) {
+  try {
+    if (!token) {
+      console.error('Cannot suspend order! Reason: Token not provided.');
+      return;
+    }
+    await api.post(
+      `/admin/blockAdvertisement/${id}`,
+      {
+        title: 'Оголошення заблоковано!',
+        message: reason,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.error(`Cannot suspend order! Reason: ${error}`);
+  }
+}
