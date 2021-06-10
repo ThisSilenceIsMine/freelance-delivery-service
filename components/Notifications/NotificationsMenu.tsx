@@ -16,9 +16,10 @@ import { Notification } from '@lib/types';
 
 export interface Props {
   notifications: Notification[];
+  onDismiss: (id: number | string) => void;
 }
 
-export const NotificationsMenu = ({ notifications }: Props) => {
+export const NotificationsMenu = ({ notifications, onDismiss }: Props) => {
   return (
     <Menu closeOnSelect={false} closeOnBlur={true} autoSelect={false}>
       <MenuButton
@@ -30,7 +31,7 @@ export const NotificationsMenu = ({ notifications }: Props) => {
       />
       <MenuList p="2.5" maxW="90vw">
         {notifications.length ? notifications.map((x) => (
-          <NotificationItem title={x.title} text={x.text} id={x.id} key={x.id} onDismiss={console.log} />
+          <NotificationItem title={x.title} text={x.text} id={x.id} key={x.id} onDismiss={onDismiss} />
         )) : "Всі повідомлення прочитано!"}
       </MenuList>
     </Menu>

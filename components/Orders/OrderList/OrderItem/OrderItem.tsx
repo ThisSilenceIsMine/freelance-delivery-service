@@ -17,11 +17,12 @@ import NextLink from 'next/link';
 
 import type { Order } from '@lib/types';
 export interface Props extends Order {
+  btnTitle?: string;
   onClick?: (id: number | string) => void;
 }
 
 
-export const OrderItem = ({ title, departure, destination, tags, id, onClick }: Props) => {
+export const OrderItem = ({ title, departure, destination, tags, id, onClick, btnTitle }: Props) => {
   const { colorMode } = useColorMode();
   const darkModeStyleProps = colorMode === "dark" ? { background: "gray.700", borderRadius: "0.3em" } : {};
   return (
@@ -55,8 +56,8 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick }: 
       </GridItem>
       <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" {...darkModeStyleProps}>
         {onClick && (
-          <Button colorScheme="green" variant="outline" w="full">
-            Виконано
+          <Button colorScheme="green" variant="outline" w="full" onClick={() => onClick(id)}>
+            {btnTitle ?? "Виконано"}
           </Button>
         )}
         <Center w="full" h={onClick ? 'calc(100% - 40px)' : 'full'}>

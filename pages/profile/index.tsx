@@ -133,7 +133,8 @@ export default function Profile({ userID, token, user, tags }: Props) {
                   Зберегти
                 </Button>
               </DriverForm>
-              <DriverOrders
+                <DriverOrders
+                  token={token}
                   initialOrders={renameOrdersFrom(data!.user_metadata.driver.advertisements ?? [])}
                   tags={(renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[]}
                   driverID={data!.user_metadata.driver.id}

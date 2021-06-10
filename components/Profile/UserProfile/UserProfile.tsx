@@ -9,7 +9,7 @@ import {
   FormHelperText,
   Flex,
 } from '@chakra-ui/react';
-
+import NextLink from 'next/link'
 import { useCallback, FormEvent } from 'react';
 
 import { useForm } from '~/hooks/useForm';
@@ -67,9 +67,11 @@ export const UserProfile = ({ name, email, onFormSubmit }: Props) => {
       <Button colorScheme="teal" variant="outline" mt="2" type="submit">
         Зберегти
       </Button>
-      <Button colorScheme="red" variant="solid" mt="2" ml="2" type="submit">
-        Вихід
-      </Button>
+      <NextLink href="/api/auth/logout">
+        <Button variant="outline"  mt="2" colorScheme="orange">
+          Вихід
+        </Button>
+      </NextLink>
     </form>
   );
 };

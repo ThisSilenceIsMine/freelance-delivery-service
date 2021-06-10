@@ -25,12 +25,9 @@ export default function OrderDetails({ order, token, recommendedDrivers, isAdmin
   const [departure, setDeparture] = useState<Point>();
   const [destination, setDestiation] = useState<Point>();
 
-  console.log(order);
-
   useEffect(() => {
     (async () => {
       try {
-        console.log(order);
         const dep = await getLatLng(order.departure);
         const dest = await getLatLng(order.destination);
 
@@ -60,7 +57,7 @@ export default function OrderDetails({ order, token, recommendedDrivers, isAdmin
             </TabList>
             <TabPanels>
               <TabPanel>
-                <DriverList onClick={driverID => appointDriver(order.id, driverID, token)} drivers={order?.responded ?? []} />
+                <DriverList onClick={driverID => appointDriver(order.id, driverID, token)} drivers={renameDriversFrom( order?.responded ) ?? []} />
               </TabPanel>
               <TabPanel>
                 <DriverList drivers={recommendedDrivers} />
@@ -102,7 +99,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
   
   
   const { data: rawOrder } = await api.get(`/public/advertisements/${params?.id}`);
+
   
+  console.log(`rawOrder :>>`, rawOrder);
+
   const { data: rawRecommended } = await api.get('/public/advertisements/recommended/', {
     params: {
       advertisement_id: params?.id
@@ -115,14 +115,22 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
   const isAdmin = !!roles.find(v => v === 'Admin');
   const isOwner = user.user_id === order.user_id;
   const isDriver = !isOwner && !!user?.user_metadata?.driver;
+  let _order;
 
-  console.log(`isAdmin: ${isAdmin}`);
-  console.log(`isOwner: ${isOwner}`);
-  console.log(`isDriver: ${isDriver}`);
+  if (isOwner) {
+    const { data } = await api.get(`/user/advertisements/${params?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    _order = renameOrdersFrom([data])[0];
+  } else {
+    _order = order;
+  }
   
   return {
     props: {
-      order,
+      order: _order,
       token,
       isAdmin,
       isDriver,

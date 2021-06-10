@@ -8,10 +8,24 @@ import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 import { notifications } from '~/mock/Notifications.mock';
 import { ColorModeSwitch } from '~/components/ColorModeSwitch';
 import { useUser } from '@auth0/nextjs-auth0';
+import { QueryFunctionContext, useQuery } from 'react-query';
+import { Notification } from '@lib/types';
+import { renameNotificationsFrom } from '@lib/utils';
+import { api } from '@lib/Api/backend';
 
-export const Header = () => {
+interface Props {
+  initialNotifications?: Notification[];
+  token?: string;
+}
+
+
+export const Header = ({ initialNotifications, token }:Props) => {
+  const { data, refetch } = useQuery(['notifications', token], fetchNotifications, {
+    initialData: initialNotifications
+  });
+
+  const { user } = useUser();
   const { colorMode } = useColorMode();
-  const { user, error, isLoading } = useUser();
   return (
     <Flex
       w="100%"
@@ -38,41 +52,23 @@ export const Header = () => {
         <NextLink href="/drivers" passHref>
           <NavLink dark={colorMode === 'dark'}>Водії</NavLink>
         </NextLink>
-        {/* <Link as={NextLink} href="/orders">
-          Orders
-        </Link> */}
-
-        {/*         
-        <Link as={NextLink} href="/drivers">
-          Drivers
-        </Link>
-        <Link as={NextLink} href="/about">
-          About
-        </Link> */}
       </Stack>
       <Spacer />
       <ColorModeSwitch mr="2" />
       {user ? (
         <>
-          <NotificationsMenu notifications={notifications} />
+          <NotificationsMenu onDismiss={(id) => token && dismiss(id, token)} notifications={data ?? []} />
           <NextLink href="/profile">
-            <Button variant="outline" colorScheme="black">
+            <Button variant="outline" ml="2" colorScheme="black">
               Профіль
-            </Button>
-          </NextLink>
-          <NextLink href="/api/auth/logout">
-            <Button variant="outline" colorScheme="orange">
-              Вихід
             </Button>
           </NextLink>
         </>
       ) : (
         <>
-          {/* <NextLink href="/api/auth/login"> */}
           <Button as={Link} href="/api/auth/login" variant="base" colorScheme="teal">
             Вхід
           </Button>
-          {/* </NextLink> */}
           <NextLink href="/api/auth/register">
             <Button variant="outline" colorScheme="orange">
               Реєстрація
@@ -85,17 +81,44 @@ export const Header = () => {
   );
 };
 
-export const ResponsiveHeader = () => {
+interface __Props {
+  token?: string;
+}
+
+export const ResponsiveHeader = ({ token }: __Props) => {
   const { width } = useWindowDimensions();
 
   if (width && width <= 768) {
     //roughly equals to 62em assuming font-size is 16px
     return (
       <MenuDrawer>
-        <Header />
+        <Header token={token} />
       </MenuDrawer>
     );
   }
 
-  return <Header />;
+  return <Header token={token} />;
 };
+
+async function fetchNotifications({ queryKey }: QueryFunctionContext) {
+  const [_key, token] = queryKey as [string, string];
+  const { data: notifications } = await api.get('/user/notifications', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return renameNotificationsFrom(notifications);
+}
+
+async function dismiss(id: number | string, token: string) {
+  try {
+    api.delete(`/user/notifications/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+
+    });
+  } catch (error) {
+    console.error(error)
+  }
+}

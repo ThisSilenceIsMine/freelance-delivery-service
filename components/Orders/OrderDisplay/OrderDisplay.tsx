@@ -85,7 +85,7 @@ export const OrderDisplay = ({
                   <MenuItem>Редагувати</MenuItem>
                 </NextLink>
               )}
-              {isDriver && <MenuItem onClick={() => {}}>Відгукнутись</MenuItem>}
+              {isDriver && <MenuItem onClick={() => applyForOrder(id, token)}>Відгукнутись</MenuItem>}
               {isAdmin && <MenuItem onClick={() => onToggle()}>Заблокувати</MenuItem>}
             </MenuList>
           </Menu>

@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { QueryFunctionContext, useQuery } from 'react-query';
@@ -20,11 +21,12 @@ export interface Props {
   initialOrders: Order[];
   tags: Tag[];
   driverID: number;
+  token: string;
 }
 
-export const DriverOrders = ({ initialOrders, tags, driverID }: Props) => {
+export const DriverOrders = ({ initialOrders, tags, driverID, token }: Props) => {
   const [filter, setFilter] = useState<Partial<FormData>>();
-
+  const toast = useToast();
   const { data, refetch } = useQuery(['driverOrders', driverID, filter], fetchDriverOrders, {
     initialData: initialOrders,
   });
@@ -33,10 +35,26 @@ export const DriverOrders = ({ initialOrders, tags, driverID }: Props) => {
     refetch();
   }, [filter]);
 
-  useEffect(() => {
-    console.log('initialOrders :>> ', initialOrders);
-    console.log('data :>> ', data);
-  }, [data]);
+  const onItemClick = (id: number | string, status: string) => {
+    console.log(status)
+    if (status === 'APPOINTED') {
+      executeOrder(id, token) &&
+        toast({
+          title: 'Ви почали виконувати замовлення',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+    } else if (status === 'IN_PROCESS') {
+      finishOrder(id, token) &&
+        toast({
+          title: 'Замовлення виконано',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+    }
+  }
 
   return (
     <>
@@ -61,7 +79,7 @@ export const DriverOrders = ({ initialOrders, tags, driverID }: Props) => {
         </AccordionItem>
       </Accordion>
       <Divider />
-      <OrderList orders={data ?? []} />
+      <OrderList onItemClick={onItemClick} orders={data ?? []} />
     </>
   );
 };
@@ -85,4 +103,38 @@ async function fetchDriverOrders({ queryKey }: QueryFunctionContext) {
   const rn = renameOrdersFrom(data.content);
 
   return rn;
+}
+
+async function executeOrder(id: number | string, token: string) {
+  try {
+    const { data } = await api.get('/user/driver/executing', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        advertisement_id: id,
+      },
+    });
+    return !!data;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function finishOrder(id: number | string, token: string) {
+  try {
+    const { data } = await api.get('/user/driver/done', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        advertisement_id: id,
+      },
+    });
+    return !!data;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }

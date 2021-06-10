@@ -123,3 +123,11 @@ export const renameDriversTo = (drivers: any[]) => {
 
   return res;
 };
+
+export const renameNotificationsFrom = (notifications: any[]) => {
+  const renamed = renameFields(notifications, {
+    message: 'text',
+  });
+
+  return renamed;
+};
