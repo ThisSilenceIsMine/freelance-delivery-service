@@ -1,4 +1,5 @@
 import App from 'next/app'
+import Router from 'next/router';
 import { AppContext, AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ResponsiveHeader as Header } from '@components/Layout/Header';
@@ -13,6 +14,14 @@ import { theme } from "@lib/theme"
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { getAccessToken, UserProvider } from '@auth0/nextjs-auth0';
 import { useEffect, useState } from 'react';
+
+import NProgress from 'nprogress'; //nprogress module
+import 'nprogress/nprogress.css'; //styles of nprogress
+
+//Binding events.
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());  
 
 
 const queryClient = new QueryClient();
