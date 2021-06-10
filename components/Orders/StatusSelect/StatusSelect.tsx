@@ -2,27 +2,19 @@ import {HStack} from '@chakra-ui/react'
 import { useRadioGroup } from '@chakra-ui/radio';
 
 import {StatusRadio} from './StatusRadio/StatusRadio'
-
-// //TODO: assign string values
-// export enum OrderStatus {
-//   DONE,
-//   IN_PROCESS,
-//   ACTIVE,
-//   BLOCKED,
-// }
-
+import { statusValue, names } from '@lib/orderStatus';
 
 export interface Props {
   onSelected: (_arg0: string) => void;
 }
 
 export const StatusSelect = ({ onSelected }: Props) => {
-  const options = ["Виконано", "В Процессі"]
+  const options = names;
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'status',
     defaultValue: options[0],
-    onChange: onSelected
+    onChange: (name: string) => onSelected(statusValue[name]),
   });
 
   const group = getRootProps();
