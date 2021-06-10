@@ -26,6 +26,7 @@ const fetchOrders = async ({ pageParam = 0, queryKey }: QueryFunctionContext) =>
       deliver_to: filter?.destination,
       max_price: filter?.maxPrice,
       min_price: filter?.minPrice,
+      status: "ACTIVE"
     },
   });
 
@@ -90,7 +91,11 @@ export default function Orders({ orders, tags }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data: orders } = await api.get('/public/advertisements/');
+  const { data: orders } = await api.get('/public/advertisements/', {
+    params: {
+      status: "ACTIVE"
+    }
+  });
   const { data: _tags } = await api.get('/public/types');
   const session = getSession(context.req, context.res);
   const roles = session?.user['https://spring5-delivery.com/roles'] ?? [];

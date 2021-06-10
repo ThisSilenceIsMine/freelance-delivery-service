@@ -16,8 +16,8 @@ export const OrderList = ({ orders, onItemClick }: Props) => {
           key={order.id}
           btnTitle={order.status === 'APPOINTED' ? 'Почати виконання...' : 'Виконано'}
           onClick={
-            order.status !== 'DONE' && order.status !== 'BLOCKED'
-              ? (oid) => onItemClick && onItemClick(oid, order?.status ?? '')
+            (onItemClick && order.status !== 'DONE' && order.status !== 'BLOCKED')
+              ? (oid) => onItemClick(oid, order?.status ?? '')
               : undefined
           }
           {...order}

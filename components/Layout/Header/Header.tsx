@@ -8,7 +8,7 @@ import { useWindowDimensions } from '~/hooks/useWindowDimensions';
 import { notifications } from '~/mock/Notifications.mock';
 import { ColorModeSwitch } from '~/components/ColorModeSwitch';
 import { useUser } from '@auth0/nextjs-auth0';
-import { QueryFunctionContext, useQuery } from 'react-query';
+import { QueryFunctionContext, useMutation, useQuery, useQueryClient } from 'react-query';
 import { Notification } from '@lib/types';
 import { renameNotificationsFrom } from '@lib/utils';
 import { api } from '@lib/Api/backend';
@@ -19,11 +19,14 @@ interface Props {
 }
 
 
-export const Header = ({ initialNotifications, token }:Props) => {
+export const Header = ({ initialNotifications, token }: Props) => {
+  const queryClient = useQueryClient();
   const { data, refetch } = useQuery(['notifications', token], fetchNotifications, {
     initialData: initialNotifications
   });
-
+  const { mutate } = useMutation(dismiss, {
+    onSuccess: () => queryClient.invalidateQueries('notifications'),
+  });
   const { user } = useUser();
   const { colorMode } = useColorMode();
   return (
@@ -57,7 +60,7 @@ export const Header = ({ initialNotifications, token }:Props) => {
       <ColorModeSwitch mr="2" />
       {user ? (
         <>
-          <NotificationsMenu onDismiss={(id) => token && dismiss(id, token)} notifications={data ?? []} />
+          <NotificationsMenu onDismiss={(id) => token && mutate({ id, token })} notifications={data ?? []} />
           <NextLink href="/profile">
             <Button variant="outline" ml="2" colorScheme="black">
               Профіль
@@ -110,7 +113,7 @@ async function fetchNotifications({ queryKey }: QueryFunctionContext) {
   return renameNotificationsFrom(notifications);
 }
 
-async function dismiss(id: number | string, token: string) {
+async function dismiss({ id, token }:{ id: number | string, token: string}) {
   try {
     api.delete(`/user/notifications/${id}`, {
       headers: {
