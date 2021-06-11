@@ -24,7 +24,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
   const { data, refetch } = useQuery(['notifications', token], fetchNotifications, {
     initialData: initialNotifications
   });
-  const { mutate } = useMutation(dismiss, {
+  const { mutate, isLoading } = useMutation(dismiss, {
     onSuccess: () => queryClient.invalidateQueries('notifications'),
   });
   const { user } = useUser();
@@ -60,7 +60,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
       <ColorModeSwitch mr="2" />
       {user ? (
         <>
-          <NotificationsMenu onDismiss={(id) => token && mutate({ id, token })} notifications={data ?? []} />
+          <NotificationsMenu onDismiss={(id) => !isLoading && token && mutate({ id, token })} notifications={data ?? []} />
           <NextLink href="/profile">
             <Button variant="outline" ml="2" colorScheme="black">
               Профіль

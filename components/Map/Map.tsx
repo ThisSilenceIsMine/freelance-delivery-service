@@ -28,8 +28,8 @@ export const Map = withScriptjs(
     }: Props) => {
       const [departure, setDeparture] = useState<Point>(initialDeparture ?? defaultCenter);
       const [destination, setDestination] = useState<Point>(initialDestination ?? defaultCenter);
-      const [showDep, setShowDep] = useBoolean(isViewOnly);
-      const [showDest, setShowDest] = useBoolean(isViewOnly);
+      const [showDep, setShowDep] = useBoolean(!!initialDeparture || isViewOnly);
+      const [showDest, setShowDest] = useBoolean(!!initialDestination || isViewOnly);
       const isInitialMount = useRef(true);
 
       console.log(`Dep Prop: ${JSON.stringify(initialDeparture)}`);
@@ -91,7 +91,7 @@ export const Map = withScriptjs(
       return (
         <GoogleMap
           defaultZoom={8}
-          defaultCenter={isViewOnly ? defaultCenter : defaultCenter}
+          defaultCenter={departure || defaultCenter}
           onClick={isViewOnly ? () => {} : handleMapClick}
         >
           {showDest && <Marker position={destination} />}

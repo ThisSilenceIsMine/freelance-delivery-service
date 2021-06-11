@@ -57,14 +57,18 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick, bt
       <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" {...darkModeStyleProps}>
         {onClick && (
           <Button colorScheme="green" variant="outline" w="full" onClick={() => onClick(id)}>
-            {btnTitle ?? "Виконано"}
+            {btnTitle ?? 'Виконано'}
           </Button>
         )}
         <Center w="full" h={onClick ? 'calc(100% - 40px)' : 'full'}>
           <Stack direction="column">
-            <Text>{departure}</Text>
+            <Text textAlign="center" textOverflow="ellipsis">
+              {departure}
+            </Text>
             <Divider />
-            <Text>{destination}</Text>
+            <Text textAlign="center" textOverflow="ellipsis">
+              {destination}
+            </Text>
           </Stack>
         </Center>
       </GridItem>

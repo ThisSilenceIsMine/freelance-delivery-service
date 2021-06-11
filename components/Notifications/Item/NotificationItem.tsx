@@ -17,7 +17,7 @@ export const NotificationItem = ({ title, text, id, onDismiss }: Props) => {
     <MenuItem>
       <VStack>
         <HStack>
-          <Heading isTruncated p="1.5" maxW="45ch" size="md" onClick={onToggle}>
+          <Heading isTruncated p="1.5" maxW="45ch" size="sm" onClick={onToggle}>
             {title}
           </Heading>
           <Icon as={AiOutlineClose} onClick={ () => onDismiss(id) }/>

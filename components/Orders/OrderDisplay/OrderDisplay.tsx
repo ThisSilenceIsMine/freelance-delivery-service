@@ -31,6 +31,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Textarea,
+  Spacer,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
@@ -76,9 +77,10 @@ export const OrderDisplay = ({
     <Stack direction="column">
       <Stack direction="row">
         <Heading>{title}</Heading>
+        <Spacer/>
         {(showMenu) ? (
           <Menu>
-            <MenuButton>Menu</MenuButton>
+            <MenuButton>Меню</MenuButton>
             <MenuList>
               {isOwner && (
                 <NextLink href={`/orders/${id}/edit`}>

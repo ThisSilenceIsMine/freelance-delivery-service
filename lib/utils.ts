@@ -66,7 +66,7 @@ export const renameOrdersFrom = (orders: any[]) => {
     if (order?.details) {
       renameField(order.details, 'people_count', 'peopleCount');
     }
-    console.log(order);
+
     return order;
   });
   // console.log(orders)
@@ -95,6 +95,9 @@ export const renameOrdersTo = (orders: any[]) => {
 };
 
 export const renameDriversFrom = (drivers: any[]) => {
+  if (!drivers) {
+    return [];
+  }
   const newDrivers = renameFields(drivers, {
     name: 'fullName',
     types: 'tags',

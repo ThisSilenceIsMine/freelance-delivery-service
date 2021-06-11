@@ -28,6 +28,7 @@ export const TagPicker = ({ tags, onTagsPicked, initialTags }: Props) => {
     <CUIAutoComplete
       disableCreateItem={true}
       label="Виберіть теги"
+      labelStyleProps={{mb: "0"}}
       placeholder="Почніть друкувати..."
       listStyleProps={{background: colorMode === "dark" ? "gray.800" : undefined}}
       onCreateItem={handleCreateItem}

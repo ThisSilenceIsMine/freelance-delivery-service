@@ -47,9 +47,10 @@ export interface Props {
 }
 
 export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeChange, initialOrder }: Props) => {
-  const { data, handleChange } = useForm<FormData>(initialOrder ?? { departure, destination }
-  );
+  const { data, handleChange } = useForm<FormData>(initialOrder ?? { departure, destination });
 
+  console.log('data :>> ', data);
+  console.log('tags :>> ', tags);
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
@@ -69,7 +70,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
         <FormLabel>Заголовок</FormLabel>
         <Input value={data.title ?? ''} onChange={(e) => handleChange('title', e.target.value)} />
       </FormControl>
-      <TagPicker tags={tags} onTagsPicked={(tags) => handleChange('tags', tags)} />
+      <TagPicker initialTags={data.tags} tags={tags} onTagsPicked={(tags) => handleChange('tags', tags)} />
       <FormControl isRequired>
         <FormLabel>Точка відправки</FormLabel>
         <InputGroup>

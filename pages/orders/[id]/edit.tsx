@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { Container, Heading, Flex, Stack, Box } from '@chakra-ui/react';
+import { Container, Heading, Flex, Stack, Box, useToast } from '@chakra-ui/react';
 
 import { api } from '@lib/Api/backend';
 import { renameOrdersFrom, renameOrdersTo, renameTagsFrom, renameTagsTo } from '@lib/utils';
@@ -10,6 +10,7 @@ import { OrderForm, MODE } from '@components/Orders/OrderForm/OrderForm';
 import { tags, orders } from '~/mock';
 import { getLatLng } from '@lib/Api/geocoding/geocoding';
 import { getAccessToken } from '@auth0/nextjs-auth0';
+import { useMutation } from 'react-query';
 
 interface Props {
   order: Order;
@@ -18,30 +19,55 @@ interface Props {
   token: string;
 }
 
-const updateOrder = async (order: Partial<Order>, token: string, id: string | number) => {
-  try {
-    const orderData = renameOrdersTo([order])[0];
+const updateOrder = async ({
+  order,
+  token,
+  id,
+}: {
+  order: Partial<Order>;
+  token: string;
+  id: string | number;
+}) => {
+  const orderData = renameOrdersTo([order])[0];
 
-    api.patch(
-      `/user/advertisements/${id}`,
-      {
-        ...orderData,
+  return api.patch(
+    `/user/advertisements/${id}`,
+    {
+      ...orderData,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
+    }
+  );
 };
 
-export default function NewOrder({ order, departurePoint, destinationPoint, token}: Props) {
+export default function NewOrder({ order, departurePoint, destinationPoint, token }: Props) {
   const [departure, setDeparture] = useState(order.departure);
   const [destination, setDestinaion] = useState(order.destination);
   const [mode, setMode] = useState<MODE>(MODE.DEPARTURE);
+  const toast = useToast();
+  const { mutate } = useMutation(updateOrder, {
+    onSuccess: () => {
+      toast({
+        title: 'Успішно!',
+        description: 'Оголошення було оновлено',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+    onError: () => {
+      toast({
+        title: 'Помилка!',
+        description: 'Щось пішло не так. Перевірте вхідні дані.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
 
   const onPlacePicked = (place: string) => {
     console.log(`Picked ${place} as ${MODE[mode]}`);
@@ -60,7 +86,7 @@ export default function NewOrder({ order, departurePoint, destinationPoint, toke
           departure={departure}
           destination={destination}
           tags={tags}
-          onFormSubmit={(order) => updateOrder(order, token, order.id ?? -1)}
+          onFormSubmit={(order) => mutate({ order, token, id: order.id ?? -1 })}
           onModeChange={(m) => setMode(m)}
         />
       </Box>
@@ -80,14 +106,14 @@ export default function NewOrder({ order, departurePoint, destinationPoint, toke
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, params }) => {
   // console.log(context) // params.id
 
   const { data } = await api.get(`/public/advertisements/${params?.id}`);
 
-    const { accessToken } = await getAccessToken(req, res, {
-      scopes: ['openid', 'profile', 'email'],
-    });
+  const { accessToken } = await getAccessToken(req, res, {
+    scopes: ['openid', 'profile', 'email'],
+  });
 
   const order = renameOrdersFrom([data])[0];
 

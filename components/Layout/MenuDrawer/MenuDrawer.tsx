@@ -33,11 +33,10 @@ export const MenuDrawer: FC = ({ children }) => {
           Меню
         </Button>
       </Flex>
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} size="full">
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} closeOnEsc closeOnOverlayClick size="full">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-
           <DrawerBody>{children}</DrawerBody>
         </DrawerContent>
       </Drawer>

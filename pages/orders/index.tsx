@@ -47,8 +47,10 @@ export default function Orders({ orders, tags }: Props) {
     status,
   } = useInfiniteQuery(['orders', filter], fetchOrders, {
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.pageable.pageNumber < lastPage.totalPages)
+      if (lastPage.pageable.pageNumber < (lastPage.totalPage - 1))
         return lastPage.pageable.pageNumber + 1;
+      else
+        return undefined;
     },
     initialData: orders,
   });
