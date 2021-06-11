@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
-import { Button, Box, Flex, Heading, Link, Spacer, Stack, useColorMode } from '@chakra-ui/react';
-
+import { Button, Box, Flex, Heading, Link, Spacer, Stack, useColorMode, IconButton } from '@chakra-ui/react';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { NavLink } from './NavLink';
 import { MenuDrawer } from '../MenuDrawer';
 import { NotificationsMenu } from '~/components/Notifications';
@@ -60,10 +60,18 @@ export const Header = ({ initialNotifications, token }: Props) => {
       <ColorModeSwitch mr="2" />
       {user ? (
         <>
-          <NotificationsMenu onDismiss={(id) => !isLoading && token && mutate({ id, token })} notifications={data ?? []} />
+          <NotificationsMenu
+            onDismiss={(id) => !isLoading && token && mutate({ id, token })}
+            notifications={data ?? []}
+          />
           <NextLink href="/profile">
             <Button variant="outline" ml="2" colorScheme="black">
               Профіль
+            </Button>
+          </NextLink>
+          <NextLink href="/orders/new">
+            <Button as={IconButton} icon={<AiOutlinePlus/>} variant="outline" ml="2" colorScheme="green">
+              Створити замовлення
             </Button>
           </NextLink>
         </>

@@ -46,6 +46,7 @@ export default function Drivers({drivers, tags}: Props) {
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.pageable.pageNumber < lastPage.totalPages)
           return lastPage.pageable.pageNumber + 1;
+        else return undefined;
       },
       initialData: drivers,
     });
