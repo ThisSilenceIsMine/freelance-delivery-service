@@ -101,10 +101,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
   // console.log(context) // params.id
   const session = getSession(req, res);
 
+  let { data: rawOrder } = await api.get(`/public/advertisements/${params?.id}`);
+
   if (!session) {
-    const { data: rawOrder } = await api.get(`/public/advertisements/${params?.id}`);
 
     const order = renameOrdersFrom([rawOrder])[0];
+
     return {
       props: {
         order,
@@ -128,27 +130,36 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
 
   const roles: string[] = session?.user['https://spring5-delivery.com/roles'] ?? [];
 
-  const { data: rawOrder } = await api.get(`/user/advertisements/${params?.id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const { data: rawRecommended } = await api.get('/public/advertisements/recommended/', {
-    params: {
-      advertisement_id: params?.id,
-    },
-  });
-
-  const order = renameOrdersFrom([rawOrder])[0];
-  const recommendedDrivers = renameDriversFrom(rawRecommended);
-
-      const departurePoint = await getLatLng(order.departure);
-      const destinationPoint = await getLatLng(order.destination);
-
   const isAdmin = !!roles.find((v) => v === 'Admin');
-  const isOwner = user.user_id === order.user_id;
+  const isOwner = user.user_id === rawOrder.user_id;
   const isDriver = !isOwner && !!user?.user_metadata?.driver;
+
+  if (isOwner) {
+    let { data } = await api.get(`/user/advertisements/${params?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    rawOrder = data;
+  }
+
+  let order = renameOrdersFrom([rawOrder])[0];
+  let recommendedDrivers = [];
+
+  if (isOwner) {
+    const { data: rawRecommended } = await api.get('/public/advertisements/recommended/', {
+      params: {
+        advertisement_id: params?.id,
+      },
+    });
+
+    recommendedDrivers = renameDriversFrom(rawRecommended);
+  }
+  
+  const departurePoint = await getLatLng(order.departure);
+  const destinationPoint = await getLatLng(order.destination);
+
 
   return {
     props: {
