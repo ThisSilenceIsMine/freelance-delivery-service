@@ -58,7 +58,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
         </NextLink>
       </Stack>
       <Spacer />
-      <ColorModeSwitch mr="2" />
+      <ColorModeSwitch />
       {user ? (
         <>
           <NotificationsMenu

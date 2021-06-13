@@ -68,7 +68,7 @@ export const UserProfile = ({ name, email, onFormSubmit }: Props) => {
         Зберегти
       </Button>
       <NextLink href="/api/auth/logout">
-        <Button variant="outline"  mt="2" colorScheme="orange">
+        <Button variant="outline" ml="2" mt="2" colorScheme="orange">
           Вихід
         </Button>
       </NextLink>
