@@ -44,9 +44,10 @@ export default function Drivers({drivers, tags}: Props) {
       status,
     } = useInfiniteQuery(['drivers', filter], fetchDrivers, {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.pageable.pageNumber < lastPage.totalPages)
+        if (lastPage.pageable.pageNumber < (lastPage.totalPages - 1))
           return lastPage.pageable.pageNumber + 1;
-        else return undefined;
+        else
+          return undefined;
       },
       initialData: drivers,
     });

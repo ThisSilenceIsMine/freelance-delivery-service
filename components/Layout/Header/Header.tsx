@@ -22,7 +22,8 @@ interface Props {
 export const Header = ({ initialNotifications, token }: Props) => {
   const queryClient = useQueryClient();
   const { data, refetch } = useQuery(['notifications', token], fetchNotifications, {
-    initialData: initialNotifications
+    initialData: initialNotifications,
+    enabled: !!token
   });
   const { mutate, isLoading } = useMutation(dismiss, {
     onSuccess: () => queryClient.invalidateQueries('notifications'),
@@ -80,11 +81,6 @@ export const Header = ({ initialNotifications, token }: Props) => {
           <Button as={Link} href="/api/auth/login" variant="base" colorScheme="teal">
             Вхід
           </Button>
-          <NextLink href="/api/auth/register">
-            <Button variant="outline" colorScheme="orange">
-              Реєстрація
-            </Button>
-          </NextLink>
         </>
       )}
     </Flex>

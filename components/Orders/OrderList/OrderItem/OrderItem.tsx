@@ -27,8 +27,10 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick, bt
   const darkModeStyleProps = colorMode === "dark" ? { background: "gray.700", borderRadius: "0.3em" } : {};
   return (
     <Grid
-      h="min-content"
+      // h="min-content"
+      maxH="48"
       w="full"
+      maxW="full"
       templateRows="repeat(3, 1fr)"
       templateColumns="repeat(6, 1fr)"
       gap={4}
@@ -54,19 +56,19 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick, bt
       >
         <Wrap>{tags && tags.map((x) => <Tag key={x.value}>{x.label}</Tag>)}</Wrap>
       </GridItem>
-      <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" {...darkModeStyleProps}>
+      <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" maxW="100%" {...darkModeStyleProps}>
         {onClick && (
           <Button colorScheme="green" variant="outline" w="full" onClick={() => onClick(id)}>
             {btnTitle ?? 'Виконано'}
           </Button>
         )}
         <Center w="full" h={onClick ? 'calc(100% - 40px)' : 'full'}>
-          <Stack direction="column">
-            <Text textAlign="center" textOverflow="ellipsis">
+          <Stack direction="column" maxW="full">
+            <Text textAlign="center" isTruncated>
               {departure}
             </Text>
             <Divider />
-            <Text textAlign="center" textOverflow="ellipsis">
+            <Text textAlign="center" isTruncated>
               {destination}
             </Text>
           </Stack>
