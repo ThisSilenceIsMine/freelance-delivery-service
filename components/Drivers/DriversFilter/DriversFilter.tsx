@@ -43,7 +43,7 @@ export const DriversFilter = ({ tagOptions, onFilterSubmit }: Props) => {
         boxShadow="lg"
         justify="space-evenly"
         width={['full', 'full', 'full', 'md']}
-        height="md"
+        height="min-content"
         p="3.5"
       >
         <FormControl>
