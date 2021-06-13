@@ -63,27 +63,27 @@ export default function Profile({ userID, token, user, tags }: Props) {
     },
   });
 
-    const { mutate: mutateUser } = useMutation(updateUser, {
-      onSuccess: () => {
-        queryClient.invalidateQueries('profile');
-        toast({
-          title: 'Успішно!',
-          description: 'Ваш профіль було оновлено',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      },
-      onError: () => {
-        toast({
-          title: 'Помилка!',
-          description: 'Щось пішло не так. Перевірте вхідні дані.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-      },
-    });
+  const { mutate: mutateUser } = useMutation(updateUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+      toast({
+        title: 'Успішно!',
+        description: 'Ваш профіль було оновлено',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+    onError: () => {
+      toast({
+        title: 'Помилка!',
+        description: 'Щось пішло не так. Перевірте вхідні дані.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
 
   const isDriver = Boolean(data?.user_metadata.driver);
 
@@ -104,7 +104,11 @@ export default function Profile({ userID, token, user, tags }: Props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserProfile name={data?.name ?? ''} email={data?.email ?? ''} onFormSubmit={(user) => mutateUser({token, user})} />
+            <UserProfile
+              name={data?.name ?? ''}
+              email={data?.email ?? ''}
+              onFormSubmit={(user) => mutateUser({ token, user })}
+            />
             <Center my="3.5">
               <Heading>Ваші замовлення</Heading>
             </Center>
@@ -117,28 +121,30 @@ export default function Profile({ userID, token, user, tags }: Props) {
           <TabPanel>
             {isDriver && (
               <>
-              <DriverForm
-                initialData={{
-                  id: data!.user_metadata.driver.id,
-                  fullName: data!.user_metadata.driver.name,
-                  experience: String(data!.user_metadata.driver.experience),
-                  tags: (renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[],
-                  description: data!.user_metadata.driver.description,
-                }}
-                tagOptions={tags}
-                onFormSubmit={(driver) => { mutateDriver( {token, driver} ) }} //mutate driver
-                ref={ref}
-              >
-                <Button colorScheme="teal" mt="2" variant="outline" type="submit">
-                  Зберегти
-                </Button>
-              </DriverForm>
+                <DriverForm
+                  initialData={{
+                    id: data!.user_metadata.driver.id,
+                    fullName: data!.user_metadata.driver.name,
+                    experience: String(data!.user_metadata.driver.experience),
+                    tags: (renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[],
+                    description: data!.user_metadata.driver.description,
+                  }}
+                  tagOptions={tags}
+                  onFormSubmit={(driver) => {
+                    mutateDriver({ token, driver });
+                  }} //mutate driver
+                  ref={ref}
+                >
+                  <Button colorScheme="teal" mt="2" variant="outline" type="submit">
+                    Зберегти
+                  </Button>
+                </DriverForm>
                 <DriverOrders
                   token={token}
                   initialOrders={renameOrdersFrom(data!.user_metadata.driver.advertisements ?? [])}
                   tags={(renameTagsFrom(data!.user_metadata.driver.types) as unknown) as Tag[]}
                   driverID={data!.user_metadata.driver.id}
-              />
+                />
               </>
             )}
           </TabPanel>
@@ -153,9 +159,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const { accessToken } = await getAccessToken(req, res, {
       scopes: ['openid', 'profile', 'email'],
     });
-  
+
     const session = getSession(req, res);
 
+    if (!session || !session.user) {
+      res.writeHead(302, {
+        Location: '/api/login',
+      });
+      res.end();
+      return {
+        props: {},
+      };
+    }
 
     const { data: user } = await api.get('/user', {
       headers: {
@@ -177,17 +192,29 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   } catch (error) {
     // console.log(error)
     console.log('Whoops! Token f*d up!');
-    return { props: {} };
+    res.writeHead(302, {
+      Location: '/api/auth/login',
+    });
+    res.end();
+    return {
+      props: {},
+    };
   }
 };
 
-async function updateUser({ token, user }: { token: string; user: { name?: string; email?: string; } }) {
+async function updateUser({
+  token,
+  user,
+}: {
+  token: string;
+  user: { name?: string; email?: string };
+}) {
   return (
     await api.patch(
       '/user',
       {
         name: user?.name,
-        email: user?.email
+        email: user?.email,
       },
       {
         headers: {
@@ -198,8 +225,7 @@ async function updateUser({ token, user }: { token: string; user: { name?: strin
   ).data;
 }
 
-async function updateDriver({ token, driver }: {token: string, driver: Partial<Driver>}) {
-
+async function updateDriver({ token, driver }: { token: string; driver: Partial<Driver> }) {
   return (
     await api.patch(
       '/user/driver',

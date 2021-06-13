@@ -108,26 +108,35 @@ export default function NewOrder({ order, departurePoint, destinationPoint, toke
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res, params }) => {
   // console.log(context) // params.id
+  try {
+    const { data } = await api.get(`/public/advertisements/${params?.id}`);
 
-  const { data } = await api.get(`/public/advertisements/${params?.id}`);
+    const { accessToken } = await getAccessToken(req, res, {
+      scopes: ['openid', 'profile', 'email'],
+    });
 
-  const { accessToken } = await getAccessToken(req, res, {
-    scopes: ['openid', 'profile', 'email'],
-  });
+    const order = renameOrdersFrom([data])[0];
 
-  const order = renameOrdersFrom([data])[0];
+    console.log(data);
 
-  console.log(data);
+    const departurePoint = await getLatLng(order.departure);
+    const destinationPoint = await getLatLng(order.destination);
 
-  const departurePoint = await getLatLng(order.departure);
-  const destinationPoint = await getLatLng(order.destination);
-
-  return {
-    props: {
-      order,
-      departurePoint,
-      destinationPoint,
-      token: accessToken,
-    },
-  };
+    return {
+      props: {
+        order,
+        departurePoint,
+        destinationPoint,
+        token: accessToken,
+      },
+    };
+  } catch (error) {
+    res.writeHead(302, {
+      Location: '/api/auth/login',
+    });
+    res.end();
+    return {
+      props: {},
+    };
+  }
 };
