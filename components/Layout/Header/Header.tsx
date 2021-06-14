@@ -40,12 +40,13 @@ export const Header = ({ initialNotifications, token }: Props) => {
     },
   });
   const { user } = useUser();
-  const { colorMode } = useColorMode();
+  // const { colorMode } = useColorMode();
+  const colorMode = "light";
   return (
     <Flex
       w="100%"
       p="4"
-      bg={colorMode === 'dark' ? 'gray.900' : 'orange'}
+      bg={'orange'}
       direction={['column', 'column', 'row', 'row']}
       boxShadow="md"
       justify="flex-start"
@@ -59,17 +60,16 @@ export const Header = ({ initialNotifications, token }: Props) => {
       <Spacer />
       <Stack direction={['column', 'column', 'row', 'row']} spacing="1em">
         <NextLink href="/" passHref>
-          <NavLink dark={colorMode === 'dark'}>Головна</NavLink>
+          <NavLink dark={false}>Головна</NavLink>
         </NextLink>
         <NextLink href="/orders" passHref>
-          <NavLink dark={colorMode === 'dark'}>Замовлення</NavLink>
+          <NavLink dark={false}>Замовлення</NavLink>
         </NextLink>
         <NextLink href="/drivers" passHref>
-          <NavLink dark={colorMode === 'dark'}>Водії</NavLink>
+          <NavLink dark={false}>Водії</NavLink>
         </NextLink>
       </Stack>
       <Spacer />
-      <ColorModeSwitch />
       {user ? (
         <>
           <NotificationsMenu
