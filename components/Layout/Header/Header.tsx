@@ -23,10 +23,19 @@ export const Header = ({ initialNotifications, token }: Props) => {
   const queryClient = useQueryClient();
   const { data, refetch, isLoading: isFetching } = useQuery(['notifications', token], fetchNotifications, {
     initialData: initialNotifications,
-    enabled: !!token
+    onSuccess: () => {
+      console.log('refetched notifs')
+    }
   });
   const { mutate, isLoading: isMutating } = useMutation(dismiss, {
-    onSuccess: () => queryClient.invalidateQueries('notifications'),
+    onSuccess: () => {
+      // queryClient.invalidateQueries('notifications');
+      setTimeout(() => {
+        refetch();
+      }, 2000);
+      
+      console.log('mutated that shet')
+    },
   });
   const { user } = useUser();
   const { colorMode } = useColorMode();

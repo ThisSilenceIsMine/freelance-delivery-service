@@ -77,8 +77,8 @@ export const OrderDisplay = ({
   const showMenu = isDriver || isOwner || isAdmin;
 
   return (
-    <Stack direction="column">
-      <Stack direction="row">
+    <Stack direction="column" w="full">
+      <Stack direction="row" w="full">
         <Heading>{title}</Heading>
         <Spacer />
         {showMenu ? (
