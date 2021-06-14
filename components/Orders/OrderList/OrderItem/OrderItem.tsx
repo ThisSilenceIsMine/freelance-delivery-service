@@ -70,7 +70,7 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick, bt
         maxW="100%"
         {...darkModeStyleProps}
       >
-        {onClick && (
+        {onClick && status !== "READY" && (
           <Button colorScheme="green" variant="outline" w="full" onClick={() => onClick(id)}>
             {btnTitle ?? 'Виконано'}
           </Button>
