@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { getSession, getAccessToken } from '@auth0/nextjs-auth0';
 import { Container, Heading, Flex, Stack, Box } from '@chakra-ui/react';
 import { useMutation, useQueryClient, useQuery, QueryFunctionContext } from 'react-query';
-
+import { useRouter } from 'next/router';
 import { api } from '@lib/Api/backend';
 import { renameOrdersFrom, renameOrdersTo, renameTagsFrom, renameTagsTo } from '@lib/utils';
 
@@ -38,7 +38,7 @@ export default function NewOrder({ token, tags }:Props) {
   const [departure, setDeparture] = useState("");
   const [destination, setDestinaion] = useState("");
   const [mode, setMode] = useState<MODE>(MODE.DEPARTURE)
-
+  const router = useRouter();
   const onPlacePicked = (place: string) => {
     console.log(`Picked ${place} for ${MODE[mode]}`)
     if(mode === MODE.DEPARTURE) {
@@ -55,7 +55,10 @@ export default function NewOrder({ token, tags }:Props) {
           departure={departure}
           destination={destination}
           tags={tags}
-          onFormSubmit={(order) => createOrder(order, token)}
+          onFormSubmit={async(order) => {
+            await createOrder(order, token);
+            router.push('/orders')
+          }}
           onModeChange={(m) => setMode(m)}
         />
       </Box>

@@ -8,6 +8,7 @@ export const NavLink = styled.a<Props>`
   position: relative;
   box-sizing: content-box;
   cursor: pointer;
+  text-align: center;
   &::before {
     display: block;
     position: relative;

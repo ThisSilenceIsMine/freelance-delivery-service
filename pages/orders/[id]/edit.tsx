@@ -11,6 +11,7 @@ import { tags, orders } from '~/mock';
 import { getLatLng } from '@lib/Api/geocoding/geocoding';
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
 
 interface Props {
   order: Order;
@@ -29,7 +30,7 @@ const updateOrder = async ({
   id: string | number;
 }) => {
   const orderData = renameOrdersTo([order])[0];
-
+  console.log(`orderData`, orderData);
   return api.patch(
     `/user/advertisements/${id}`,
     {
@@ -48,6 +49,7 @@ export default function NewOrder({ order, departurePoint, destinationPoint, toke
   const [destination, setDestinaion] = useState(order.destination);
   const [mode, setMode] = useState<MODE>(MODE.DEPARTURE);
   const toast = useToast();
+  const router = useRouter();
   const { mutate } = useMutation(updateOrder, {
     onSuccess: () => {
       toast({
@@ -57,6 +59,7 @@ export default function NewOrder({ order, departurePoint, destinationPoint, toke
         duration: 9000,
         isClosable: true,
       });
+      router.push('/orders')
     },
     onError: () => {
       toast({

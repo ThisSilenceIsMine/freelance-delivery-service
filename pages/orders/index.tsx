@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { Container, Heading, Flex, Stack, Button } from '@chakra-ui/react';
+import { Container, Heading, Flex, Stack, Button, Text } from '@chakra-ui/react';
 import { QueryFunctionContext, useInfiniteQuery } from 'react-query';
 
 import { OrderList, OrdersFilter, FormData } from '@components/Orders';
@@ -75,6 +75,7 @@ export default function Orders({ orders, tags }: Props) {
         <OrdersFilter tagOptions={tags} onFilterSubmit={(data) => {setFilter(data);}} sticky />
         <Stack direction="column" w="full">
           <OrderList orders={orderList ?? []} />
+          {!(orderList?.length) && <Text>Нічого не знайдено</Text>}
           <Button
             isLoading={isFetching}
             disabled={!hasNextPage || isFetchingNextPage}

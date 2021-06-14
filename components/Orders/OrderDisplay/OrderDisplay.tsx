@@ -75,7 +75,7 @@ export const OrderDisplay = ({
   const toast = useToast();
 
   const showMenu = isDriver || isOwner || isAdmin;
-
+  // console.log(details);
   return (
     <Stack direction="column" w="full">
       <Stack direction="row" w="full">
@@ -201,6 +201,7 @@ export const OrderDisplay = ({
           <Input readOnly value={details?.weight} />
         </FormControl>
       )}
+      
       {details?.peopleCount && (
         <FormControl>
           <FormLabel>Кількість людей:</FormLabel>

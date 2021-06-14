@@ -49,7 +49,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
       bg={'orange'}
       direction={['column', 'column', 'row', 'row']}
       boxShadow="md"
-      justify="flex-start"
+      justify="center"
       align="center"
     >
       <Box>

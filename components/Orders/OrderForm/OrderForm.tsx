@@ -70,7 +70,11 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
         <FormLabel>Заголовок</FormLabel>
         <Input value={data.title ?? ''} onChange={(e) => handleChange('title', e.target.value)} />
       </FormControl>
-      <TagPicker initialTags={data.tags} tags={tags} onTagsPicked={(tags) => handleChange('tags', tags)} />
+      <TagPicker
+        initialTags={data.tags}
+        tags={tags}
+        onTagsPicked={(tags) => handleChange('tags', tags)}
+      />
       <FormControl isRequired>
         <FormLabel>Точка відправки</FormLabel>
         <InputGroup>
@@ -128,8 +132,8 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
             <FormControl>
               <FormLabel>Дата</FormLabel>
               <DatePicker
-                selectedDate={ data.date ? new Date(data.date) : undefined}
-                onChange={(date) => handleChange('date', date.toISOString().substring(0,10))}
+                selectedDate={data.date ? new Date(data.date) : undefined}
+                onChange={(date) => handleChange('date', date.toISOString().substring(0, 10))}
               />
             </FormControl>
             <FormControl>
@@ -139,8 +143,8 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 <NumberInput
                   precision={2}
                   w="full"
-                  value={data.price ?? ''} 
-                  onChange={(value) => handleChange('price', value)}
+                  value={data.price ?? ''}
+                  onChange={(value) => handleChange('price', Number(value))}
                 >
                   <NumberInputField />
                 </NumberInput>
@@ -151,7 +155,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
               <NumberInput
                 w="full"
                 value={data.details?.peopleCount ?? ''} //
-                onChange={(value) => handleChange('details.peopleCount', value)}
+                onChange={(value) => handleChange('details.peopleCount', Number(value))}
               >
                 <NumberInputField />
               </NumberInput>
@@ -162,7 +166,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                 precision={2}
                 w="full"
                 value={data.details?.weight ?? ''} //
-                onChange={(value) => handleChange('details.weight', value)}
+                onChange={(value) => handleChange('details.weight', Number(value))}
               >
                 <NumberInputField />
               </NumberInput>
@@ -174,7 +178,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                   precision={2}
                   w="1/3"
                   value={data.details?.height ?? ''} //
-                  onChange={(value) => handleChange('details.height', value)}
+                  onChange={(value) => handleChange('details.height', Number(value))}
                 >
                   <NumberInputField placeholder="Висота" />
                 </NumberInput>
@@ -182,7 +186,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                   precision={2}
                   w="1/3"
                   value={data.details?.width ?? ''} //
-                  onChange={(value) => handleChange('details.width', value)}
+                  onChange={(value) => handleChange('details.width', Number(value))}
                 >
                   <NumberInputField placeholder="Ширина" />
                 </NumberInput>
@@ -190,7 +194,7 @@ export const OrderForm = ({ departure, destination, tags, onFormSubmit, onModeCh
                   precision={2}
                   w="1/3"
                   value={data.details?.length ?? ''} //
-                  onChange={(value) => handleChange('details.length', value)}
+                  onChange={(value) => handleChange('details.length', Number(value))}
                 >
                   <NumberInputField placeholder="Довжина" />
                 </NumberInput>

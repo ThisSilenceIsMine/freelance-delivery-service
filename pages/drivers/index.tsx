@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { Container, Stack, Button } from '@chakra-ui/react';
+import { Container, Stack, Button, Text } from '@chakra-ui/react';
 import { QueryFunctionContext, useInfiniteQuery } from 'react-query';
 
 import { renameDriversFrom, renameTagsFrom } from '@lib/utils';
@@ -81,6 +81,7 @@ export default function Drivers({drivers, tags}: Props) {
         />
         <Stack direction="column" w="full">
           <DriverList drivers={driverList ?? []} />
+          {!driverList?.length && <Text>Нічого не знайдено</Text>}
           <Button
             isLoading={isFetching}
             disabled={!hasNextPage || isFetchingNextPage}
