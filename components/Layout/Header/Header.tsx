@@ -21,11 +21,11 @@ interface Props {
 
 export const Header = ({ initialNotifications, token }: Props) => {
   const queryClient = useQueryClient();
-  const { data, refetch } = useQuery(['notifications', token], fetchNotifications, {
+  const { data, refetch, isLoading: isFetching } = useQuery(['notifications', token], fetchNotifications, {
     initialData: initialNotifications,
     enabled: !!token
   });
-  const { mutate, isLoading } = useMutation(dismiss, {
+  const { mutate, isLoading: isMutating } = useMutation(dismiss, {
     onSuccess: () => queryClient.invalidateQueries('notifications'),
   });
   const { user } = useUser();
@@ -62,8 +62,9 @@ export const Header = ({ initialNotifications, token }: Props) => {
       {user ? (
         <>
           <NotificationsMenu
-            onDismiss={(id) => !isLoading && token && mutate({ id, token })}
+            onDismiss={(id) => !isMutating && token && mutate({ id, token })}
             notifications={data ?? []}
+            isLoading={isMutating || isFetching}
           />
           <NextLink href="/profile">
             <Button variant="outline" ml="2" colorScheme="black">

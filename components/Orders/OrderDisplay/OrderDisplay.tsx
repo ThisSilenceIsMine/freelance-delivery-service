@@ -32,6 +32,7 @@ import {
   useDisclosure,
   Textarea,
   Spacer,
+  useToast,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { RiMapPin2Line, RiMapPin2Fill, RiPhoneLine } from 'react-icons/ri';
@@ -71,14 +72,16 @@ export const OrderDisplay = ({
   const { isOpen, onClose, onToggle } = useDisclosure();
   const [reason, setReason] = useState('');
 
+  const toast = useToast();
+
   const showMenu = isDriver || isOwner || isAdmin;
 
   return (
     <Stack direction="column">
       <Stack direction="row">
         <Heading>{title}</Heading>
-        <Spacer/>
-        {(showMenu) ? (
+        <Spacer />
+        {showMenu ? (
           <Menu>
             <MenuButton>Меню</MenuButton>
             <MenuList>
@@ -87,7 +90,32 @@ export const OrderDisplay = ({
                   <MenuItem>Редагувати</MenuItem>
                 </NextLink>
               )}
-              {isDriver && <MenuItem onClick={() => applyForOrder(id, token)}>Відгукнутись</MenuItem>}
+              {isDriver && (
+                <MenuItem
+                  onClick={async () => {
+                    try {
+                      await applyForOrder(id, token);
+                      toast({
+                        title: 'Успішно!',
+                        description: 'Ви подали заявку на виконання',
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    } catch (error) {
+                      toast({
+                        title: 'Помилка!',
+                        description: 'Щось пішло не так',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    }
+                  }}
+                >
+                  Відгукнутись
+                </MenuItem>
+              )}
               {isAdmin && <MenuItem onClick={() => onToggle()}>Заблокувати</MenuItem>}
             </MenuList>
           </Menu>
@@ -127,18 +155,33 @@ export const OrderDisplay = ({
       <Stack direction={['column', 'column', 'row', 'row']}>
         {date && (
           <InputGroup>
-            <InputLeftAddon children={<Icon as={AiOutlineCalendar} />} />
+            <InputLeftAddon
+              minW="80px"
+              justifyContent="center"
+              alignItems="center"
+              children={<Icon as={AiOutlineCalendar} />}
+            />
             <Input readOnly value={date.toString()} />
           </InputGroup>
         )}
         {price && (
           <InputGroup>
-            <InputLeftAddon children={<Icon as={BiDollar} />} />
+            <InputLeftAddon
+              minW="80px"
+              justifyContent="center"
+              alignItems="center"
+              children={<Icon as={BiDollar} />}
+            />
             <Input readOnly value={price} />
           </InputGroup>
         )}
         <InputGroup>
-          <InputLeftAddon children={<Icon as={RiPhoneLine} />} />
+          <InputLeftAddon
+            minW="80px"
+            justifyContent="center"
+            alignItems="center"
+            children={<Icon as={RiPhoneLine} />}
+          />
           <Input readOnly value={phoneNumber} />
         </InputGroup>
       </Stack>
@@ -181,7 +224,28 @@ export const OrderDisplay = ({
             <Button
               variant="outline"
               colorScheme="orange"
-              onClick={() => suspendOrder(id, reason, token)}
+              onClick={async () => {
+                try {
+                  await suspendOrder(id, reason, token);
+
+                  toast({
+                    title: 'Успішно!',
+                    description: 'Оголошення заблоковано',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                } catch (error) {
+                  toast({
+                    title: 'Помилка!',
+                    description: 'Щось пішло не так',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                }
+                onClose();
+              }}
             >
               Підтвердити
             </Button>
@@ -224,17 +288,14 @@ async function applyForOrder(advertisement_id: number | string, token: string | 
       console.error('Cannot apply for order! Reason: Token not provided.');
       return;
     }
-    await api.get(
-      '/user/driver/respond/',
-      {
-        params: {
-          advertisement_id,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    await api.get('/user/driver/respond/', {
+      params: {
+        advertisement_id,
       },
-    );
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     console.error(`Cannot suspend order! Reason: ${error}`);
   }

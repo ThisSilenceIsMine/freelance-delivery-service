@@ -1,4 +1,4 @@
-import { Heading, Text, MenuItem, SlideFade, VStack, HStack, Icon } from '@chakra-ui/react';
+import { Heading, Text, MenuItem, SlideFade, VStack, HStack, Icon, Spacer } from '@chakra-ui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { useDisclosure } from '@chakra-ui/hooks';
@@ -8,10 +8,11 @@ import { Notification } from '@lib/types';
 // export type Props = Notification;
 
 export interface Props extends Notification {
+  
   onDismiss: (id: number | string) => void;
 }
 
-export const NotificationItem = ({ title, text, id, onDismiss }: Props) => {
+export const NotificationItem = ({ title, text, id, onDismiss, time_stamp }: Props) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   return (
     <MenuItem>
@@ -20,11 +21,12 @@ export const NotificationItem = ({ title, text, id, onDismiss }: Props) => {
           <Heading isTruncated p="1.5" maxW="45ch" size="sm" onClick={onToggle}>
             {title}
           </Heading>
-          <Icon as={AiOutlineClose} onClick={ () => onDismiss(id) }/>
+          <Spacer/>
+          <Icon as={AiOutlineClose} onClick={() => onDismiss(id)} />
         </HStack>
         <SlideFade in={isOpen} hidden={!isOpen} onClick={onClose}>
           <Heading size="sm" maxW="45ch">
-            {title}
+            {time_stamp}
           </Heading>
           <Text maxW="45ch">{text}</Text>
         </SlideFade>

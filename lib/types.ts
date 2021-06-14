@@ -40,4 +40,5 @@ export interface Notification {
   id: string | number;
   title: string;
   text: string;
+  time_stamp: string;
 }

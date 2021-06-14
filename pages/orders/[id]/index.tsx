@@ -1,4 +1,14 @@
-import { Box, Stack, VStack, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  VStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  useToast,
+} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
@@ -12,6 +22,7 @@ import { getLatLng } from '@lib/Api/geocoding/geocoding';
 import { api } from '@lib/Api/backend';
 import { renameDriversFrom, renameOrdersFrom } from '@lib/utils';
 import { DriverList } from '@components/Drivers';
+import { useMutation } from 'react-query';
 
 interface Props {
   order: any; //FIX_ME
@@ -21,6 +32,7 @@ interface Props {
   isOwner: boolean;
   departurePoint: Point;
   destinationPoint: Point;
+  respondedDrivers?: Driver[];
   token?: string;
 }
 
@@ -32,24 +44,10 @@ export default function OrderDetails({
   isOwner,
   isDriver,
   departurePoint,
-  destinationPoint
+  destinationPoint,
+  respondedDrivers,
 }: Props) {
-  // const [departure, setDeparture] = useState<Point>();
-  // const [destination, setDestiation] = useState<Point>();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const dep = await getLatLng(order.departure);
-  //       const dest = await getLatLng(order.destination);
-
-  //       setDeparture(dep);
-  //       setDestiation(dest);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   })();
-  // }, []);
+  const toast = useToast();
 
   return (
     <Stack h="full" w="full" direction={['column', 'column', 'column', 'row']} p="4">
@@ -70,8 +68,27 @@ export default function OrderDetails({
             <TabPanels>
               <TabPanel>
                 <DriverList
-                  onClick={(driverID) => appointDriver(order.id, driverID, token ?? '')}
-                  drivers={renameDriversFrom(order?.responded) ?? []}
+                  onClick={async (driverID) => {
+                    try {
+                      await appointDriver(order.id, driverID, token ?? '');
+                      toast({
+                        title: 'Успішно!',
+                        description: 'Водія назначено як виконавця',
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    } catch (error) {
+                      toast({
+                        title: 'Помилка!',
+                        description: 'Щось пішло не так',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    }
+                  }}
+                  drivers={respondedDrivers ?? []}
                 />
               </TabPanel>
               <TabPanel>
@@ -103,10 +120,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
 
   let { data: rawOrder } = await api.get(`/public/advertisements/${params?.id}`);
 
+  const order = renameOrdersFrom([rawOrder])[0];
+
   if (!session) {
-
-    const order = renameOrdersFrom([rawOrder])[0];
-
     return {
       props: {
         order,
@@ -134,17 +150,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
   const isOwner = user.user_id === rawOrder.user_id;
   const isDriver = !isOwner && !!user?.user_metadata?.driver;
 
-  if (isOwner) {
-    let { data } = await api.get(`/user/advertisements/${params?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  
-    rawOrder = data;
-  }
+  // if (isOwner) {
+  //   let { data } = await api.get(`/user/advertisements/${params?.id}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   console.log('data :>> ', data);
+  //   rawOrder = data;
+  // }
 
-  let order = renameOrdersFrom([rawOrder])[0];
   let recommendedDrivers = [];
 
   if (isOwner) {
@@ -156,16 +171,19 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
 
     recommendedDrivers = renameDriversFrom(rawRecommended);
   }
-  
+
   const departurePoint = await getLatLng(order.departure);
   const destinationPoint = await getLatLng(order.destination);
 
-
+  console.log('order.responded :>> ', order.responded);
+  const respondedDrivers = await fetchDriversByIds(order.responded);
+  console.log('respondedDrivers :>> ', respondedDrivers);
   return {
     props: {
       order,
       departurePoint,
       destinationPoint,
+      respondedDrivers,
       token,
       isAdmin,
       isDriver,
@@ -189,4 +207,20 @@ async function appointDriver(orderID: number | string, driverID: number | string
   } catch (error) {
     console.error(error);
   }
+}
+
+async function fetchDriversByIds(ids: number[]) {
+  let drivers: any[] = [];
+  // ids.forEach(async (id) => {
+  //   const { data } = await api.get(`/public/drivers/${id}`);
+  //   console.log(`Driver in forEach:`, data)
+  //   drivers = [...drivers, data];
+  // });
+  for (const id of ids) {
+      const { data } = await api.get(`/public/drivers/${id}`);
+      console.log(`Driver in forEach:`, data)
+      drivers = [...drivers, data];
+  }
+  console.log('drivers :>> ', drivers);
+  return renameDriversFrom(drivers);
 }
