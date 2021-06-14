@@ -63,6 +63,7 @@ export const RegisterDriverModal = ({ token, tags, isDriver }: Props) => {
         duration: 9000,
         isClosable: true,
       });
+      onClose();
     },
     onError: () => {
       toast({

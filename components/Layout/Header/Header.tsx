@@ -12,6 +12,7 @@ import { QueryFunctionContext, useMutation, useQuery, useQueryClient } from 'rea
 import { Notification } from '@lib/types';
 import { renameNotificationsFrom } from '@lib/utils';
 import { api } from '@lib/Api/backend';
+import styled from '@emotion/styled';
 
 interface Props {
   initialNotifications?: Notification[];
@@ -23,6 +24,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
   const queryClient = useQueryClient();
   const { data, refetch, isLoading: isFetching } = useQuery(['notifications', token], fetchNotifications, {
     initialData: initialNotifications,
+    enabled: !!token,
     onSuccess: () => {
       console.log('refetched notifs')
     }
@@ -32,7 +34,7 @@ export const Header = ({ initialNotifications, token }: Props) => {
       // queryClient.invalidateQueries('notifications');
       setTimeout(() => {
         refetch();
-      }, 2000);
+      }, 1000);
       
       console.log('mutated that shet')
     },

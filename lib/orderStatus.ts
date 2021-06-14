@@ -11,3 +11,11 @@ export const statusValue: Record<string, string> = {
   Заблоковане: 'BLOCKED',
   Назначено: 'APPOINTED',
 };
+
+export const statusKey: Record<string, string> = {
+  ACTIVE: 'Активне',
+  IN_PROCESS: 'В процессі',
+  READY: 'Виконане',
+  BLOCKED: 'Заблоковане',
+  APPOINTED: 'Назначено',
+}

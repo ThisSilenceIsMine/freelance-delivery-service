@@ -116,10 +116,12 @@ export default function OrderDetails({
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req, res }) => {
   // console.log(context) // params.id
-  const session = getSession(req, res);
-
+  try {
+    
+    const session = getSession(req, res);
+    
   let { data: rawOrder } = await api.get(`/public/advertisements/${params?.id}`);
-
+  
   const order = renameOrdersFrom([rawOrder])[0];
 
   if (!session) {
@@ -133,64 +135,72 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req, res 
       },
     };
   }
-
+  
   const { accessToken: token } = await getAccessToken(req, res, {
     scopes: ['openid', 'profile', 'email'],
   });
-
+  
   const { data: user } = await api.get('/user', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
+  
   const roles: string[] = session?.user['https://spring5-delivery.com/roles'] ?? [];
-
+  
   const isAdmin = !!roles.find((v) => v === 'Admin');
   const isOwner = user.user_id === rawOrder.user_id;
   const isDriver = !isOwner && !!user?.user_metadata?.driver;
-
+  
   // if (isOwner) {
-  //   let { data } = await api.get(`/user/advertisements/${params?.id}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //   console.log('data :>> ', data);
-  //   rawOrder = data;
-  // }
-
-  let recommendedDrivers = [];
-
-  if (isOwner) {
-    const { data: rawRecommended } = await api.get('/public/advertisements/recommended/', {
-      params: {
-        advertisement_id: params?.id,
-      },
-    });
-
-    recommendedDrivers = renameDriversFrom(rawRecommended);
-  }
-
-  const departurePoint = await getLatLng(order.departure);
-  const destinationPoint = await getLatLng(order.destination);
-
-  console.log('order.responded :>> ', order.responded);
-  const respondedDrivers = await fetchDriversByIds(order.responded);
-  console.log('respondedDrivers :>> ', respondedDrivers);
-  return {
-    props: {
-      order,
-      departurePoint,
-      destinationPoint,
-      respondedDrivers,
-      token,
-      isAdmin,
-      isDriver,
-      isOwner,
+    //   let { data } = await api.get(`/user/advertisements/${params?.id}`, {
+      //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //     },
+        //   });
+        //   console.log('data :>> ', data);
+        //   rawOrder = data;
+        // }
+        
+        let recommendedDrivers = [];
+        
+        if (isOwner) {
+          const { data: rawRecommended } = await api.get('/public/advertisements/recommended/', {
+            params: {
+              advertisement_id: params?.id,
+            },
+          });
+          
+          recommendedDrivers = renameDriversFrom(rawRecommended);
+        }
+        
+        const departurePoint = await getLatLng(order.departure);
+        const destinationPoint = await getLatLng(order.destination);
+        
+        console.log('order.responded :>> ', order.responded);
+        const respondedDrivers = await fetchDriversByIds(order.responded);
+        console.log('respondedDrivers :>> ', respondedDrivers);
+        return {
+          props: {
+            order,
+            departurePoint,
+            destinationPoint,
+            respondedDrivers,
+            token,
+            isAdmin,
+            isDriver,
+            isOwner,
       recommendedDrivers,
     },
   };
+} catch (error) {
+  return {
+    props: {},
+    redirect: {
+      destination: '/404',
+    }
+  }
+}
 };
 
 async function appointDriver(orderID: number | string, driverID: number | string, token: string) {

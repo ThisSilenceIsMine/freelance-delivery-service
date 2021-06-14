@@ -24,7 +24,6 @@ export interface Props {
 export const UserOrders = ({ initialOrders, tags, userID }: Props) => {
   const [filter, setFilter] = useState<Partial<FormData>>();
 
-
   const { data, refetch } = useQuery(['userOrders', userID, filter], fetchUserOrders, {
     initialData: initialOrders,
   });
@@ -56,7 +55,7 @@ export const UserOrders = ({ initialOrders, tags, userID }: Props) => {
         </AccordionItem>
       </Accordion>
       <Divider />
-      <OrderList orders={data ?? []} />
+      <OrderList withStatus orders={data ?? []} />
     </>
   );
 };

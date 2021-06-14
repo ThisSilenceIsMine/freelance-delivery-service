@@ -16,13 +16,16 @@ import {
 import NextLink from 'next/link';
 
 import type { Order } from '@lib/types';
+import { statusValue, statusKey } from '@lib/orderStatus';
 export interface Props extends Order {
   btnTitle?: string;
+  withStatus?: boolean;
   onClick?: (id: number | string) => void;
 }
 
 
-export const OrderItem = ({ title, departure, destination, tags, id, onClick, btnTitle }: Props) => {
+
+export const OrderItem = ({ title, departure, destination, tags, id, onClick, btnTitle, withStatus, status }: Props) => {
   const { colorMode } = useColorMode();
   const darkModeStyleProps = colorMode === "dark" ? { background: "gray.700", borderRadius: "0.3em" } : {};
   return (
@@ -54,9 +57,19 @@ export const OrderItem = ({ title, departure, destination, tags, id, onClick, bt
         p="2.5"
         {...darkModeStyleProps}
       >
-        <Wrap>{tags && tags.map((x) => <Tag key={x.value}>{x.label}</Tag>)}</Wrap>
+        <Wrap>
+          {withStatus && status && <Tag colorScheme="teal">{statusKey[status]}</Tag>}
+          {tags && tags.map((x) => <Tag key={x.value}>{x.label}</Tag>)}
+        </Wrap>
       </GridItem>
-      <GridItem rowSpan={3} colSpan={2} p="2.5" boxShadow="base" maxW="100%" {...darkModeStyleProps}>
+      <GridItem
+        rowSpan={3}
+        colSpan={2}
+        p="2.5"
+        boxShadow="base"
+        maxW="100%"
+        {...darkModeStyleProps}
+      >
         {onClick && (
           <Button colorScheme="green" variant="outline" w="full" onClick={() => onClick(id)}>
             {btnTitle ?? 'Виконано'}
