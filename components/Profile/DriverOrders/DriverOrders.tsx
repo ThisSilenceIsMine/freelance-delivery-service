@@ -9,7 +9,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { QueryFunctionContext, useQuery } from 'react-query';
+import { QueryFunctionContext, useQuery, useQueryClient } from 'react-query';
 
 import { api } from '@lib/Api/backend';
 import { Order, Tag } from '@lib/types';
@@ -26,6 +26,7 @@ export interface Props {
 
 export const DriverOrders = ({ initialOrders, tags, driverID, token }: Props) => {
   const [filter, setFilter] = useState<Partial<FormData>>();
+  const queryClient = useQueryClient();
   const toast = useToast();
   const { data, refetch } = useQuery(['driverOrders', driverID, filter], fetchDriverOrders, {
     initialData: initialOrders,
@@ -35,26 +36,48 @@ export const DriverOrders = ({ initialOrders, tags, driverID, token }: Props) =>
     refetch();
   }, [filter]);
 
-  const onItemClick = (id: number | string, status: string) => {
-    console.log(status)
+  const onItemClick = async (id: number | string, status: string) => {
+    console.log(status);
     if (status === 'APPOINTED') {
-      executeOrder(id, token) &&
+      try {
+        await executeOrder(id, token);
         toast({
           title: 'Ви почали виконувати замовлення',
           status: 'success',
           duration: 9000,
           isClosable: true,
         });
+        queryClient.invalidateQueries();
+      } catch (error) {
+        toast({
+          title: 'Помилка!',
+          description: 'Щось пішло не так',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     } else if (status === 'IN_PROCESS') {
-      finishOrder(id, token) &&
+      try {
+        await finishOrder(id, token);
         toast({
           title: 'Замовлення виконано',
           status: 'success',
           duration: 9000,
           isClosable: true,
         });
+        queryClient.invalidateQueries();
+      } catch (error) {
+        toast({
+          title: 'Помилка!',
+          description: 'Щось пішло не так',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     }
-  }
+  };
 
   return (
     <>
